@@ -11,6 +11,7 @@ const StyledTextField = styled(TextField)({
   input: {
     color: "grey",
     fontStyle: "italic",
+    cursor: "grab",
   },
 });
 

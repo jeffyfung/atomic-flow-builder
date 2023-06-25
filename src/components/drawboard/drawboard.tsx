@@ -1,15 +1,10 @@
-import { Drawer } from "@mui/material";
 import { MouseEvent, useState } from "react";
 import { TopMenu } from "../top-menu/top-menu";
-import { OperationDrawer } from "../operation-drawer/operation-drawer";
 import { ActionMenu } from "../action-menu/action-menu";
+import { DrawingToolbar } from "../drawing-toolbar/drawing-toolbar";
+import { Canvas } from "../canvas/canvas";
 
-interface Props {}
-
-// TODO: consider a floating action button for IO actions e.g. import
-export const Drawboard: React.FC<Props> = (props: Props) => {
-  //   const [showGraphCompSideBar, setShowGraphCompSideBar] = useState(false);
-
+export const Drawboard: React.FC<{}> = () => {
   const [showActionMenu, setShowActionMenu] = useState(false);
   const [actionMenuAnchor, setActionMenuAnchor] = useState<Element | null>(null);
 
@@ -27,6 +22,14 @@ export const Drawboard: React.FC<Props> = (props: Props) => {
     <div className="layout">
       <TopMenu openActionMenu={openActionMenu} />
       <ActionMenu anchorEl={actionMenuAnchor} open={showActionMenu} onClose={handleCloseActionMenu} />
+      <div id="drawboard-main" style={{ position: "relative" }}>
+        <DrawingToolbar />
+        <Canvas />
+      </div>
     </div>
   );
 };
+
+// 3 components
+// Canvas
+// Palette

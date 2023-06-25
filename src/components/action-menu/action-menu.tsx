@@ -24,7 +24,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ open, anchorEl, onClose 
         horizontal: "left",
       }}
       onClose={onClose}
-      PaperProps={{ sx: { width: "20vh" } }}
+      PaperProps={{ sx: { width: "130px" } }}
     >
       <MenuItem>
         <ListItemIcon>

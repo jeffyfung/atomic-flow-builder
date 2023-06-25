@@ -14,6 +14,7 @@ interface TopMenuProps {
 
 export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
   const status = "Latex: af{(0,8)*{afcd a{}{}a{}{}};(0,0)*{afcu a{}{}a{}{}}}";
+  const appTitle = "Atomic Flow Builder";
 
   return (
     <Box id="top-menu" sx={{ flexGrow: 1 }}>
@@ -22,7 +23,7 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
           <IconButton size="large" edge="start" color="warning" onClick={openActionMenu} sx={{ mr: 0.5 }}>
             <TipsAndUpdatesIcon fontSize="large" />
           </IconButton>
-          <StyledAppTitle variant="h6">Atomic Flow Builder</StyledAppTitle>
+          <StyledAppTitle variant="h6">{appTitle}</StyledAppTitle>
           <StatusBar status={status} />
           <Button variant="contained" size="small" color="secondary" sx={{ mx: 0.5 }}>
             Save
