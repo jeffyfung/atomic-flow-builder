@@ -23,8 +23,9 @@ export const Drawboard: React.FC<{}> = () => {
       <TopMenu openActionMenu={openActionMenu} />
       <ActionMenu anchorEl={actionMenuAnchor} open={showActionMenu} onClose={handleCloseActionMenu} />
       <div id="drawboard-main" style={{ position: "relative" }}>
-        <DrawingToolbar />
         <Canvas />
+        <DrawingToolbar />
+        {/* <Inspector /> */}
       </div>
     </div>
   );
