@@ -4,8 +4,7 @@ import Konva from "konva";
 import { Shape } from "../shape/shape";
 import { addToCanvas, selectCanvas, updatePreview } from "../../features/canvas";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getShapeProperties } from "../../features/shape";
-import { nanoid } from "nanoid";
+import { store } from "../../store";
 
 // TODO: make the canvas fit the layout/window perfectly
 // add camera / viewport for canvas
@@ -44,15 +43,17 @@ export const Canvas: React.FC<{}> = () => {
   const stageRef = useRef<Konva.Stage>(null);
 
   const handleDrop = useCallback((event: DragEvent) => {
-    const draggedData = event.nativeEvent.dataTransfer?.getData("dragPayload");
+    // const draggedData = event.nativeEvent.dataTransfer?.getData("dragPayload");
 
-    if (draggedData) {
-      const data = JSON.parse(draggedData);
-
-      stageRef.current!.setPointersPositions(event);
-      const coords = stageRef.current!.getPointerPosition()!;
-
-      const shape = getShapeProperties({ ...data, coordX: coords.x, coordY: coords.y });
+    // if (draggedData) {
+    // const data = JSON.parse(draggedData);
+    // stageRef.current!.setPointersPositions(event);
+    // const coords = stageRef.current!.getPointerPosition()!;
+    // const shape = getShapeProperties({ ...data, coordX: coords.x, coordY: coords.y });
+    // }
+    const shape = store.getState().canvas.previewShape;
+    console.log("here2", shape);
+    if (shape !== null) {
       dispatch(addToCanvas(shape));
     }
 
@@ -63,30 +64,21 @@ export const Canvas: React.FC<{}> = () => {
     event.preventDefault();
 
     const stage = stageRef.current!;
-    stageRef.current!.setPointersPositions(event);
+    stage.setPointersPositions(event);
     // const scale = stage.scaleX();
-    const coords = stageRef.current!.getPointerPosition()!;
+    const coords = stage.getPointerPosition()!;
+
+    console.log("here1", coords);
 
     dispatch(
       updatePreview({
-        x: coords.x - stage.x(),
-        y: coords.y - stage.y(),
+        x: coords.x,
+        y: coords.y,
       })
     );
   };
 
   const clearSelection = () => {};
-
-  //   useEffect(() => {
-  //     const canvas = canvasRef.current!;
-  //     const context = canvas.getContext("2d");
-
-  //     if (context !== null) {
-  //       drawGridlines(canvas, context, gridlineSpacing);
-  //     }
-  //   });
-
-  console.log("previewShape", previewShape);
 
   return (
     <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>

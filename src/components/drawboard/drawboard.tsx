@@ -1,8 +1,9 @@
 import { MouseEvent, useState } from "react";
 import { TopMenu } from "../top-menu/top-menu";
 import { ActionMenu } from "../action-menu/action-menu";
-import { DrawingToolbar } from "../drawing-toolbar/drawing-toolbar";
+import { Palette } from "../palette/palette";
 import { Canvas } from "../canvas/canvas";
+import { Box } from "@mui/material";
 
 export const Drawboard: React.FC<{}> = () => {
   const [showActionMenu, setShowActionMenu] = useState(false);
@@ -19,18 +20,14 @@ export const Drawboard: React.FC<{}> = () => {
   };
 
   return (
-    <div className="layout">
+    <Box className="layout">
       <TopMenu openActionMenu={openActionMenu} />
       <ActionMenu anchorEl={actionMenuAnchor} open={showActionMenu} onClose={handleCloseActionMenu} />
-      <div id="drawboard-main" style={{ position: "relative" }}>
+      <Box id="drawboard-main" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Canvas />
-        <DrawingToolbar />
+        <Palette />
         {/* <Inspector /> */}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
-
-// 3 components
-// Canvas
-// Palette

@@ -13,28 +13,48 @@ export interface ShapeProperties {
   y: number;
 }
 
-export enum ShapeType {
+enum ArcType {
+  ARC_AFIDN = "arcAFIDN",
+  ARC_AFIUN = "arcAFIUN",
+}
+
+enum InvertedArcType {}
+
+enum TestType {
   RECT = "rect",
   CIRCLE = "circle",
-  TRI_WEDGE = "triWedge",
-  TRI_WEDGE_SOLID = "triWedgeSolid",
 }
+
+export const AtomicFlowShapes = {
+  ARC: ArcType,
+  INVERTED_ARC: InvertedArcType,
+  TEST: TestType,
+  // HOLLOW_WEDGE = "hollowWedge",
+  // INVERTED_HOLLOW_WEDGE = "invertedHollowWedge",
+  // SOLID_WEDGE = "solidWedge",
+  // INVERTED_SOLID_WEDGE = "invertedSolidWedge",
+  // DOT = "dot",
+};
+
+export type ShapeType = (typeof AtomicFlowShapes)[keyof typeof AtomicFlowShapes];
 
 export interface ShapePropertiesWithId extends ShapeProperties {
   id: string;
 }
 
-export const getShapeProperties = ({ type, clientX, clientY, offsetX, offsetY, coordX, coordY }: DropPoint): ShapeProperties => {
+export const getShapeProperties = ({ type, clientX, clientY, offsetX, offsetY, screenX, screenY, coordX, coordY }: DropPoint): ShapeProperties => {
   switch (type) {
-    case ShapeType.RECT:
+    case AtomicFlowShapes.TEST.RECT:
       return {
         type,
         width: 150,
         height: 100,
         stroke: "#000000",
         rotation: 0,
-        x: coordX - offsetX,
-        y: coordY - offsetY,
+        x: clientX,
+        y: clientY,
+        // x: coordX - offsetX,
+        // y: coordY - offsetY,
       };
     // case ShapeType.CIRCLE:
     default:
@@ -42,8 +62,8 @@ export const getShapeProperties = ({ type, clientX, clientY, offsetX, offsetY, c
         type,
         radius: 50,
         stroke: "#000000",
-        x: coordX - (offsetX - clientX / 2),
-        y: coordY - (offsetY - clientY / 2),
+        x: coordX! - (offsetX - clientX / 2),
+        y: coordY! - (offsetY - clientY / 2),
       };
   }
 };

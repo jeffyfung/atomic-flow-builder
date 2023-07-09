@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 export interface CanvasState {
   shapes: Record<string, ShapeProperties>;
-  previewShape: ShapeProperties | null; // or DropPoint
+  previewShape: ShapeProperties | null;
 }
 
 export interface DragPoint {
@@ -14,11 +14,13 @@ export interface DragPoint {
   clientY: number;
   offsetX: number;
   offsetY: number;
+  screenX: number;
+  screenY: number;
 }
 
 export interface DropPoint extends DragPoint {
-  coordX: number;
-  coordY: number;
+  coordX?: number;
+  coordY?: number;
 }
 
 const initialState: CanvasState = {
