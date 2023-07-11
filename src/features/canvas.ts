@@ -8,20 +8,20 @@ export interface CanvasState {
   previewShape: ShapeProperties | null;
 }
 
-export interface DragPoint {
-  type: ShapeType;
-  clientX: number;
-  clientY: number;
-  offsetX: number;
-  offsetY: number;
-  screenX: number;
-  screenY: number;
-}
+// export interface DragPoint {
+//   type: ShapeType;
+//   clientX: number;
+//   clientY: number;
+// offsetX: number;
+// offsetY: number;
+// screenX: number;
+// screenY: number;
+// }
 
-export interface DropPoint extends DragPoint {
-  coordX?: number;
-  coordY?: number;
-}
+// export interface DropPoint extends DragPoint {
+//   coordX?: number;
+//   coordY?: number;
+// }
 
 const initialState: CanvasState = {
   shapes: {},

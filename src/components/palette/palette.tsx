@@ -1,8 +1,8 @@
 import { Box, List, ListItem, ListItemButton, Menu, MenuItem } from "@mui/material";
 import styled from "@emotion/styled";
 import { Dispatch, DragEvent, MouseEvent, SetStateAction, useState } from "react";
-import { DragPoint, addToPreview } from "../../features/canvas";
-import { ShapeType, getShapeProperties } from "../../features/shape";
+import { addToPreview } from "../../features/canvas";
+import { ShapeProperties, ShapeType } from "../../features/shape";
 import { useAppDispatch } from "../../hooks";
 import { LeafPaletteItemSchema, PaletteItemSchema, paletteItemSchema } from "./constant";
 
@@ -78,24 +78,21 @@ export const Palette: React.FC<{}> = () => {
   };
 
   const handleDragStart = (event: DragEvent, shapeType: ShapeType) => {
-    const payload: DragPoint = {
+    const payload: ShapeProperties = {
       type: shapeType,
-      clientX: event.nativeEvent.clientX,
-      clientY: event.nativeEvent.clientY,
-      offsetX: event.nativeEvent.offsetX,
-      offsetY: event.nativeEvent.offsetY,
-      screenX: event.nativeEvent.screenX,
-      screenY: event.nativeEvent.screenY,
+      x: event.nativeEvent.clientX,
+      y: event.nativeEvent.clientY,
+      // offsetX: event.nativeEvent.offsetX,
+      // offsetY: event.nativeEvent.offsetY,
+      // screenX: event.nativeEvent.screenX,
+      // screenY: event.nativeEvent.screenY,
     };
-    // TODO: event.dataTransfer is currently useless because things are stored in redux
-    event.dataTransfer.setData("dragPayload", JSON.stringify(payload));
+
     // disable the dragging image
     event.dataTransfer.setDragImage(placeholderImg, 0, 0);
     (event.target as Element).classList.add("hide");
 
-    const shape = getShapeProperties({ ...payload, coordX: 0, coordY: 0 });
-    console.log("here0", shape);
-    dispatch(addToPreview(shape));
+    dispatch(addToPreview(payload));
   };
 
   return (

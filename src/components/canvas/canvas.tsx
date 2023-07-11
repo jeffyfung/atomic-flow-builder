@@ -1,4 +1,4 @@
-import { useCallback, useRef, DragEvent, useState } from "react";
+import { useCallback, useRef, DragEvent, useState, MouseEvent } from "react";
 import { Stage, Layer } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
@@ -52,7 +52,6 @@ export const Canvas: React.FC<{}> = () => {
     // const shape = getShapeProperties({ ...data, coordX: coords.x, coordY: coords.y });
     // }
     const shape = store.getState().canvas.previewShape;
-    console.log("here2", shape);
     if (shape !== null) {
       dispatch(addToCanvas(shape));
     }
@@ -67,8 +66,6 @@ export const Canvas: React.FC<{}> = () => {
     stage.setPointersPositions(event);
     // const scale = stage.scaleX();
     const coords = stage.getPointerPosition()!;
-
-    console.log("here1", coords);
 
     dispatch(
       updatePreview({

@@ -1,5 +1,9 @@
-import { AtomicFlowShapes, ShapeType } from "../../features/shape";
+import { ShapeType } from "../../features/shape";
 import afidnIcon from "../../res/palette-icons/arc.png";
+import afidxcIcon from "../../res/palette-icons/afidx.png";
+import afiidxcIcon from "../../res/palette-icons/afiidx.png";
+import afiuxcIcon from "../../res/palette-icons/afiux.png";
+import afiiuxcIcon from "../../res/palette-icons/afiiux.png";
 import afiunIcon from "../../res/palette-icons/upside_down_arc.png";
 import hollowWedgeIcon from "../../res/palette-icons/wedge.png";
 import invertedhollowWedgeIcon from "../../res/palette-icons/upside_down_wedge.png";
@@ -23,25 +27,47 @@ type PaletteItemSchemaType = PaletteItemSchema | LeafPaletteItemSchema;
 
 const arcCatItemSchema: LeafPaletteItemSchema[] = [
   {
-    shapeType: AtomicFlowShapes.ARC.ARC_AFIDN,
-    iconElement: <img src={afidnIcon} alt="afid" width="30px" />,
+    shapeType: ShapeType.ARC_AFIDN,
+    iconElement: <img src={afidnIcon} alt="afidn" width="30px" />,
     nested: false,
   },
   {
-    shapeType: AtomicFlowShapes.ARC.ARC_AFIUN,
-    iconElement: <img src={afiunIcon} alt="afid" width="30px" />,
+    shapeType: ShapeType.ARC_AFIDXC,
+    iconElement: <img src={afidxcIcon} alt="afidxc" width="30px" />,
     nested: false,
   },
   {
-    shapeType: AtomicFlowShapes.TEST.RECT,
-    iconElement: <img src={afiunIcon} alt="afid" width="30px" />,
+    shapeType: ShapeType.ARC_AFIIDXC,
+    iconElement: <img src={afiidxcIcon} alt="afiidxc" width="30px" />,
     nested: false,
   },
 ];
 
-const invertedArcCatItemSchema: LeafPaletteItemSchema[] = [];
+const invertedArcCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.INVERTED_ARC_AFIUN,
+    iconElement: <img src={afiunIcon} alt="afiun" width="30px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_ARC_AFIUXC,
+    iconElement: <img src={afiuxcIcon} alt="afiuxc" width="30px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_ARC_AFIIUXC,
+    iconElement: <img src={afiiuxcIcon} alt="afiiuxc" width="30px" />,
+    nested: false,
+  },
+];
 
-const hollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
+const hollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFWUN,
+    iconElement: <img src={afiunIcon} alt="afwun" width="30px" />,
+    nested: false,
+  },
+];
 
 const invertedhollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
 
