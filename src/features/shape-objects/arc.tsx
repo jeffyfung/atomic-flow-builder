@@ -8,8 +8,6 @@ const DEFAULT_HEIGHT = 10;
 export const ArcAFIDN: React.FC<ShapeProperties> = ({ x, y }) => {
   return (
     <KonvaShape
-      width={DEFAULT_WIDTH}
-      height={DEFAULT_WIDTH}
       stroke="black"
       strokeWidth={4}
       sceneFunc={(context, shape) => {
@@ -38,8 +36,8 @@ export const ArcAFIDXC: React.FC<ShapeProperties> = ({ x, y, widthFactor, stroke
 
   return (
     <>
-      <Line points={leftLinePoints} stroke={stroke![0]} lineCap="round" />
-      <Line points={rightLinePoints} stroke={stroke![1]} lineCap="round" />
+      <Line points={leftLinePoints} stroke={stroke[0]} lineCap="round" />
+      <Line points={rightLinePoints} stroke={stroke[1]} lineCap="round" />
       <KonvaShape
         width={width}
         height={height}
