@@ -1,5 +1,5 @@
 import { Shape as KonvaShape, Line, RegularPolygon } from "react-konva";
-import { ShapeProperties } from "../shape";
+import { LatexColour, ShapeProperties } from "../shape";
 
 // for both hollow and solid wedge
 
@@ -16,12 +16,12 @@ const DEFAULT_WIDTH = 50;
 const DEFAULT_ARC_Y_DISPLACEMENT = 30;
 
 export const WedgeAFWUN: React.FC<ShapeProperties> = ({ x, y, fill }) => {
-  return <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />;
+  return <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />;
 };
 
 export const WedgeAFWUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black"],
+    stroke: [LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -30,14 +30,14 @@ export const WedgeAFWUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =>
   return (
     <>
       <Line points={points} stroke={stroke[0]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFWWUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black"],
+    stroke: [LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -49,14 +49,14 @@ export const WedgeAFWWUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =
     <>
       <Line points={line1Points} stroke={stroke[0]} lineCap="round" />
       <Line points={line2Points} stroke={stroke[0]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFAUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black"],
+    stroke: [LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -65,14 +65,14 @@ export const WedgeAFAUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =>
   return (
     <>
       <Line points={points} stroke={stroke[0]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFAAUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black"],
+    stroke: [LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -84,14 +84,14 @@ export const WedgeAFAAUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =
     <>
       <Line points={line1Points} stroke={stroke[0]} lineCap="round" />
       <Line points={line2Points} stroke={stroke[0]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFCUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black", "black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -121,14 +121,14 @@ export const WedgeAFCUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =>
         }}
       />
       <Line points={line3Points} stroke={stroke[2]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFCUNC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -156,14 +156,14 @@ export const WedgeAFCUNC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =
           context.fillStrokeShape(shape);
         }}
       />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFCCUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black", "black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -214,14 +214,14 @@ export const WedgeAFCCUC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) =
       />
       <Line points={line3aPoints} stroke={stroke[2]} lineCap="round" />
       <Line points={line3bPoints} stroke={stroke[2]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
 
 export const WedgeAFCCUNC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) => {
   const defaultProps = {
-    stroke: ["black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!stroke) stroke = defaultProps.stroke;
@@ -268,7 +268,7 @@ export const WedgeAFCCUNC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) 
           context.fillStrokeShape(shape);
         }}
       />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
@@ -276,7 +276,7 @@ export const WedgeAFCCUNC: React.FC<ShapeProperties> = ({ x, y, fill, stroke }) 
 export const WedgeAFCUXC: React.FC<ShapeProperties> = ({ x, y, fill, stroke, widthFactor }) => {
   const defaultProps = {
     widthFactor: 2,
-    stroke: ["black", "black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!widthFactor) widthFactor = defaultProps.widthFactor;
@@ -293,22 +293,7 @@ export const WedgeAFCUXC: React.FC<ShapeProperties> = ({ x, y, fill, stroke, wid
       <Line points={line1Points} stroke={stroke[0]} lineCap="round" tension={0.5} />
       <Line points={line2Points} stroke={stroke[1]} lineCap="round" tension={0.5} />
       <Line points={line3Points} stroke={stroke[2]} lineCap="round" />
-      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke="black" strokeWidth={4} />
+      <RegularPolygon x={x} y={y} fill={fill} sides={3} radius={DEFAULT_RADIUS} stroke={LatexColour.BLACK} strokeWidth={4} />
     </>
   );
 };
-
-{
-  /* <KonvaShape
-        width={width}
-        height={height}
-        stroke="black"
-        strokeWidth={4}
-        sceneFunc={(context, shape) => {
-          context.beginPath();
-          context.moveTo(x, y);
-          context.quadraticCurveTo(x + width / 2, y - height * 2, x + width, y);
-          context.fillStrokeShape(shape);
-        }}
-      /> */
-}

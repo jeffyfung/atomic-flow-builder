@@ -1,5 +1,5 @@
 import { Shape as KonvaShape, Line } from "react-konva";
-import { ShapeProperties } from "../shape";
+import { LatexColour, ShapeProperties } from "../shape";
 
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 10;
@@ -7,9 +7,7 @@ const DEFAULT_HEIGHT = 10;
 export const ArcAFIUN: React.FC<ShapeProperties> = ({ x, y }) => {
   return (
     <KonvaShape
-      width={DEFAULT_WIDTH}
-      height={DEFAULT_WIDTH}
-      stroke="black"
+      stroke={LatexColour.BLACK}
       strokeWidth={4}
       sceneFunc={(context, shape) => {
         context.beginPath();
@@ -25,7 +23,7 @@ export const ArcAFIUXC: React.FC<ShapeProperties> = ({ x, y, widthFactor, stroke
   // TODO (later): account for labels
   const defaultProps = {
     widthFactor: 1,
-    stroke: ["black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!widthFactor) widthFactor = defaultProps.widthFactor;
@@ -42,7 +40,7 @@ export const ArcAFIUXC: React.FC<ShapeProperties> = ({ x, y, widthFactor, stroke
       <KonvaShape
         width={width}
         height={height}
-        stroke="black"
+        stroke={LatexColour.BLACK}
         strokeWidth={4}
         sceneFunc={(context, shape) => {
           context.beginPath();
@@ -59,7 +57,7 @@ export const ArcAFIIUXC: React.FC<ShapeProperties> = ({ x, y, widthFactor, strok
   // TODO (later): account for labels
   const defaultProps = {
     widthFactor: 1,
-    stroke: ["black", "black"],
+    stroke: [LatexColour.BLACK, LatexColour.BLACK],
   };
 
   if (!widthFactor) widthFactor = defaultProps.widthFactor;
@@ -80,7 +78,7 @@ export const ArcAFIIUXC: React.FC<ShapeProperties> = ({ x, y, widthFactor, strok
       <KonvaShape
         width={width}
         height={height}
-        stroke="black"
+        stroke={LatexColour.BLACK}
         strokeWidth={4}
         sceneFunc={(context, shape) => {
           context.beginPath();
