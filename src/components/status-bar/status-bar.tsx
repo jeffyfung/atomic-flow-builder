@@ -24,7 +24,6 @@ export const StatusBar: React.FC<StatusBarProps> = ({ status }) => {
     try {
       await navigator.clipboard.writeText(status);
       msg = "Copied to clipboard!";
-      console.log(msg);
     } catch (error: any) {
       msg = "Failed to copy to clipboard!";
       console.error(error);

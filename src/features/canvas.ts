@@ -6,6 +6,8 @@ import { nanoid } from "nanoid";
 export interface CanvasState {
   shapes: Record<string, ShapeProperties>;
   previewShape: ShapeProperties | null;
+  // selectedShape: string | null;
+  // displayInspector: boolean;
 }
 
 // export interface DragPoint {
@@ -49,10 +51,16 @@ export const canvasSlice = createSlice({
     clear: (state) => {
       state.shapes = {};
     },
+    updateShape: (state, action: PayloadAction<{ id: string; properties: Partial<ShapeProperties> }>) => {
+      state.shapes[action.payload.id] = {
+        ...state.shapes[action.payload.id],
+        ...action.payload.properties,
+      };
+    },
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear } = canvasSlice.actions;
+export const { addToCanvas, addToPreview, updatePreview, clear, updateShape } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

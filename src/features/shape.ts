@@ -125,66 +125,69 @@ export enum LatexColour {
   DVIPS_YELLOW_ORANGE = "YellowOrange",
 }
 
-// TODO: is this func necessary?
-// export const getShapeProperties = ({ type, clientX, clientY, offsetX, offsetY, screenX, screenY, coordX, coordY }: DropPoint): ShapeProperties => {
-//   switch (type) {
-//     case ShapeType.ARC_AFIDN:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     case ShapeType.ARC_AFIDXC:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     case ShapeType.ARC_AFIIDXC:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     case ShapeType.INVERTED_ARC_AFIUN:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     case ShapeType.INVERTED_ARC_AFIUXC:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     case ShapeType.INVERTED_ARC_AFIIUXC:
-//       return {
-//         type,
-//         x: clientX,
-//         y: clientY,
-//       };
-//     // case AtomicFlowShapes.TEST.RECT:
-//     //   return {
-//     //     type,
-//     //     width: 150,
-//     //     height: 100,
-//     //     stroke: "#000000",
-//     //     rotation: 0,
-//     //     x: clientX,
-//     //     y: clientY,
-//     //     // x: coordX - offsetX,
-//     //     // y: coordY - offsetY,
-//     //   };
-//     // case ShapeType.CIRCLE:
-//     // return {
-//     //   type,
-//     //   radius: 50,
-//     //   stroke: "#000000",
-//     //   x: coordX! - (offsetX - clientX / 2),
-//     //   y: coordY! - (offsetY - clientY / 2),
-//     // };
-//     default:
-//       throw new Error("Invalid shape type");
-//   }
-// };
+export const getShapeProperties = (type: ShapeType, x: number, y: number): ShapeProperties => {
+  switch (type) {
+    case ShapeType.ARC_AFIDN:
+      return {
+        type,
+        x,
+        y,
+      };
+    case ShapeType.ARC_AFIDXC:
+      return {
+        type,
+        x,
+        y,
+        widthFactor: 1,
+        stroke: [LatexColour.BLACK, LatexColour.BLACK],
+      };
+    case ShapeType.ARC_AFIIDXC:
+      return {
+        type,
+        x,
+        y,
+        widthFactor: 1,
+        stroke: [LatexColour.BLACK, LatexColour.BLACK],
+      };
+    case ShapeType.INVERTED_ARC_AFIUN:
+      return {
+        type,
+        x,
+        y,
+      };
+    case ShapeType.INVERTED_ARC_AFIUXC:
+      return {
+        type,
+        x,
+        y,
+      };
+    case ShapeType.INVERTED_ARC_AFIIUXC:
+      return {
+        type,
+        x,
+        y,
+      };
+    // case AtomicFlowShapes.TEST.RECT:
+    //   return {
+    //     type,
+    //     width: 150,
+    //     height: 100,
+    //     stroke: "#000000",
+    //     rotation: 0,
+    //     x: clientX,
+    //     y: clientY,
+    //     // x: coordX - offsetX,
+    //     // y: coordY - offsetY,
+    //   };
+    // case ShapeType.CIRCLE:
+    // return {
+    //   type,
+    //   radius: 50,
+    //   stroke: "#000000",
+    //   x: coordX! - (offsetX - clientX / 2),
+    //   y: coordY! - (offsetY - clientY / 2),
+    // };
+    default:
+      throw new Error("Invalid shape type");
+  }
+};

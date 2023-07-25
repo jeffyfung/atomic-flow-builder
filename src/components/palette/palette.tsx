@@ -2,7 +2,7 @@ import { Box, List, ListItem, ListItemButton, Menu, MenuItem } from "@mui/materi
 import styled from "@emotion/styled";
 import { Dispatch, DragEvent, MouseEvent, SetStateAction, useState } from "react";
 import { addToPreview } from "../../features/canvas";
-import { ShapeProperties, ShapeType } from "../../features/shape";
+import { ShapeProperties, ShapeType, getShapeProperties } from "../../features/shape";
 import { useAppDispatch } from "../../hooks";
 import { LeafPaletteItemSchema, PaletteItemSchema, paletteItemSchema } from "./constant";
 
@@ -78,20 +78,11 @@ export const Palette: React.FC<{}> = () => {
   };
 
   const handleDragStart = (event: DragEvent, shapeType: ShapeType) => {
-    const payload: ShapeProperties = {
-      type: shapeType,
-      x: event.nativeEvent.clientX,
-      y: event.nativeEvent.clientY,
-      // offsetX: event.nativeEvent.offsetX,
-      // offsetY: event.nativeEvent.offsetY,
-      // screenX: event.nativeEvent.screenX,
-      // screenY: event.nativeEvent.screenY,
-    };
-
     // disable the dragging image
     event.dataTransfer.setDragImage(placeholderImg, 0, 0);
     (event.target as Element).classList.add("hide");
 
+    const payload = getShapeProperties(shapeType, event.nativeEvent.clientX, event.nativeEvent.clientY);
     dispatch(addToPreview(payload));
   };
 

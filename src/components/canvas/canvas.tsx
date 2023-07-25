@@ -1,10 +1,11 @@
-import { useCallback, useRef, DragEvent, useState, MouseEvent } from "react";
+import { useCallback, useRef, DragEvent, useState } from "react";
 import { Stage, Layer } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
 import { addToCanvas, selectCanvas, updatePreview } from "../../features/canvas";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
+import { Inspector } from "../inspector/inspector";
 
 // TODO: make the canvas fit the layout/window perfectly
 // add camera / viewport for canvas
@@ -21,7 +22,6 @@ export const Canvas: React.FC<{}> = () => {
   //     context.strokeStyle = "#ccc"; // TODO: update color
   //     context.lineWidth = 0.2; // 0.1
 
-  //     console.log(canvasWidth, canvasHeight);
   //     for (let x = 0; x <= canvasWidth; x += gridSize) {
   //       context.beginPath();
   //       context.moveTo(x, 0);
@@ -39,6 +39,8 @@ export const Canvas: React.FC<{}> = () => {
 
   const { shapes, previewShape } = useAppSelector(selectCanvas);
   const dispatch = useAppDispatch();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
 
   const stageRef = useRef<Konva.Stage>(null);
 
@@ -75,22 +77,46 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  const clearSelection = () => {};
+  const handleClick = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
+    setSelectedId(id);
+    setInspectorDisplay(true);
+  };
+
+  const handleCloseInspector = () => {
+    setInspectorDisplay(false);
+  };
+
+  const handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
+    const container = event.target.getStage()!.container();
+    container.style.cursor = "grab";
+  };
+
+  const handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
+    const container = event.target.getStage()!.container();
+    container.style.cursor = "default";
+  };
+
+  // const clearSelection = () => {
+  //   dispatch(selectShape(null));
+  // };
 
   return (
-    <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
-      <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight} onClick={clearSelection}>
-        <Layer>
-          {Object.entries(shapes).map(([key, shape]) => (
-            <Shape key={key} shape={{ ...shape, id: key }} />
-          ))}
-        </Layer>
-        {previewShape && (
+    <>
+      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
+        <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Layer>
-            <Shape key={"drag-preview"} shape={{ ...previewShape, id: "drag-preview" }} />
+            {Object.entries(shapes).map(([shapeId, shape]) => {
+              return <Shape key={shapeId} shapeId={shapeId} shape={{ ...shape, id: shapeId }} onClick={handleClick} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} />;
+            })}
           </Layer>
-        )}
-      </Stage>
-    </main>
+          {previewShape && (
+            <Layer>
+              <Shape key={"drag-preview"} shapeId={"drag-preview"} shape={{ ...previewShape, id: "drag-preview" }} onClick={() => {}} handleMouseEnter={() => {}} handleMouseLeave={() => {}} />
+            </Layer>
+          )}
+        </Stage>
+      </main>
+      {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} />}
+    </>
   );
 };
