@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from "@mui/material";
-import { LatexColour, ShapeProperties } from "../../../features/shape";
+import { ShapeProperties } from "../../../features/shape";
 import { useAppDispatch } from "../../../hooks";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent } from "react";
 import { updateShape } from "../../../features/canvas";
 
 export const FormDropDown: React.FC<{
@@ -11,7 +11,6 @@ export const FormDropDown: React.FC<{
   options: any[];
 }> = ({ shapeId, shape, fieldName, options }) => {
   const dispatch = useAppDispatch();
-  const value = shape[fieldName];
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     dispatch(
@@ -25,7 +24,9 @@ export const FormDropDown: React.FC<{
   return (
     <TextField variant="outlined" size="small" label="Colour" select value={shape[fieldName]} onChange={handleChange} sx={{ width: "87%" }}>
       {options.map((val) => (
-        <MenuItem value={val}>{val}</MenuItem>
+        <MenuItem key={val} value={val}>
+          {val}
+        </MenuItem>
       ))}
     </TextField>
   );

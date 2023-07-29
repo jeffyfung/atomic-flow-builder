@@ -100,9 +100,9 @@ export const Canvas: React.FC<{}> = () => {
     container.style.cursor = "default";
   };
 
-  // const clearSelection = () => {
-  //   dispatch(selectShape(null));
-  // };
+  const clearSelection = () => {
+    setSelectedId(null);
+  };
 
   const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
     const { x, y } = event.target!.absolutePosition();
@@ -153,7 +153,7 @@ export const Canvas: React.FC<{}> = () => {
           )}
         </Stage>
       </main>
-      {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} />}
+      {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} clearSelection={clearSelection} />}
     </>
   );
 };

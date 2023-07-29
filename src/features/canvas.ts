@@ -57,10 +57,13 @@ export const canvasSlice = createSlice({
         ...action.payload.properties,
       };
     },
+    deleteShape: (state, action: PayloadAction<string>) => {
+      delete state.shapes[action.payload];
+    },
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear, updateShape } = canvasSlice.actions;
+export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

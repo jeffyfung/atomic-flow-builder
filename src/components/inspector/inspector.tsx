@@ -1,10 +1,13 @@
 import { Box, Fab, Grid, Typography, styled } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { validator } from "../../features/form";
 import { FormTextFieldAndSlider } from "./inpector-forms/form-text-field-and-slider";
 import { LatexColour, ShapeProperties } from "../../features/shape";
 import { MouseEvent, ReactNode } from "react";
 import { FormDropDown } from "./inpector-forms/form-drop-down";
+import { deleteShape } from "../../features/canvas";
+import { useAppDispatch } from "../../hooks";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -26,11 +29,11 @@ const StyledGridItem = styled(Grid)({
   margin: "5px",
 });
 
-const StyledIconButton = styled(Fab)({
-  position: "absolute",
-  top: "-29px",
-  right: "2px",
-});
+// const StyledIconButton = styled(Fab)({
+//   position: "absolute",
+//   top: "-29px",
+//   right: "2px",
+// });
 
 const NestedGridContainer = styled(Grid)({
   justifyContent: "center",
@@ -42,14 +45,17 @@ export interface InspectorProps {
   shapeId: string;
   shape: ShapeProperties;
   handleCloseInspector: (event: MouseEvent<HTMLElement>) => void;
+  clearSelection: () => void;
 }
 
-export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleCloseInspector }) => {
+export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleCloseInspector, clearSelection }) => {
+  const dispatch = useAppDispatch();
+
   const getForm = (shape: ShapeProperties): ReactNode[] => {
     const components = shape.variables.map((field) => {
       if (field === "widthFactor") {
         return (
-          <NestedGridContainer container direction="row" spacing={2}>
+          <NestedGridContainer key={field} container direction="row" spacing={2}>
             <Grid item xs={3}>
               Width Factor
             </Grid>
@@ -74,12 +80,20 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
     return components;
   };
 
+  const handleDeleteShape = () => {
+    dispatch(deleteShape(shapeId));
+    clearSelection();
+  };
+
   return (
     <>
       <StyledBoxContainer>
-        <StyledIconButton color="info" size="small" onClick={handleCloseInspector}>
+        <Fab color="info" size="small" onClick={handleCloseInspector} sx={{ position: "absolute", top: "-29px", right: "2px" }}>
           <RemoveIcon />
-        </StyledIconButton>
+        </Fab>
+        <Fab color="error" size="small" onClick={handleDeleteShape} sx={{ position: "absolute", top: "-29px", right: "50px" }}>
+          <DeleteForeverIcon />
+        </Fab>
         <StyledGridContainer id="inspector" width="100%" height="100%" container direction="row" spacing={2} sx={{ boxShadow: "3" }}>
           <StyledGridItem item xs={12}>
             <Typography fontSize="1.2rem" fontWeight="bold" sx={{ marginBottom: "12px" }}>
