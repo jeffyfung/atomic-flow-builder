@@ -78,7 +78,11 @@ export const Canvas: React.FC<{}> = () => {
   };
 
   const handleClick = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
-    setSelectedId(id);
+    if (selectedId === id) {
+      setSelectedId(null);
+    } else {
+      setSelectedId(id);
+    }
     setInspectorDisplay(true);
   };
 
