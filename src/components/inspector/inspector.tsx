@@ -1,11 +1,10 @@
-import { Box, Fab, Grid, TextField, Typography, styled } from "@mui/material";
+import { Box, Fab, Grid, Typography, styled } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { validator } from "../../features/form";
 import { FormTextFieldAndSlider } from "./inpector-forms/form-text-field-and-slider";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-// import { selectInspectorStatus, selectSelectedId, toggleInspector } from "../../features/canvas";
-import { ShapeProperties } from "../../features/shape";
-import { MouseEvent } from "react";
+import { LatexColour, ShapeProperties } from "../../features/shape";
+import { MouseEvent, ReactNode } from "react";
+import { FormDropDown } from "./inpector-forms/form-drop-down";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -46,10 +45,35 @@ export interface InspectorProps {
 }
 
 export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleCloseInspector }) => {
-  // const dispatch = useAppDispatch();
-  // const handleClick = () => dispatch(toggleInspector(false));
+  const getForm = (shape: ShapeProperties): ReactNode[] => {
+    const components = shape.variables.map((field) => {
+      if (field === "widthFactor") {
+        return (
+          <NestedGridContainer container direction="row" spacing={2}>
+            <Grid item xs={3}>
+              Width Factor
+            </Grid>
+            <Grid item xs={9}>
+              <FormTextFieldAndSlider shapeId={shapeId} shape={shape} fieldName={field} validator={validator.positiveNumberOnly} />
+            </Grid>
+          </NestedGridContainer>
+        );
+      } else if (field.startsWith("stroke")) {
+        return (
+          <NestedGridContainer key={field} container direction="row" spacing={2}>
+            <Grid item xs={3}>
+              {`Stroke ${field.slice(6)}`}
+            </Grid>
+            <Grid item xs={9}>
+              <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LatexColour)} />
+            </Grid>
+          </NestedGridContainer>
+        );
+      }
+    });
+    return components;
+  };
 
-  // TODO: rewrite into schema
   return (
     <>
       <StyledBoxContainer>
@@ -61,54 +85,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             <Typography fontSize="1.2rem" fontWeight="bold" sx={{ marginBottom: "12px" }}>
               Object Inspector
             </Typography>
-            <NestedGridContainer container direction="row" spacing={2}>
-              <Grid item xs={3}>
-                Stroke 1
-              </Grid>
-              <Grid item xs={9}>
-                <TextField variant="outlined" size="small" label="Colour"></TextField>
-              </Grid>
-            </NestedGridContainer>
-            <NestedGridContainer container direction="row" spacing={2}>
-              <Grid item xs={3}>
-                Stroke 2
-              </Grid>
-              <Grid item xs={9}>
-                <TextField variant="outlined" size="small" label="Colour"></TextField>
-              </Grid>
-            </NestedGridContainer>
-            <NestedGridContainer container direction="row" spacing={2}>
-              <Grid item xs={3}>
-                Stroke 3
-              </Grid>
-              <Grid item xs={9}>
-                <TextField variant="outlined" size="small" label="Colour"></TextField>
-              </Grid>
-            </NestedGridContainer>
-            <NestedGridContainer container direction="row" spacing={2}>
-              <Grid item xs={3}>
-                Width Factor
-              </Grid>
-              <Grid item xs={9}>
-                <FormTextFieldAndSlider shapeId={shapeId} shape={shape} fieldName="widthFactor" validator={validator.positiveNumberOnly} />
-              </Grid>
-            </NestedGridContainer>
-            {/* <NestedGridContainer container direction="row" spacing={2}>
-                <Grid item xs={3}>
-                  Width
-                </Grid>
-                <Grid item xs={9}>
-                  <FormTextFieldAndSlider defaultValue={1} validator={validator.positiveIntegerOnly} />
-                </Grid>
-              </NestedGridContainer>
-              <NestedGridContainer container direction="row" spacing={2}>
-                <Grid item xs={3}>
-                  Height
-                </Grid>
-                <Grid item xs={9}>
-                  <FormTextFieldAndSlider fieldName={"height"} validator={validator.positiveIntegerOnly} />
-                </Grid>
-              </NestedGridContainer> */}
+            {getForm(shape)}
           </StyledGridItem>
           <StyledGridItem item xs={12}>
             <Typography fontSize="1.2rem" fontWeight="bold" sx={{ marginBottom: "12px" }}>

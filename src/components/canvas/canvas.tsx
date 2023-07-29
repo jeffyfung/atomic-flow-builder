@@ -1,8 +1,8 @@
-import { useCallback, useRef, DragEvent, useState } from "react";
-import { Stage, Layer } from "react-konva";
+import { useCallback, useRef, useState } from "react";
+import { Stage, Layer, Transformer } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
-import { addToCanvas, selectCanvas, updatePreview } from "../../features/canvas";
+import { addToCanvas, selectCanvas, updatePreview, updateShape } from "../../features/canvas";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
@@ -44,7 +44,7 @@ export const Canvas: React.FC<{}> = () => {
 
   const stageRef = useRef<Konva.Stage>(null);
 
-  const handleDrop = useCallback((event: DragEvent) => {
+  const handleDrop = useCallback((event: React.DragEvent) => {
     // const draggedData = event.nativeEvent.dataTransfer?.getData("dragPayload");
 
     // if (draggedData) {
@@ -61,7 +61,7 @@ export const Canvas: React.FC<{}> = () => {
     (event.target as Element).classList.remove("hide");
   }, []);
 
-  const handleDragOver = (event: DragEvent) => {
+  const handleDragOver = (event: React.DragEvent) => {
     event.preventDefault();
 
     const stage = stageRef.current!;
@@ -100,18 +100,51 @@ export const Canvas: React.FC<{}> = () => {
   //   dispatch(selectShape(null));
   // };
 
+  const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
+    const { x, y } = event.target!.absolutePosition();
+    dispatch(
+      updateShape({
+        id,
+        properties: {
+          x,
+          y,
+        },
+      })
+    );
+  };
+
   return (
     <>
       <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             {Object.entries(shapes).map(([shapeId, shape]) => {
-              return <Shape key={shapeId} shapeId={shapeId} shape={{ ...shape, id: shapeId }} onClick={handleClick} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} />;
+              return (
+                <Shape
+                  selected={selectedId === shapeId} //
+                  key={shapeId}
+                  shapeId={shapeId}
+                  shape={{ ...shape, id: shapeId }}
+                  onClick={handleClick}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  handleDragEnd={handleSelectedShapeDragEnd}
+                />
+              );
             })}
           </Layer>
           {previewShape && (
             <Layer>
-              <Shape key={"drag-preview"} shapeId={"drag-preview"} shape={{ ...previewShape, id: "drag-preview" }} onClick={() => {}} handleMouseEnter={() => {}} handleMouseLeave={() => {}} />
+              <Shape
+                selected={false}
+                key={"drag-preview"}
+                shapeId={"drag-preview"} //
+                shape={{ ...previewShape, id: "drag-preview" }}
+                onClick={() => {}}
+                handleMouseEnter={() => {}}
+                handleMouseLeave={() => {}}
+                handleDragEnd={() => {}}
+              />
             </Layer>
           )}
         </Stage>
