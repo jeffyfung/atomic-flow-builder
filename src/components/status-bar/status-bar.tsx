@@ -2,7 +2,7 @@ import { TextField, Tooltip, styled } from "@mui/material";
 import { MouseEvent, useState } from "react";
 
 interface StatusBarProps {
-  status: string;
+  val: string;
 }
 
 const StyledTextField = styled(TextField)({
@@ -15,14 +15,14 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-export const StatusBar: React.FC<StatusBarProps> = ({ status }) => {
+export const StatusBar: React.FC<StatusBarProps> = ({ val }) => {
   const tooltipResetTime = 2500;
   const [hint, setHint] = useState("Click to Copy");
 
   const handleClick = async (_e: MouseEvent) => {
     let msg: string = "";
     try {
-      await navigator.clipboard.writeText(status);
+      await navigator.clipboard.writeText(val);
       msg = "Copied to clipboard!";
     } catch (error: any) {
       msg = "Failed to copy to clipboard!";
@@ -39,12 +39,13 @@ export const StatusBar: React.FC<StatusBarProps> = ({ status }) => {
         id="status-display"
         variant="outlined"
         size="small"
+        value={val}
+        placeholder="Exported Latex to be displayed"
         InputProps={{
           readOnly: true,
           color: "info",
           onClick: handleClick,
         }}
-        defaultValue={status}
       />
     </Tooltip>
   );

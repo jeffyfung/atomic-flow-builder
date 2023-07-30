@@ -38,7 +38,8 @@ export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   let xIdx = -xAxisIdx;
   for (let i = 0; i <= numXSteps; i++) {
     if (i === xAxisIdx) {
-      verticals.push(<Line key={`vert-origin`} x={i * stepSize} points={[0, 0, 0, stageHeight]} stroke={axisColour} strokeWidth={2.5} />);
+      xAxisVal = i * stepSize;
+      verticals.push(<Line key={`vert-origin`} x={xAxisVal} points={[0, 0, 0, stageHeight]} stroke={axisColour} strokeWidth={2.5} />);
     } else {
       verticals.push(<Line key={`vert-${i}`} x={i * stepSize} points={[0, 0, 0, stageHeight]} stroke={strokeColour} strokeWidth={1} />);
     }
@@ -53,7 +54,7 @@ export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   for (let i = 0; i <= numYSteps; i++) {
     if (i === yAxisIdx) {
       yAxisVal = i * stepSize;
-      horizontals.push(<Line key={`hori-origin`} y={i * stepSize} points={[0, 0, stageWidth, 0]} stroke={axisColour} strokeWidth={2} />);
+      horizontals.push(<Line key={`hori-origin`} y={yAxisVal} points={[0, 0, stageWidth, 0]} stroke={axisColour} strokeWidth={2} />);
     } else {
       horizontals.push(<Line key={`hori-${i}`} y={i * stepSize} points={[0, 0, stageWidth, 0]} stroke={strokeColour} strokeWidth={1} />);
     }

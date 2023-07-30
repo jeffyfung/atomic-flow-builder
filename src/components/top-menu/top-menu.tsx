@@ -16,8 +16,8 @@ interface TopMenuProps {
 }
 
 // TODO: deal with the status/exporetdLatex bar
+// TODO: add toggle for compact mode
 export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
-  const status = "Latex: af{(0,8)*{afcd a{}{}a{}{}};(0,0)*{afcu a{}{}a{}{}}}";
   const appTitle = "Atomic Flow Builder";
 
   const { shapes } = useAppSelector(selectCanvas);
@@ -38,7 +38,7 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
             <TipsAndUpdatesIcon fontSize="large" />
           </IconButton>
           <StyledAppTitle variant="h6">{appTitle}</StyledAppTitle>
-          <StatusBar status={status} />
+          <StatusBar val={exportedLatex} />
           <Button variant="contained" size="small" color="secondary" sx={{ mx: 0.5 }}>
             Save
           </Button>
