@@ -1,11 +1,12 @@
-import { useCallback, useRef, useState } from "react";
-import { Stage, Layer, Transformer } from "react-konva";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Stage, Layer } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
 import { addToCanvas, selectCanvas, updatePreview, updateShape } from "../../features/canvas";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
+import { Gridline } from "./gridline";
 
 // TODO: make the canvas fit the layout/window perfectly
 // add camera / viewport for canvas
@@ -41,6 +42,7 @@ export const Canvas: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
+  const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
 
@@ -117,10 +119,15 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
+  useEffect(() => {
+    setStageObj(stageRef.current);
+  });
+
   return (
     <>
-      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
+      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#f2f1ed" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
+          <Gridline stage={stageObj} stepSize={20} />
           <Layer>
             {Object.entries(shapes).map(([shapeId, shape]) => {
               return (
