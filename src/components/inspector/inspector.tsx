@@ -14,13 +14,13 @@ const StyledBoxContainer = styled(Box)({
   width: "350px",
   height: "90%",
   right: "7px",
-  backgroundColor: "#fffffd",
   zIndex: 2,
 });
 const StyledGridContainer = styled(Grid)({
   padding: 3,
   justifyContent: "center",
   alignItems: "stretch",
+  backgroundColor: "#fffffd",
 });
 
 const StyledGridItem = styled(Grid)({
@@ -28,12 +28,6 @@ const StyledGridItem = styled(Grid)({
   borderRadius: "10px",
   margin: "5px",
 });
-
-// const StyledIconButton = styled(Fab)({
-//   position: "absolute",
-//   top: "-29px",
-//   right: "2px",
-// });
 
 const NestedGridContainer = styled(Grid)({
   justifyContent: "center",

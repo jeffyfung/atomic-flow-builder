@@ -46,6 +46,10 @@ export const Canvas: React.FC<{}> = () => {
 
   const stageRef = useRef<Konva.Stage>(null);
 
+  useEffect(() => {
+    setStageObj(stageRef.current);
+  }, []);
+
   const handleDrop = useCallback((event: React.DragEvent) => {
     // const draggedData = event.nativeEvent.dataTransfer?.getData("dragPayload");
 
@@ -119,13 +123,9 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  useEffect(() => {
-    setStageObj(stageRef.current);
-  });
-
   return (
     <>
-      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#f2f1ed" }}>
+      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#fffffd" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Gridline stage={stageObj} stepSize={20} />
           <Layer>

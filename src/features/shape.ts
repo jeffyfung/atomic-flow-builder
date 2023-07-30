@@ -2,11 +2,15 @@ export interface ShapeProperties {
   type: ShapeType;
   x: number;
   y: number;
-  widthFactor?: number;
-  heightFactor?: number;
+  label1?: string;
+  label2?: string;
+  label3?: string;
+  label4?: string;
   stroke1?: LatexColour;
   stroke2?: LatexColour;
   stroke3?: LatexColour;
+  widthFactor?: number;
+  heightFactor?: number;
   fill?: string;
   variables: (keyof ShapeProperties)[];
   // radius?: number;
@@ -14,24 +18,22 @@ export interface ShapeProperties {
 }
 
 export enum ShapeType {
-  ARC_AFIDN,
-  ARC_AFIDXC,
-  ARC_AFIIDXC,
-  INVERTED_ARC_AFIUN,
-  INVERTED_ARC_AFIUXC,
-  INVERTED_ARC_AFIIUXC,
-  HOLLOW_WEDGE_AFWUN, // AFAUN
-  HOLLOW_WEDGE_AFWUC,
-  HOLLOW_WEDGE_AFWWUC,
-  HOLLOW_WEDGE_AFAUC,
-  HOLLOW_WEDGE_AFAAUC,
-  HOLLOW_WEDGE_AFCUC,
-  HOLLOW_WEDGE_AFCUNC,
-  HOLLOW_WEDGE_AFCCUC,
-  HOLLOW_WEDGE_AFCCUNC,
-  HOLLOW_WEDGE_AFCUXC, // AND MORE
-  RECT,
-  CIRCLE,
+  ARC_AFIDN = "afidn",
+  ARC_AFIDXC = "afidxc",
+  ARC_AFIIDXC = "afIdxc",
+  INVERTED_ARC_AFIUN = "afiun",
+  INVERTED_ARC_AFIUXC = "afiuxc",
+  INVERTED_ARC_AFIIUXC = "afIuxc",
+  HOLLOW_WEDGE_AFWUN = "afwun", // AFAUN
+  HOLLOW_WEDGE_AFWUC = "afwuc",
+  HOLLOW_WEDGE_AFWWUC = "afWuc",
+  HOLLOW_WEDGE_AFAUC = "afauc",
+  HOLLOW_WEDGE_AFAAUC = "afAuc",
+  HOLLOW_WEDGE_AFCUC = "afcuc",
+  HOLLOW_WEDGE_AFCUNC = "afcunc",
+  HOLLOW_WEDGE_AFCCUC = "afCuc",
+  HOLLOW_WEDGE_AFCCUNC = "afCunc",
+  HOLLOW_WEDGE_AFCUXC = "afcuxc", // AND MORE
   // INVERTED_HOLLOW_WEDGE = "invertedHollowWedge",
   // SOLID_WEDGE = "solidWedge",
   // INVERTED_SOLID_WEDGE = "invertedSolidWedge",
@@ -135,7 +137,11 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
-        variables: [],
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        variables: ["label1", "label2", "label3", "label4"],
       };
     case ShapeType.ARC_AFIDXC:
       return {
@@ -143,19 +149,27 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         x,
         y,
         widthFactor: 1,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["widthFactor", "stroke1", "stroke2"],
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
     case ShapeType.ARC_AFIIDXC:
       return {
         type,
         x,
         y,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         widthFactor: 1,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["widthFactor", "stroke1", "stroke2"],
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
     case ShapeType.INVERTED_ARC_AFIUN:
       return {
