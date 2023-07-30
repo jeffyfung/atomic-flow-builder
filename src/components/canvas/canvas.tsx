@@ -127,7 +127,7 @@ export const Canvas: React.FC<{}> = () => {
     <>
       <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#fffffd" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
-          <Gridline stage={stageObj} stepSize={20} />
+          <Gridline stage={stageObj} />
           <Layer>
             {Object.entries(shapes).map(([shapeId, shape]) => {
               return (

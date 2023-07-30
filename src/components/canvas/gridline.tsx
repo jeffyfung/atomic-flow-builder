@@ -1,39 +1,66 @@
 import Konva from "konva";
-import { useEffect, useRef } from "react";
-import { Group, Layer, Line } from "react-konva";
+import { Layer, Line, Text } from "react-konva";
 
 export interface GridlineProps {
   stage: Konva.Stage | null;
-  stepSize: number;
 }
 
-// TODO: add x-axis, y-axis
-export const Gridline: React.FC<GridlineProps> = ({ stage, stepSize }) => {
+export const stepSize = 20;
+let stageWidth: number;
+let stageHeight: number;
+let numXSteps: number;
+let numYSteps: number;
+let xAxisVal: number;
+let yAxisVal: number; // y axis is top-down
+
+export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY: number } => {
+  const gridCoor = {
+    gridX: (x - xAxisVal) / stepSize,
+    gridY: (yAxisVal - y) / stepSize,
+  };
+  return gridCoor;
+};
+
+// TODO: snap to grid (need to know which part of the component to snap to)
+export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   if (!stage) return <Layer></Layer>;
 
   const strokeColour = "#d6d5d2";
   const axisColour = "#8c8c8c";
-  const stageWidth = stage.width();
-  const stageHeight = stage.height();
-  const numXSteps = Math.round(stageWidth / stepSize);
-  const numYSteps = Math.round(stageHeight / stepSize);
+  stageWidth = stage.width();
+  stageHeight = stage.height();
+  numXSteps = Math.round(stageWidth / stepSize);
+  numYSteps = Math.round(stageHeight / stepSize);
+  const xAxisIdx = Math.floor(numXSteps * 0.4);
+  const yAxisIdx = Math.floor(numYSteps * 0.5);
 
   let verticals = [];
+  let xIdx = -xAxisIdx;
   for (let i = 0; i <= numXSteps; i++) {
-    if (i === Math.floor(numXSteps * 0.4)) {
+    if (i === xAxisIdx) {
       verticals.push(<Line key={`vert-origin`} x={i * stepSize} points={[0, 0, 0, stageHeight]} stroke={axisColour} strokeWidth={2.5} />);
     } else {
       verticals.push(<Line key={`vert-${i}`} x={i * stepSize} points={[0, 0, 0, stageHeight]} stroke={strokeColour} strokeWidth={1} />);
     }
+    if ((i - xAxisIdx) % 5 === 0) {
+      verticals.push(<Text key={`vert-axis-${xIdx}`} x={i * stepSize - 4} y={yAxisIdx * stepSize + 2} text={`${xIdx}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
+    }
+    xIdx++;
   }
 
   let horizontals = [];
+  let yIdx = yAxisIdx;
   for (let i = 0; i <= numYSteps; i++) {
-    if (i === Math.floor(numYSteps * 0.5)) {
+    if (i === yAxisIdx) {
+      yAxisVal = i * stepSize;
       horizontals.push(<Line key={`hori-origin`} y={i * stepSize} points={[0, 0, stageWidth, 0]} stroke={axisColour} strokeWidth={2} />);
     } else {
       horizontals.push(<Line key={`hori-${i}`} y={i * stepSize} points={[0, 0, stageWidth, 0]} stroke={strokeColour} strokeWidth={1} />);
     }
+    if ((i - yAxisIdx) % 5 === 0) {
+      horizontals.push(<Text key={`hori-axis-${i}`} x={xAxisIdx * stepSize - 14} y={i * stepSize - 4} text={`${yIdx}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
+    }
+    yIdx--;
   }
 
   return <Layer>{[...verticals, ...horizontals]}</Layer>;

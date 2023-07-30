@@ -1,10 +1,15 @@
 import { ShapeProperties } from "./shape";
+import { getGridCoordinate } from "../components/canvas/gridline";
+
+const roundTo1dp = (val: number): number => {
+  return Math.round(val * 10) / 10;
+};
 
 export const convertShapeToLatex = (shapes: ShapeProperties[], compact: boolean = false) => {
   let body = "";
   shapes.forEach((shape) => {
     const { type, x, y, variables } = shape;
-    // TODO: need to convert coordinates
+    const { gridX, gridY } = getGridCoordinate(x, y);
 
     const params = variables.reduce((accu, key) => {
       if (key.startsWith("label")) {
@@ -17,9 +22,9 @@ export const convertShapeToLatex = (shapes: ShapeProperties[], compact: boolean 
       }
       return accu;
     }, "");
-    const latex = `(${x}, ${y})*{\\${type} ${params}};`;
-    body += latex + compact ? "" : "\n";
+    const latex = `(${roundTo1dp(gridX)}, ${roundTo1dp(gridY)})*{\\${type} ${params}};`;
+    body += latex + (compact ? "" : "\n");
   });
 
-  return `\\af{${compact ? "\n" : ""}${body}}`;
+  return `\\af{${compact ? "" : "\n"}${body}}`;
 };
