@@ -1,6 +1,6 @@
 import { ShapeProperties } from "./shape";
 
-export const latexConverter = (shapes: ShapeProperties[]) => {
+export const convertShapeToLatex = (shapes: ShapeProperties[], compact: boolean = false) => {
   let body = "";
   shapes.forEach((shape) => {
     const { type, x, y, variables } = shape;
@@ -18,8 +18,8 @@ export const latexConverter = (shapes: ShapeProperties[]) => {
       return accu;
     }, "");
     const latex = `(${x}, ${y})*{\\${type} ${params}};`;
-    body += latex + "\n";
+    body += latex + compact ? "" : "\n";
   });
 
-  return `\\af{\n${body}}`;
+  return `\\af{${compact ? "\n" : ""}${body}}`;
 };
