@@ -137,11 +137,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
-        label1: "",
-        label2: "",
-        label3: "",
-        label4: "",
-        variables: ["label1", "label2", "label3", "label4"],
+        variables: [],
       };
     case ShapeType.ARC_AFIDXC:
       return {

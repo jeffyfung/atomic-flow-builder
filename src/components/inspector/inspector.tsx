@@ -1,4 +1,4 @@
-import { Box, Fab, Grid, Typography, styled } from "@mui/material";
+import { Box, Fab, Grid, TextField, Typography, styled } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { validator } from "../../features/form";
@@ -8,6 +8,7 @@ import { MouseEvent, ReactNode } from "react";
 import { FormDropDown } from "./inpector-forms/form-drop-down";
 import { deleteShape } from "../../features/canvas";
 import { useAppDispatch } from "../../hooks";
+import { FormTextField } from "./inpector-forms/form-text-field";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -66,6 +67,17 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             </Grid>
             <Grid item xs={9}>
               <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LatexColour)} />
+            </Grid>
+          </NestedGridContainer>
+        );
+      } else if (field.startsWith("label")) {
+        return (
+          <NestedGridContainer key={field} container direction="row" spacing={2}>
+            <Grid item xs={3}>
+              {`Label ${field.slice(5)}`}
+            </Grid>
+            <Grid item xs={9}>
+              <FormTextField shapeId={shapeId} shape={shape} fieldName={field} />
             </Grid>
           </NestedGridContainer>
         );

@@ -1,4 +1,4 @@
-import { Group, Shape as KonvaShape, Line, Transformer } from "react-konva";
+import { Group, Shape as KonvaShape, Line, Transformer, Text } from "react-konva";
 import { LatexColour } from "../shape";
 import { ShapeProps } from "../../components/shape/shape";
 import { useEffect, useRef } from "react";
@@ -7,7 +7,6 @@ import Konva from "konva";
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 10;
 
-// TODO: what unit is x and y??
 export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.Shape>(null);
@@ -55,8 +54,7 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
 };
 
 export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
-  // TODO (later): account for labels
-  const { x, y, widthFactor, stroke1, stroke2 } = shape;
+  const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const width = DEFAULT_WIDTH * widthFactor!;
   const height = DEFAULT_HEIGHT;
   const leftLinePoints = [width * 0.1, -2, width * 0.1, 40];
@@ -109,6 +107,10 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
             context.closePath();
           }}
         />
+        {label1 && <Text x={width * 0.1 - 10 - 5 * label1.length} y={10} text={label1} height={15} fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label2 && <Text x={width * 0.1 + 5} y={10} text={label2} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label3 && <Text x={width * 0.9 - 10 - 5 * label3.length} y={10} text={label3} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label4 && <Text x={width * 0.9 + 5} y={10} text={label4} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -116,8 +118,7 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
 };
 
 export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
-  // TODO (later): account for labels
-  const { x, y, widthFactor, stroke1, stroke2 } = shape;
+  const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const width = DEFAULT_WIDTH * widthFactor!;
   const height = DEFAULT_HEIGHT;
   const leftLinePoints = [width * 0.1 - 2, -2, width * 0.1 - 2, 40];
@@ -176,6 +177,10 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
             context.closePath();
           }}
         />
+        {label1 && <Text x={width * 0.1 - 12 - 5 * label1.length} y={10} text={label1} height={15} fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label2 && <Text x={width * 0.1 + 7} y={10} text={label2} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label3 && <Text x={width * 0.9 - 12 - 5 * label3.length} y={10} text={label3} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label4 && <Text x={width * 0.9 + 7} y={10} text={label4} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
