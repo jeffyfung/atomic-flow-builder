@@ -180,19 +180,27 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         x,
         y,
         widthFactor: 1,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["widthFactor", "stroke1", "stroke2"],
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
     case ShapeType.INVERTED_ARC_AFIIUXC:
       return {
         type,
         x,
         y,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         widthFactor: 1,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["widthFactor", "stroke1", "stroke2"],
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
     case ShapeType.HOLLOW_WEDGE_AFWUN:
       return {

@@ -3,6 +3,7 @@ import { LatexColour } from "../shape";
 import { ShapeProps } from "../../components/shape/shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
+import { GraphLabel } from "./graph-label";
 
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 10;
@@ -107,10 +108,10 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
             context.closePath();
           }}
         />
-        {label1 && <Text x={width * 0.1 - 10 - 5 * label1.length} y={10} text={label1} height={15} fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label2 && <Text x={width * 0.1 + 5} y={10} text={label2} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label3 && <Text x={width * 0.9 - 10 - 5 * label3.length} y={10} text={label3} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label4 && <Text x={width * 0.9 + 5} y={10} text={label4} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label1 && <GraphLabel x={width * 0.1 - 10 - 5 * label1.length} y={height} text={label1} />}
+        {label2 && <GraphLabel x={width * 0.1 + 5} y={height} text={label2} />}
+        {label3 && <GraphLabel x={width * 0.9 - 10 - 5 * label3.length} y={height} text={label3} />}
+        {label4 && <GraphLabel x={width * 0.9 + 5} y={height} text={label4} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -177,10 +178,10 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
             context.closePath();
           }}
         />
-        {label1 && <Text x={width * 0.1 - 12 - 5 * label1.length} y={10} text={label1} height={15} fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label2 && <Text x={width * 0.1 + 7} y={10} text={label2} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label3 && <Text x={width * 0.9 - 12 - 5 * label3.length} y={10} text={label3} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
-        {label4 && <Text x={width * 0.9 + 7} y={10} text={label4} align="center" verticalAlign="middle" fontFamily={"Calibri"} fontSize={16} fontStyle="italic" fill={"black"} />}
+        {label1 && <GraphLabel x={width * 0.1 - 12 - 5 * label1.length} y={height} text={label1} />}
+        {label2 && <GraphLabel x={width * 0.1 + 7} y={height} text={label2} />}
+        {label3 && <GraphLabel x={width * 0.9 - 12 - 5 * label3.length} y={10} text={label3} />}
+        {label4 && <GraphLabel x={width * 0.9 + 7} y={height} text={label4} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
