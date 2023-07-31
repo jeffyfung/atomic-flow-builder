@@ -8,7 +8,7 @@ import { GraphLabel } from "./graph-label";
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 10;
 
-export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
+export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -47,6 +47,7 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
           context.closePath();
         }}
         draggable
+        onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
       />
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
@@ -54,7 +55,7 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
+export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const width = DEFAULT_WIDTH * widthFactor!;
   const height = DEFAULT_HEIGHT;
@@ -90,6 +91,7 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         draggable
+        onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
       >
         <Line ref={shapeRef1} points={leftLinePoints} stroke={stroke1} lineCap="round" />
@@ -118,7 +120,7 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragEnd }) => {
+export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const width = DEFAULT_WIDTH * widthFactor!;
   const height = DEFAULT_HEIGHT;
@@ -158,6 +160,7 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         draggable
+        onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
       >
         <Line ref={shapeRef1} points={leftLinePoints} stroke={stroke1} lineCap="round" />

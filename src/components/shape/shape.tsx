@@ -11,6 +11,7 @@ export interface ShapeProps {
   onClick: (evt: Konva.KonvaEventObject<MouseEvent>, id: string) => void;
   handleMouseEnter: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleMouseLeave: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
+  handleDragStart: (event: Konva.KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: Konva.KonvaEventObject<DragEvent>, id: string) => void;
 }
 

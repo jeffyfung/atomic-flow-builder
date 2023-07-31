@@ -9,8 +9,6 @@ import { Inspector } from "../inspector/inspector";
 import { Gridline } from "./gridline";
 
 // TODO: make the canvas fit the layout/window perfectly
-// add camera / viewport for canvas
-// snappable grid (optional)
 
 export const Canvas: React.FC<{}> = () => {
   //   const gridlineSpacing = 10;
@@ -81,6 +79,8 @@ export const Canvas: React.FC<{}> = () => {
         y: coords.y,
       })
     );
+
+    setInspectorDisplay(false);
   };
 
   const handleClick = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
@@ -108,6 +108,10 @@ export const Canvas: React.FC<{}> = () => {
 
   const clearSelection = () => {
     setSelectedId(null);
+  };
+
+  const handleSelectedShapeDragStart = (event: Konva.KonvaEventObject<DragEvent>) => {
+    setInspectorDisplay(false);
   };
 
   const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
@@ -140,6 +144,7 @@ export const Canvas: React.FC<{}> = () => {
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
                   handleDragEnd={handleSelectedShapeDragEnd}
+                  handleDragStart={handleSelectedShapeDragStart}
                 />
               );
             })}
@@ -155,6 +160,7 @@ export const Canvas: React.FC<{}> = () => {
                 handleMouseEnter={() => {}}
                 handleMouseLeave={() => {}}
                 handleDragEnd={() => {}}
+                handleDragStart={() => {}}
               />
             </Layer>
           )}
