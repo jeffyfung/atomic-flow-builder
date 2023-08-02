@@ -1,4 +1,4 @@
-import { Group, Shape as KonvaShape, Line, Transformer, Text } from "react-konva";
+import { Group, Shape as KonvaShape, Line, Transformer } from "react-konva";
 import { LatexColour } from "../shape";
 import { ShapeProps } from "../../components/shape/shape";
 import { useEffect, useRef } from "react";
