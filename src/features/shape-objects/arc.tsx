@@ -4,20 +4,21 @@ import { ShapeProps } from "../../components/shape/shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
-
-const DEFAULT_WIDTH = 100;
-const DEFAULT_HEIGHT = 10;
+import { getStageDim } from "../../components/canvas/gridline";
 
 export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
+  const arcWidth = getStageDim(5);
+  const arcHeight = getStageDim(0.3);
+  const arcBottomToCenter = getStageDim(0.1);
   const borderBox = {
-    x: 0,
-    y: -DEFAULT_HEIGHT,
-    width: DEFAULT_WIDTH,
-    height: DEFAULT_HEIGHT,
+    x: -arcWidth * 0.5,
+    y: arcBottomToCenter - arcHeight,
+    width: arcWidth,
+    height: arcHeight,
   };
 
   useEffect(() => {
@@ -41,8 +42,8 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
         strokeWidth={4}
         sceneFunc={(context, shape) => {
           context.beginPath();
-          context.moveTo(0, 0);
-          context.quadraticCurveTo(DEFAULT_WIDTH / 2, 0 - DEFAULT_HEIGHT * 2, DEFAULT_WIDTH, 0);
+          context.moveTo(-arcWidth * 0.5, arcBottomToCenter);
+          context.quadraticCurveTo(0, -arcHeight * 2, arcWidth * 0.5, arcBottomToCenter);
           context.fillStrokeShape(shape);
           context.closePath();
         }}
@@ -57,21 +58,24 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
 
 export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
-  const width = DEFAULT_WIDTH * widthFactor!;
-  const height = DEFAULT_HEIGHT;
-  const leftLinePoints = [width * 0.1, -2, width * 0.1, 40];
-  const rightLinePoints = [width * 0.9, -2, width * 0.9, 40];
-
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
+  const arcWidth = getStageDim(5 * widthFactor!);
+  const arcHeight = getStageDim(0.3);
+  const arcBottomToCenter = getStageDim(0.1);
+  const strokeLength = getStageDim(4);
+  const strokeSpacing = getStageDim(4 * widthFactor!);
+  const leftLinePoints = [-strokeSpacing * 0.5, 0, -strokeSpacing * 0.5, strokeLength];
+  const rightLinePoints = [strokeSpacing * 0.5, 0, strokeSpacing * 0.5, strokeLength];
+
   const borderBox = {
-    x: 0,
-    y: -height,
-    width: width,
-    height: height,
+    x: -arcWidth * 0.5,
+    y: arcBottomToCenter - arcHeight,
+    width: arcWidth,
+    height: arcBottomToCenter - arcHeight + strokeLength,
   };
 
   useEffect(() => {
@@ -98,22 +102,20 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         <Line ref={shapeRef2} points={rightLinePoints} stroke={stroke2} lineCap="round" />
         <KonvaShape
           ref={shapeRef3}
-          width={width}
-          height={height}
           stroke={LatexColour.BLACK}
           strokeWidth={4}
           sceneFunc={(context, shape) => {
             context.beginPath();
-            context.moveTo(0, 0);
-            context.quadraticCurveTo(width / 2, -height * 2, width, 0);
+            context.moveTo(-arcWidth * 0.5, arcBottomToCenter);
+            context.quadraticCurveTo(0, -arcHeight * 2, arcWidth * 0.5, arcBottomToCenter);
             context.fillStrokeShape(shape);
             context.closePath();
           }}
         />
-        {label1 && <GraphLabel x={width * 0.1 - 10 - 5 * label1.length} y={height} text={label1} />}
-        {label2 && <GraphLabel x={width * 0.1 + 5} y={height} text={label2} />}
-        {label3 && <GraphLabel x={width * 0.9 - 10 - 5 * label3.length} y={height} text={label3} />}
-        {label4 && <GraphLabel x={width * 0.9 + 5} y={height} text={label4} />}
+        {label1 && <GraphLabel x={-strokeSpacing * 0.5 - 10 - 5 * label1.length} y={strokeLength * 0.4} text={label1} />}
+        {label2 && <GraphLabel x={-strokeSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label2} />}
+        {label3 && <GraphLabel x={strokeSpacing * 0.5 - 10 - 5 * label3.length} y={strokeLength * 0.4} text={label3} />}
+        {label4 && <GraphLabel x={strokeSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label4} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -122,13 +124,6 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
 
 export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
-  const width = DEFAULT_WIDTH * widthFactor!;
-  const height = DEFAULT_HEIGHT;
-  const leftLinePoints = [width * 0.1 - 2, -2, width * 0.1 - 2, 40];
-  const leftLine2Points = [width * 0.1 + 2, -2, width * 0.1 + 2, 40];
-  const rightLinePoints = [width * 0.9 - 2, -2, width * 0.9 - 2, 40];
-  const rightLine2Points = [width * 0.9 + 2, -2, width * 0.9 + 2, 40];
-
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.Line>(null);
@@ -136,11 +131,22 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const shapeRef5 = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
+  const arcWidth = getStageDim(5 * widthFactor!);
+  const arcHeight = getStageDim(0.3);
+  const arcBottomToCenter = getStageDim(0.1);
+  const strokeLength = getStageDim(4);
+  const strokeSpacing = getStageDim(4 * widthFactor!);
+  const strokeNeighborSpacing = getStageDim(0.3 * widthFactor!);
+  const leftLinePoints = [-strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, 0, -strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, strokeLength];
+  const leftLine2Points = [-strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, 0, -strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, strokeLength];
+  const rightLinePoints = [strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, 0, strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, strokeLength];
+  const rightLine2Points = [strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, 0, strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, strokeLength];
+
   const borderBox = {
-    x: 0,
-    y: -height,
-    width: width,
-    height: height,
+    x: -arcWidth * 0.5,
+    y: arcBottomToCenter - arcHeight,
+    width: arcWidth,
+    height: arcBottomToCenter - arcHeight + strokeLength,
   };
 
   useEffect(() => {
@@ -169,22 +175,20 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         <Line ref={shapeRef4} points={rightLine2Points} stroke={stroke2} lineCap="round" />
         <KonvaShape
           ref={shapeRef5}
-          width={width}
-          height={height}
           stroke={LatexColour.BLACK}
           strokeWidth={4}
           sceneFunc={(context, shape) => {
             context.beginPath();
-            context.moveTo(0, 0);
-            context.quadraticCurveTo(width / 2, -height * 2, width, 0);
+            context.moveTo(-arcWidth * 0.5, arcBottomToCenter);
+            context.quadraticCurveTo(0, -arcHeight * 2, arcWidth * 0.5, arcBottomToCenter);
             context.fillStrokeShape(shape);
             context.closePath();
           }}
         />
-        {label1 && <GraphLabel x={width * 0.1 - 12 - 5 * label1.length} y={height} text={label1} />}
-        {label2 && <GraphLabel x={width * 0.1 + 7} y={height} text={label2} />}
-        {label3 && <GraphLabel x={width * 0.9 - 12 - 5 * label3.length} y={10} text={label3} />}
-        {label4 && <GraphLabel x={width * 0.9 + 7} y={height} text={label4} />}
+        {label1 && <GraphLabel x={-strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5 - 10 - 5 * label1.length} y={strokeLength * 0.4} text={label1} />}
+        {label2 && <GraphLabel x={-strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label2} />}
+        {label3 && <GraphLabel x={strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5 - 10 - 5 * label3.length} y={strokeLength * 0.4} text={label3} />}
+        {label4 && <GraphLabel x={strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label4} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
