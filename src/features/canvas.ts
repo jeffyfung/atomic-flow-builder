@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { ShapeProperties, ShapeType } from "./shape";
+import { ShapeProperties } from "./shape";
 import { nanoid } from "nanoid";
 
 export interface CanvasState {
   shapes: Record<string, ShapeProperties>;
   previewShape: ShapeProperties | null;
+  dragging: boolean;
   // selectedShape: string | null;
   // displayInspector: boolean;
 }
@@ -28,6 +29,7 @@ export interface CanvasState {
 const initialState: CanvasState = {
   shapes: {},
   previewShape: null,
+  dragging: false,
 };
 
 export const canvasSlice = createSlice({
@@ -62,10 +64,13 @@ export const canvasSlice = createSlice({
     deleteShape: (state, action: PayloadAction<string>) => {
       delete state.shapes[action.payload];
     },
+    toggleDragging: (state, action: PayloadAction<boolean>) => {
+      state.dragging = action.payload;
+    },
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape } = canvasSlice.actions;
+export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

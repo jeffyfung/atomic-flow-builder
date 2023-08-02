@@ -1,8 +1,8 @@
 import { Box, List, ListItem, ListItemButton, Menu, MenuItem } from "@mui/material";
 import styled from "@emotion/styled";
-import { Dispatch, DragEvent, MouseEvent, SetStateAction, useState } from "react";
-import { addToPreview } from "../../features/canvas";
-import { ShapeProperties, ShapeType, getShapeProperties } from "../../features/shape";
+import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { addToPreview, toggleDragging } from "../../features/canvas";
+import { ShapeType, getShapeProperties } from "../../features/shape";
 import { useAppDispatch } from "../../hooks";
 import { LeafPaletteItemSchema, PaletteItemSchema, paletteItemSchema } from "./constant";
 
@@ -21,7 +21,7 @@ interface PaletteItemProps extends PaletteItemSchema {
 interface LeafPaletteItemProps extends LeafPaletteItemSchema {
   setNestedMenu: Dispatch<SetStateAction<LeafPaletteItemSchema[] | null>>;
   setNestedMenuAnchorEl: Dispatch<SetStateAction<Element | null>>;
-  handleDragStart: (event: DragEvent, shapeType: ShapeType) => void;
+  handleClick: (event: MouseEvent<HTMLElement>, shapeType: ShapeType) => void;
 }
 
 const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
@@ -43,9 +43,9 @@ const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, setNes
   );
 };
 
-const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleDragStart, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
-  const dragStartHandler = (event: DragEvent) => {
-    handleDragStart(event, shapeType);
+const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClick, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
+  const clickHandler = (event: MouseEvent<HTMLElement>) => {
+    handleClick(event, shapeType);
     setTimeout(() => {
       setNestedMenu(null);
       setNestedMenuAnchorEl(null);
@@ -56,7 +56,7 @@ const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleDrag
     <ListItem disableGutters style={{ justifyContent: "center" }}>
       <Box>
         <ListItemButton sx={{ padding: 0 }}>
-          <div className={`shape ${shapeType}`} draggable onDragStart={dragStartHandler}>
+          <div className={`shape ${shapeType}`} onClick={clickHandler} onDragStart={(e) => e.preventDefault()}>
             {iconElement}
           </div>
         </ListItemButton>
@@ -79,13 +79,10 @@ export const Palette: React.FC<{}> = () => {
     setNestedMenuAnchorEl(null);
   };
 
-  const handleDragStart = (event: DragEvent, shapeType: ShapeType) => {
-    // disable the dragging image
-    event.dataTransfer.setDragImage(placeholderImg, 0, 0);
-    (event.target as Element).classList.add("hide");
-
+  const handleClick = (event: MouseEvent<HTMLElement>, shapeType: ShapeType) => {
     const payload = getShapeProperties(shapeType, event.nativeEvent.clientX, event.nativeEvent.clientY);
     dispatch(addToPreview(payload));
+    dispatch(toggleDragging(true));
   };
 
   return (
@@ -95,7 +92,7 @@ export const Palette: React.FC<{}> = () => {
           if (i.nested) {
             return <PaletteItem key={idx} setNestedMenu={setNestedMenu} setNestedMenuAnchorEl={setNestedMenuAnchorEl} {...i} />;
           } else {
-            return <LeafPaletteItem key={idx} handleDragStart={handleDragStart} setNestedMenu={setNestedMenu} setNestedMenuAnchorEl={setNestedMenuAnchorEl} {...i} />;
+            return <LeafPaletteItem key={idx} handleClick={handleClick} setNestedMenu={setNestedMenu} setNestedMenuAnchorEl={setNestedMenuAnchorEl} {...i} />;
           }
         })}
       </List>
@@ -116,7 +113,7 @@ export const Palette: React.FC<{}> = () => {
           PaperProps={{ sx: { width: "40px", boxShadow: 2 } }}
         >
           {nestedMenu.map((i, idx) => (
-            <LeafPaletteItem key={idx} handleDragStart={handleDragStart} setNestedMenu={setNestedMenu} setNestedMenuAnchorEl={setNestedMenuAnchorEl} {...i} />
+            <LeafPaletteItem key={idx} handleClick={handleClick} setNestedMenu={setNestedMenu} setNestedMenuAnchorEl={setNestedMenuAnchorEl} {...i} />
           ))}
         </Menu>
       )}
