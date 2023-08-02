@@ -34,7 +34,9 @@ const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, setNes
     <ListItem disableGutters style={{ justifyContent: "center" }}>
       <Box>
         <ListItemButton sx={{ padding: 0 }}>
-          <div onClick={onClick}>{iconElement}</div>
+          <div onClick={onClick} onDragStart={(e) => e.preventDefault()}>
+            {iconElement}
+          </div>
         </ListItemButton>
       </Box>
     </ListItem>
