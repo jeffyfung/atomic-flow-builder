@@ -6,7 +6,7 @@ import { addToCanvas, selectCanvas, updatePreview, updateShape } from "../../fea
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
-import { Gridline } from "./gridline";
+import { Gridline, getGridCoordinate } from "./gridline";
 
 // TODO: make the canvas fit the layout/window perfectly
 
@@ -71,12 +71,15 @@ export const Canvas: React.FC<{}> = () => {
     const stage = stageRef.current!;
     stage.setPointersPositions(event);
     // const scale = stage.scaleX();
-    const coords = stage.getPointerPosition()!;
+    const { x, y } = stage.getPointerPosition()!;
+    const { gridX, gridY } = getGridCoordinate(x, y);
 
     dispatch(
       updatePreview({
-        x: coords.x,
-        y: coords.y,
+        x,
+        y,
+        gridX,
+        gridY,
       })
     );
 
@@ -116,12 +119,15 @@ export const Canvas: React.FC<{}> = () => {
 
   const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
     const { x, y } = event.target!.absolutePosition();
+    const { gridX, gridY } = getGridCoordinate(x, y);
     dispatch(
       updateShape({
         id,
         properties: {
           x,
           y,
+          gridX,
+          gridY,
         },
       })
     );

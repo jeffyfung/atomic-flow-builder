@@ -1,7 +1,11 @@
+import { getGridCoordinate } from "../components/canvas/gridline";
+
 export interface ShapeProperties {
   type: ShapeType;
   x: number;
   y: number;
+  gridX: number;
+  gridY: number;
   label1?: string;
   label2?: string;
   label3?: string;
@@ -131,12 +135,15 @@ export enum LatexColour {
 }
 
 export const getShapeProperties = (type: ShapeType, x: number, y: number): ShapeProperties => {
+  const { gridX, gridY } = getGridCoordinate(x, y);
   switch (type) {
     case ShapeType.ARC_AFIDN:
       return {
         type,
         x,
         y,
+        gridX,
+        gridY,
         variables: [],
       };
     case ShapeType.ARC_AFIDXC:
@@ -144,6 +151,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         widthFactor: 1,
         label1: "",
         label2: "",
@@ -158,6 +167,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         label1: "",
         label2: "",
         label3: "",
@@ -172,6 +183,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         variables: [],
       };
     case ShapeType.INVERTED_ARC_AFIUXC:
@@ -179,6 +192,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         widthFactor: 1,
         label1: "",
         label2: "",
@@ -193,6 +208,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         label1: "",
         label2: "",
         label3: "",
@@ -207,6 +224,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         variables: [],
       };
     case ShapeType.HOLLOW_WEDGE_AFWUC:
@@ -214,6 +233,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         label1: "",
         label2: "",
         stroke1: LatexColour.BLACK,
@@ -224,6 +245,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         variables: ["stroke1"],
       };
@@ -232,6 +255,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         variables: ["stroke1"],
       };
@@ -240,6 +265,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         variables: ["stroke1"],
       };
@@ -248,6 +275,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         stroke3: LatexColour.BLACK,
@@ -258,6 +287,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         variables: ["stroke1", "stroke2"],
@@ -267,6 +298,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         stroke3: LatexColour.BLACK,
@@ -277,6 +310,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         variables: ["stroke1", "stroke2"],
@@ -286,6 +321,8 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        gridX,
+        gridY,
         widthFactor: 1,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,

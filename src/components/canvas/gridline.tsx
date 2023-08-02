@@ -21,6 +21,10 @@ export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY:
   return gridCoor;
 };
 
+export const getStageDim = (val: number): number => {
+  return val * stepSize;
+};
+
 // TODO: snap to grid (need to know which part of the component to snap to)
 export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   if (!stage) return <Layer></Layer>;
