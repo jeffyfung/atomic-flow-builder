@@ -214,8 +214,10 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         type,
         x,
         y,
+        label1: "",
+        label2: "",
         stroke1: LatexColour.BLACK,
-        variables: ["stroke1"],
+        variables: ["label1", "label2", "stroke1"],
       };
     case ShapeType.HOLLOW_WEDGE_AFWWUC:
       return {
