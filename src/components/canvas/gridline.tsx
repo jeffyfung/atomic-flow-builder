@@ -14,18 +14,23 @@ let xAxisVal: number;
 let yAxisVal: number; // y axis is top-down
 
 export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY: number } => {
-  const gridCoor = {
+  return {
     gridX: (x - xAxisVal) / stepSize,
     gridY: (yAxisVal - y) / stepSize,
   };
-  return gridCoor;
+};
+
+export const getStageCoordinate = (x: number, y: number): { stageX: number; stageY: number } => {
+  return {
+    stageX: x * stepSize + xAxisVal,
+    stageY: yAxisVal - y * stepSize,
+  };
 };
 
 export const getStageDim = (val: number): number => {
   return val * stepSize;
 };
 
-// TODO: snap to grid (need to know which part of the component to snap to)
 export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   if (!stage) return <Layer></Layer>;
 

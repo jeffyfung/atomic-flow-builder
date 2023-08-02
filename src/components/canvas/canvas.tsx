@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, Circle } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
 import { addToCanvas, selectCanvas, updatePreview, updateShape } from "../../features/canvas";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
-import { Gridline, getGridCoordinate } from "./gridline";
+import { Gridline, getGridCoordinate, getStageCoordinate } from "./gridline";
 
 // TODO: make the canvas fit the layout/window perfectly
 
@@ -41,14 +41,16 @@ export const Canvas: React.FC<{}> = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
   const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
+  const [nearestSnap, setNearestSnap] = useState<{ x: number; y: number; gridX: number; gridY: number } | null>(null);
 
+  const snapGridDistanceThreshold = 0.4;
   const stageRef = useRef<Konva.Stage>(null);
 
   useEffect(() => {
     setStageObj(stageRef.current);
   }, []);
 
-  const handleDrop = useCallback((event: React.DragEvent) => {
+  const handleDrop = (event: React.DragEvent<HTMLElement>) => {
     // const draggedData = event.nativeEvent.dataTransfer?.getData("dragPayload");
 
     // if (draggedData) {
@@ -57,15 +59,17 @@ export const Canvas: React.FC<{}> = () => {
     // const coords = stageRef.current!.getPointerPosition()!;
     // const shape = getShapeProperties({ ...data, coordX: coords.x, coordY: coords.y });
     // }
+    event.currentTarget.classList.remove("hide");
     const shape = store.getState().canvas.previewShape;
     if (shape !== null) {
-      dispatch(addToCanvas(shape));
+      dispatch(addToCanvas(nearestSnap ? { ...shape, ...nearestSnap } : shape));
     }
+    if (nearestSnap) {
+      setNearestSnap(null);
+    }
+  };
 
-    (event.target as Element).classList.remove("hide");
-  }, []);
-
-  const handleDragOver = (event: React.DragEvent) => {
+  const handleDragOver = (event: React.DragEvent<HTMLElement>) => {
     event.preventDefault();
 
     const stage = stageRef.current!;
@@ -84,6 +88,15 @@ export const Canvas: React.FC<{}> = () => {
     );
 
     setInspectorDisplay(false);
+
+    const nearestSnapGridX = Math.round(gridX);
+    const nearestSnapGridY = Math.round(gridY);
+    if (Math.abs(nearestSnapGridX - gridX) < snapGridDistanceThreshold && Math.abs(nearestSnapGridY - gridY) < snapGridDistanceThreshold) {
+      const { stageX, stageY } = getStageCoordinate(nearestSnapGridX, nearestSnapGridY);
+      setNearestSnap({ x: stageX, y: stageY, gridX: nearestSnapGridX, gridY: nearestSnapGridY });
+    } else {
+      setNearestSnap(null);
+    }
   };
 
   const handleClick = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
@@ -135,7 +148,7 @@ export const Canvas: React.FC<{}> = () => {
 
   return (
     <>
-      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#fffffd" }}>
+      <main className="canvas" onDrop={handleDrop} onDragOver={handleDragOver} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Gridline stage={stageObj} />
           <Layer>
@@ -168,6 +181,11 @@ export const Canvas: React.FC<{}> = () => {
                 handleDragEnd={() => {}}
                 handleDragStart={() => {}}
               />
+            </Layer>
+          )}
+          {nearestSnap && (
+            <Layer>
+              <Circle x={nearestSnap.x} y={nearestSnap.y} radius={5} stroke="black" strokeWidth={0.5} fill="white" />
             </Layer>
           )}
         </Stage>
