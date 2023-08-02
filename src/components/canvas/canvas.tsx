@@ -153,7 +153,7 @@ export const Canvas: React.FC<{}> = () => {
           )}
           {nearestSnap && (
             <Layer>
-              <Circle x={nearestSnap.x} y={nearestSnap.y} radius={5} stroke="black" strokeWidth={0.5} fill="white" />
+              <Circle x={nearestSnap.x} y={nearestSnap.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />
             </Layer>
           )}
         </Stage>
