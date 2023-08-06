@@ -48,6 +48,14 @@ export enum ShapeType {
   HOLLOW_WEDGE_AFCCUXXC = "afCuXc",
   HOLLOW_WEDGE_AFCCUNXXC = "afCunXc",
   SOLID_WEDGE_AFWUSN = "afwusn",
+  SOLID_WEDGE_AFWUSC = "afwusc",
+  SOLID_WEDGE_AFWWUSC = "afWusc",
+  SOLID_WEDGE_AFAUSC = "afausc",
+  SOLID_WEDGE_AFAAUSC = "afAusc",
+  SOLID_WEDGE_AFCUSC = "afcusc",
+  SOLID_WEDGE_AFCUSNC = "afcusnc",
+  SOLID_WEDGE_AFCCUSC = "afCusc",
+  SOLID_WEDGE_AFCCUSNC = "afCusnc",
 
   // AND MORE
   // INVERTED_HOLLOW_WEDGE = "invertedHollowWedge",
@@ -520,6 +528,128 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         gridY,
         fill: "black",
         variables: [],
+      };
+    case ShapeType.SOLID_WEDGE_AFWUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "stroke1"],
+      };
+    case ShapeType.SOLID_WEDGE_AFWWUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "stroke1"],
+      };
+    case ShapeType.SOLID_WEDGE_AFAUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "stroke1"],
+      };
+    case ShapeType.SOLID_WEDGE_AFAAUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "stroke1"],
+      };
+    case ShapeType.SOLID_WEDGE_AFCUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        stroke3: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.SOLID_WEDGE_AFCUSNC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "label3", "label4", "stroke1", "stroke2"],
+      };
+    case ShapeType.SOLID_WEDGE_AFCCUSC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        stroke3: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.SOLID_WEDGE_AFCCUSNC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "black",
+        variables: ["label1", "label2", "label3", "label4", "stroke1", "stroke2"],
       };
     // case AtomicFlowShapes.TEST.RECT:
     //   return {

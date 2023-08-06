@@ -65,6 +65,22 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <WedgeAFCCUNXXC {...props} />;
     case ShapeType.SOLID_WEDGE_AFWUSN:
       return <WedgeAFWUN {...props} />;
+    case ShapeType.SOLID_WEDGE_AFWUSC:
+      return <WedgeAFWUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFWWUSC:
+      return <WedgeAFWWUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFAUSC:
+      return <WedgeAFAUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFAAUSC:
+      return <WedgeAFAAUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFCUSC:
+      return <WedgeAFCUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFCUSNC:
+      return <WedgeAFCUNC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFCCUSC:
+      return <WedgeAFCCUC {...props} />;
+    case ShapeType.SOLID_WEDGE_AFCCUSNC:
+      return <WedgeAFCCUNC {...props} />;
     default:
       return <></>;
   }
