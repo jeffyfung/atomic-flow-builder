@@ -1,10 +1,10 @@
 import { Group, Shape as KonvaShape, Line, RegularPolygon, Transformer } from "react-konva";
-import { LatexColour } from "../shape";
-import { ShapeProps } from "../../components/shape/shape";
+import { LatexColour } from "../../../features/shape";
+import { ShapeProps } from "../shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
-import { getStageDim } from "../../components/canvas/gridline";
+import { getStageDim } from "../../canvas/gridline";
 
 // for both hollow and solid wedge
 

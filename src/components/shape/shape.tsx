@@ -1,7 +1,7 @@
 import React from "react";
 import { ShapeProperties, ShapeType } from "../../features/shape";
-import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCCUNXC, WedgeAFCCUNXXC, WedgeAFCCUXC, WedgeAFCCUXXC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUNXC, WedgeAFCUNXXC, WedgeAFCUXC, WedgeAFCUXXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "../../features/shape-objects";
-import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "../../features/shape-objects/inverted-arc";
+import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCCUNXC, WedgeAFCCUNXXC, WedgeAFCCUXC, WedgeAFCCUXXC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUNXC, WedgeAFCUNXXC, WedgeAFCUXC, WedgeAFCUXXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "./shape-objects";
+import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
 
 export interface ShapeProps {
