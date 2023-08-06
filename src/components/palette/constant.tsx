@@ -35,6 +35,14 @@ import afcuscIcon from "../../res/palette-icons/afcusc.png";
 import afcusncIcon from "../../res/palette-icons/afcusnc.png";
 import afccuscIcon from "../../res/palette-icons/afccusc.png";
 import afccusncIcon from "../../res/palette-icons/afccusnc.png";
+import afcusxcIcon from "../../res/palette-icons/afcusxc.png";
+import afcusnxcIcon from "../../res/palette-icons/afcusnxc.png";
+import afccusxcIcon from "../../res/palette-icons/afccusxc.png";
+import afccusnxcIcon from "../../res/palette-icons/afccusnxc.png";
+import afcusxxcIcon from "../../res/palette-icons/afcusxxc.png";
+import afcusnxxcIcon from "../../res/palette-icons/afcusnxxc.png";
+import afccusxxcIcon from "../../res/palette-icons/afccusxxc.png";
+import afccusnxxcIcon from "../../res/palette-icons/afccusnxxc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -220,6 +228,46 @@ const solidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   {
     shapeType: ShapeType.SOLID_WEDGE_AFCCUSNC,
     iconElement: <img src={afccusncIcon} alt="afccusnc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCUSXC,
+    iconElement: <img src={afcusxcIcon} alt="afcusxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCUSNXC,
+    iconElement: <img src={afcusnxcIcon} alt="afcusnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCCUSXC,
+    iconElement: <img src={afccusxcIcon} alt="afccusxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCCUSNXC,
+    iconElement: <img src={afccusnxcIcon} alt="afccusnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCUSXXC,
+    iconElement: <img src={afcusxxcIcon} alt="afcusxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCUSNXXC,
+    iconElement: <img src={afcusnxxcIcon} alt="afcusnxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCCUSXXC,
+    iconElement: <img src={afccusxxcIcon} alt="afccusxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFCCUSNXXC,
+    iconElement: <img src={afccusnxxcIcon} alt="afccusnxxc" width="25px" />,
     nested: false,
   },
 ];

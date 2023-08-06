@@ -8,15 +8,6 @@ import { getStageDim } from "../../components/canvas/gridline";
 
 // for both hollow and solid wedge
 
-// afcuxc - replace afcuc? (with width factor)
-// afcunxc - replace ...?
-// afccuxc - replace ...?
-// afccunxc - replace ...?
-
-// taller versions of above??
-
-// TODO: rename to Wedge.tsx?
-
 export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);
