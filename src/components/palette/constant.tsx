@@ -19,6 +19,13 @@ import invertedhollowWedgeIcon from "../../res/palette-icons/upside_down_wedge.p
 import solidWedgeIcon from "../../res/palette-icons/solid_wedge.png";
 import invertedSolidWedgeIcon from "../../res/palette-icons/upside_down_solid_wedge.png";
 import dotIcon from "../../res/palette-icons/dot.png";
+import afcunxcIcon from "../../res/palette-icons/afcunxc.png";
+import afcuxxcIcon from "../../res/palette-icons/afcuxxc.png";
+import afcunxxcIcon from "../../res/palette-icons/afcunxxc.png";
+import afccuxcIcon from "../../res/palette-icons/afccuxc.png";
+import afccunxcIcon from "../../res/palette-icons/afccunxc.png";
+import afccuxxcIcon from "../../res/palette-icons/afccuxxc.png";
+import afccunxxcIcon from "../../res/palette-icons/afccunxxc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -119,6 +126,41 @@ const hollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   {
     shapeType: ShapeType.HOLLOW_WEDGE_AFCUXC,
     iconElement: <img src={afcuxcIcon} alt="afcuxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCUNXC,
+    iconElement: <img src={afcunxcIcon} alt="afcunxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCCUXC,
+    iconElement: <img src={afccuxcIcon} alt="afccuxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCCUNXC,
+    iconElement: <img src={afccunxcIcon} alt="afccunxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCUXXC,
+    iconElement: <img src={afcuxxcIcon} alt="afcuxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCUNXXC,
+    iconElement: <img src={afcunxxcIcon} alt="afcunxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCCUXXC,
+    iconElement: <img src={afccuxxcIcon} alt="afccuxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.HOLLOW_WEDGE_AFCCUNXXC,
+    iconElement: <img src={afccunxxcIcon} alt="afccunxxc" width="25px" />,
     nested: false,
   },
 ];

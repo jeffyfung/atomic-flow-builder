@@ -1,6 +1,6 @@
 import React from "react";
 import { ShapeProperties, ShapeType } from "../../features/shape";
-import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "../../features/shape-objects";
+import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCCUNXC, WedgeAFCCUNXXC, WedgeAFCCUXC, WedgeAFCCUXXC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUNXC, WedgeAFCUNXXC, WedgeAFCUXC, WedgeAFCUXXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "../../features/shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "../../features/shape-objects/inverted-arc";
 import Konva from "konva";
 
@@ -49,6 +49,20 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <WedgeAFCCUNC {...props} />;
     case ShapeType.HOLLOW_WEDGE_AFCUXC:
       return <WedgeAFCUXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCUNXC:
+      return <WedgeAFCUNXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCCUXC:
+      return <WedgeAFCCUXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCCUNXC:
+      return <WedgeAFCCUNXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCUXXC:
+      return <WedgeAFCUXXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCUNXXC:
+      return <WedgeAFCUNXXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCCUXXC:
+      return <WedgeAFCCUXXC {...props} />;
+    case ShapeType.HOLLOW_WEDGE_AFCCUNXXC:
+      return <WedgeAFCCUNXXC {...props} />;
     default:
       return <></>;
   }

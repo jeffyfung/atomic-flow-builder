@@ -10,6 +10,8 @@ export interface ShapeProperties {
   label2?: string;
   label3?: string;
   label4?: string;
+  label5?: string;
+  label6?: string;
   stroke1?: LatexColour;
   stroke2?: LatexColour;
   stroke3?: LatexColour;
@@ -37,7 +39,16 @@ export enum ShapeType {
   HOLLOW_WEDGE_AFCUNC = "afcunc",
   HOLLOW_WEDGE_AFCCUC = "afCuc",
   HOLLOW_WEDGE_AFCCUNC = "afCunc",
-  HOLLOW_WEDGE_AFCUXC = "afcuxc", // AND MORE
+  HOLLOW_WEDGE_AFCUXC = "afcuxc",
+  HOLLOW_WEDGE_AFCUNXC = "afcunxc",
+  HOLLOW_WEDGE_AFCCUXC = "afCuxc",
+  HOLLOW_WEDGE_AFCCUNXC = "afCunxc",
+  HOLLOW_WEDGE_AFCUXXC = "afcuXc",
+  HOLLOW_WEDGE_AFCUNXXC = "afcunXc",
+  HOLLOW_WEDGE_AFCCUXXC = "afCuXc",
+  HOLLOW_WEDGE_AFCCUNXXC = "afCunXc",
+
+  // AND MORE
   // INVERTED_HOLLOW_WEDGE = "invertedHollowWedge",
   // SOLID_WEDGE = "solidWedge",
   // INVERTED_SOLID_WEDGE = "invertedSolidWedge",
@@ -136,6 +147,7 @@ export enum LatexColour {
 
 export const getShapeProperties = (type: ShapeType, x: number, y: number): ShapeProperties => {
   const { gridX, gridY } = getGridCoordinate(x, y);
+  console.log(type);
   switch (type) {
     case ShapeType.ARC_AFIDN:
       return {
@@ -226,6 +238,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        fill: "white",
         variables: [],
       };
     case ShapeType.HOLLOW_WEDGE_AFWUC:
@@ -238,6 +251,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         label1: "",
         label2: "",
         stroke1: LatexColour.BLACK,
+        fill: "white",
         variables: ["label1", "label2", "stroke1"],
       };
     case ShapeType.HOLLOW_WEDGE_AFWWUC:
@@ -247,8 +261,11 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
         stroke1: LatexColour.BLACK,
-        variables: ["stroke1"],
+        fill: "white",
+        variables: ["label1", "label2", "stroke1"],
       };
     case ShapeType.HOLLOW_WEDGE_AFAUC:
       return {
@@ -257,8 +274,11 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
         stroke1: LatexColour.BLACK,
-        variables: ["stroke1"],
+        fill: "white",
+        variables: ["label1", "label2", "stroke1"],
       };
     case ShapeType.HOLLOW_WEDGE_AFAAUC:
       return {
@@ -267,8 +287,11 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
         stroke1: LatexColour.BLACK,
-        variables: ["stroke1"],
+        fill: "white",
+        variables: ["label1", "label2", "stroke1"],
       };
     case ShapeType.HOLLOW_WEDGE_AFCUC:
       return {
@@ -277,10 +300,17 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         stroke3: LatexColour.BLACK,
-        variables: ["stroke1", "stroke2", "stroke3"],
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "stroke1", "stroke2", "stroke3"],
       };
     case ShapeType.HOLLOW_WEDGE_AFCUNC:
       return {
@@ -289,9 +319,14 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["stroke1", "stroke2"],
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "stroke1", "stroke2"],
       };
     case ShapeType.HOLLOW_WEDGE_AFCCUC:
       return {
@@ -300,10 +335,17 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         stroke3: LatexColour.BLACK,
-        variables: ["stroke1", "stroke2", "stroke3"],
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "stroke1", "stroke2", "stroke3"],
       };
     case ShapeType.HOLLOW_WEDGE_AFCCUNC:
       return {
@@ -312,9 +354,14 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
-        variables: ["stroke1", "stroke2"],
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "stroke1", "stroke2"],
       };
     case ShapeType.HOLLOW_WEDGE_AFCUXC:
       return {
@@ -323,11 +370,146 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         y,
         gridX,
         gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
         widthFactor: 1,
         stroke1: LatexColour.BLACK,
         stroke2: LatexColour.BLACK,
         stroke3: LatexColour.BLACK,
-        variables: ["widthFactor", "stroke1", "stroke2"],
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "widthFactor", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCUNXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCCUXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        stroke3: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "widthFactor", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCCUNXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCUXXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        stroke3: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "widthFactor", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCUNXXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCCUXXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        label5: "",
+        label6: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        stroke3: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "label5", "label6", "widthFactor", "stroke1", "stroke2", "stroke3"],
+      };
+    case ShapeType.HOLLOW_WEDGE_AFCCUNXXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        label3: "",
+        label4: "",
+        widthFactor: 1,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        fill: "white",
+        variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
     // case AtomicFlowShapes.TEST.RECT:
     //   return {
