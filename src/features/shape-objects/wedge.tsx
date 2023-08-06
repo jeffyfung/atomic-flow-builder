@@ -15,6 +15,8 @@ import { getStageDim } from "../../components/canvas/gridline";
 
 // taller versions of above??
 
+// TODO: rename to Wedge.tsx?
+
 export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);

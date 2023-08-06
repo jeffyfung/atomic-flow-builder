@@ -26,6 +26,7 @@ import afccuxcIcon from "../../res/palette-icons/afccuxc.png";
 import afccunxcIcon from "../../res/palette-icons/afccunxc.png";
 import afccuxxcIcon from "../../res/palette-icons/afccuxxc.png";
 import afccunxxcIcon from "../../res/palette-icons/afccunxxc.png";
+import afwusnIcon from "../../res/palette-icons/afwusn.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -167,7 +168,13 @@ const hollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [
 
 const invertedhollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
 
-const solidWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
+const solidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.SOLID_WEDGE_AFWUSN,
+    iconElement: <img src={afwusnIcon} alt="afwusn" width="25px" />,
+    nested: false,
+  },
+];
 
 const invertedSolidWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
 

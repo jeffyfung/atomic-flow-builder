@@ -47,6 +47,7 @@ export enum ShapeType {
   HOLLOW_WEDGE_AFCUNXXC = "afcunXc",
   HOLLOW_WEDGE_AFCCUXXC = "afCuXc",
   HOLLOW_WEDGE_AFCCUNXXC = "afCunXc",
+  SOLID_WEDGE_AFWUSN = "afwusn",
 
   // AND MORE
   // INVERTED_HOLLOW_WEDGE = "invertedHollowWedge",
@@ -147,7 +148,6 @@ export enum LatexColour {
 
 export const getShapeProperties = (type: ShapeType, x: number, y: number): ShapeProperties => {
   const { gridX, gridY } = getGridCoordinate(x, y);
-  console.log(type);
   switch (type) {
     case ShapeType.ARC_AFIDN:
       return {
@@ -510,6 +510,16 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         stroke2: LatexColour.BLACK,
         fill: "white",
         variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
+      };
+    case ShapeType.SOLID_WEDGE_AFWUSN:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        fill: "black",
+        variables: [],
       };
     // case AtomicFlowShapes.TEST.RECT:
     //   return {
