@@ -26,7 +26,6 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
 
   const handleClick = () => {
     const latex = convertShapeToLatex(Object.values(shapes));
-    console.log("latex", latex);
     setExportedLatex(latex);
   };
 

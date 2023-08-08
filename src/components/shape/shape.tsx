@@ -3,6 +3,7 @@ import { ShapeProperties, ShapeType } from "../../features/shape";
 import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCCUNXC, WedgeAFCCUNXXC, WedgeAFCCUXC, WedgeAFCCUXXC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUNXC, WedgeAFCUNXXC, WedgeAFCUXC, WedgeAFCUXXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "./shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
+import { AFCCDNXC, AFCCDNXXC, AFCCDSXC, AFCCDXXC, AFCDNXXC, AFCDXXC, WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
 
 export interface ShapeProps {
   selected: boolean;
@@ -97,6 +98,75 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <WedgeAFCCUXXC {...props} />;
     case ShapeType.SOLID_WEDGE_AFCCUSNXXC:
       return <WedgeAFCCUNXXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFWDN:
+      return <WedgeAFWDN {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFWDC:
+      return <WedgeAFWDC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFWWDC:
+      return <WedgeAFWWDC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFADC:
+      return <WedgeAFADC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFAADC:
+      return <WedgeAFAADC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDC:
+      return <WedgeAFCDC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNC:
+      return <WedgeAFCDNC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDC:
+      return <WedgeAFCCDC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNC:
+      return <WedgeAFCCDNC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDXC:
+      return <WedgeAFCDXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXC:
+      return <WedgeAFCDNXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXC:
+      return <AFCCDSXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXC:
+      return <AFCCDNXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDXXC:
+      return <AFCDXXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXXC:
+      return <AFCDNXXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXXC:
+      return <AFCCDXXC {...props} />;
+    case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXXC:
+      return <AFCCDNXXC {...props} />;
+    //
+    case ShapeType.INVERTED_SOLID_WEDGE_AFWDSN:
+      return <WedgeAFWDN {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFWDSC:
+      return <WedgeAFWDC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFWWDSC:
+      return <WedgeAFWWDC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFADSC:
+      return <WedgeAFADC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFAADSC:
+      return <WedgeAFAADC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSC:
+      return <WedgeAFCDC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSNC:
+      return <WedgeAFCDNC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSC:
+      return <WedgeAFCCDC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNC:
+      return <WedgeAFCCDNC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXC:
+      return <WedgeAFCDXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXC:
+      return <AFCCDSXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXC:
+      return <AFCCDNXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXXC:
+      return <AFCDXXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXXC:
+      return <AFCDXXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXXC:
+      return <AFCDNXXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXXC:
+      return <AFCCDXXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXXC:
+      return <AFCCDNXXC {...props} />;
     default:
       return <></>;
   }

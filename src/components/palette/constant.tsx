@@ -43,6 +43,39 @@ import afcusxxcIcon from "../../res/palette-icons/afcusxxc.png";
 import afcusnxxcIcon from "../../res/palette-icons/afcusnxxc.png";
 import afccusxxcIcon from "../../res/palette-icons/afccusxxc.png";
 import afccusnxxcIcon from "../../res/palette-icons/afccusnxxc.png";
+import afwdnIcon from "../../res/palette-icons/afwdn.png";
+import afwdsnIcon from "../../res/palette-icons/afwdsn.png";
+import afwdcIcon from "../../res/palette-icons/afwdc.png";
+import afwdscIcon from "../../res/palette-icons/afwdsc.png";
+import afwwdcIcon from "../../res/palette-icons/afwwdc.png";
+import afwwdscIcon from "../../res/palette-icons/afwwdsc.png";
+import afadscIcon from "../../res/palette-icons/afadsc.png";
+import afadcIcon from "../../res/palette-icons/afadc.png";
+import afaadcIcon from "../../res/palette-icons/afaadc.png";
+import afaadscIcon from "../../res/palette-icons/afaadsc.png";
+import afcdcIcon from "../../res/palette-icons/afcdc.png";
+import afcdscIcon from "../../res/palette-icons/afcdsc.png";
+import afcdncIcon from "../../res/palette-icons/afcdnc.png";
+import afcdsncIcon from "../../res/palette-icons/afcdsnc.png";
+import afccdcIcon from "../../res/palette-icons/afccdc.png";
+import afccdscIcon from "../../res/palette-icons/afccdsc.png";
+import afccdncIcon from "../../res/palette-icons/afccdnc.png";
+import afccdsncIcon from "../../res/palette-icons/afccdsnc.png";
+import afcdxcIcon from "../../res/palette-icons/afcdxc.png";
+import afcdsxcIcon from "../../res/palette-icons/afcdsxc.png";
+import afcdnxcIcon from "../../res/palette-icons/afcdnxc.png";
+import afcdsnxcIcon from "../../res/palette-icons/afcdsnxc.png";
+import afccdxcIcon from "../../res/palette-icons/afccdxc.png";
+import afccdnxcIcon from "../../res/palette-icons/afccdnxc.png";
+import afccdsnxcIcon from "../../res/palette-icons/afccdsnxc.png";
+import afcdxxcIcon from "../../res/palette-icons/afcdxxc.png";
+import afcdsxxcIcon from "../../res/palette-icons/afcdsxxc.png";
+import afcdnxxcIcon from "../../res/palette-icons/afcdnxxc.png";
+import afcdsnxxcIcon from "../../res/palette-icons/afcdsnxxc.png";
+import afccdxxcIcon from "../../res/palette-icons/afccdxxc.png";
+import afccdsxxcIcon from "../../res/palette-icons/afccdsxxc.png";
+import afccdnxxcIcon from "../../res/palette-icons/afccdnxxc.png";
+import afccdsnxxcIcon from "../../res/palette-icons/afccdsnxxc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -182,7 +215,93 @@ const hollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   },
 ];
 
-const invertedhollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
+const invertedhollowWedgeCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFWDN,
+    iconElement: <img src={afwdnIcon} alt="afwdn" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFWDC,
+    iconElement: <img src={afwdcIcon} alt="afwdc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFWWDC,
+    iconElement: <img src={afwwdcIcon} alt="afwwdc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFADC,
+    iconElement: <img src={afadcIcon} alt="afadc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFAADC,
+    iconElement: <img src={afaadcIcon} alt="afaadc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDC,
+    iconElement: <img src={afcdcIcon} alt="afcdc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNC,
+    iconElement: <img src={afcdncIcon} alt="afcdnc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDC,
+    iconElement: <img src={afccdcIcon} alt="afccdc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNC,
+    iconElement: <img src={afccdncIcon} alt="afccdnc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDXC,
+    iconElement: <img src={afcdxcIcon} alt="afcdxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXC,
+    iconElement: <img src={afcdnxcIcon} alt="afcdnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXC,
+    iconElement: <img src={afccdxcIcon} alt="afccdxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXC,
+    iconElement: <img src={afccdnxcIcon} alt="afccdnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDXXC,
+    iconElement: <img src={afcdxxcIcon} alt="afcdxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXXC,
+    iconElement: <img src={afcdnxxcIcon} alt="afcdnxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXXC,
+    iconElement: <img src={afccdxxcIcon} alt="afccdxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXXC,
+    iconElement: <img src={afccdnxxcIcon} alt="afccdnxxc" width="25px" />,
+    nested: false,
+  },
+];
 
 const solidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   {
@@ -272,7 +391,88 @@ const solidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   },
 ];
 
-const invertedSolidWedgeCatItemSchema: LeafPaletteItemSchema[] = [];
+const invertedSolidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFWDSN,
+    iconElement: <img src={afwdsnIcon} alt="afwdsn" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFWDSC,
+    iconElement: <img src={afwdscIcon} alt="afwdsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFWWDSC,
+    iconElement: <img src={afwwdscIcon} alt="afwwdsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFADSC,
+    iconElement: <img src={afadscIcon} alt="afadsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFAADSC,
+    iconElement: <img src={afaadscIcon} alt="afaadsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSC,
+    iconElement: <img src={afcdscIcon} alt="afcdsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSNC,
+    iconElement: <img src={afcdsncIcon} alt="afcdsnc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSC,
+    iconElement: <img src={afccdscIcon} alt="afccdsc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNC,
+    iconElement: <img src={afccdsncIcon} alt="afccdsnc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSXC,
+    iconElement: <img src={afcdsxcIcon} alt="afcdsxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXC,
+    iconElement: <img src={afcdsnxcIcon} alt="afcdsnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXC,
+    iconElement: <img src={afccdsnxcIcon} alt="afccdsnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSXXC,
+    iconElement: <img src={afcdsxxcIcon} alt="afcdsxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXXC,
+    iconElement: <img src={afcdsnxxcIcon} alt="afcdsnxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXXC,
+    iconElement: <img src={afccdsxxcIcon} alt="afccdsxxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXXC,
+    iconElement: <img src={afccdsnxxcIcon} alt="afccdsnxxc" width="25px" />,
+    nested: false,
+  },
+];
 
 const dotCatItemSchema: LeafPaletteItemSchema[] = [];
 

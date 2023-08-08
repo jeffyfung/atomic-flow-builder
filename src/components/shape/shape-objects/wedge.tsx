@@ -15,16 +15,9 @@ export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const borderBox = {
-    x: -sideLength * 0.5,
-    y: -radius,
-    width: sideLength,
-    height: 1.732 * sideLength * 0.5, // tan 60
-  };
 
   useEffect(() => {
     if (selected) {
-      shapeRef.current!.getSelfRect = () => borderBox;
       transformerRef.current!.nodes([shapeRef.current!]);
       transformerRef.current!.getLayer()!.batchDraw();
     }
@@ -106,6 +99,13 @@ export const WedgeAFWWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const offset = getStageDim(0.15);
   const line1Points = [-offset, -radius, -offset, -radius - strokeLength];
   const line2Points = [offset, -radius, offset, -radius - strokeLength];
+
+  useEffect(() => {
+    if (selected) {
+      transformerRef.current!.nodes([shapeRef1.current!, shapeRef2.current!, shapeRef3.current!]);
+      transformerRef.current!.getLayer()!.batchDraw();
+    }
+  }, [selected]);
 
   return (
     <>
