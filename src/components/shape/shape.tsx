@@ -1,9 +1,59 @@
 import React from "react";
 import { ShapeProperties, ShapeType } from "../../features/shape";
-import { ArcAFIDN, ArcAFIDXC, ArcAFIIDXC, WedgeAFAAUC, WedgeAFAUC, WedgeAFCCUC, WedgeAFCCUNC, WedgeAFCCUNXC, WedgeAFCCUNXXC, WedgeAFCCUXC, WedgeAFCCUXXC, WedgeAFCUC, WedgeAFCUNC, WedgeAFCUNXC, WedgeAFCUNXXC, WedgeAFCUXC, WedgeAFCUXXC, WedgeAFWUC, WedgeAFWUN, WedgeAFWWUC } from "./shape-objects";
+import {
+  ArcAFIDN,
+  ArcAFIDXC,
+  ArcAFIIDXC,
+  DotAFCDDC,
+  DotAFCDDNC,
+  DotAFCDDNXC,
+  DotAFCDDN_XC,
+  DotAFCDDXC,
+  DotAFCDD_XC,
+  DotAFCUDC,
+  DotAFCUDNC,
+  DotAFCUDNXC,
+  DotAFCUDN_XC,
+  DotAFCUDXC,
+  DotAFCUD_XC,
+  DotAFD,
+  DotAFDDC,
+  DotAFDUC,
+  DotAF_CDDC,
+  DotAF_CDDNC,
+  DotAF_CDDNXC,
+  DotAF_CDDN_XC,
+  DotAF_CDDXC,
+  DotAF_CDD_XC,
+  DotAF_CUDC,
+  DotAF_CUDNC,
+  DotAF_CUDNXC,
+  DotAF_CUDN_XC,
+  DotAF_CUDXC,
+  DotAF_CUD_XC,
+  DotAF_DDC,
+  DotAF_DUC,
+  WedgeAFAAUC,
+  WedgeAFAUC,
+  WedgeAFCCUC,
+  WedgeAFCCUNC,
+  WedgeAFCCUNXC,
+  WedgeAFCCUNXXC,
+  WedgeAFCCUXC,
+  WedgeAFCCUXXC,
+  WedgeAFCUC,
+  WedgeAFCUNC,
+  WedgeAFCUNXC,
+  WedgeAFCUNXXC,
+  WedgeAFCUXC,
+  WedgeAFCUXXC,
+  WedgeAFWUC,
+  WedgeAFWUN,
+  WedgeAFWWUC,
+} from "./shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
-import { AFCCDNXC, AFCCDNXXC, AFCCDSXC, AFCCDXXC, AFCDNXXC, AFCDXXC, WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
+import { WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCCDNXC, WedgeAFCCDNXXC, WedgeAFCCDSXC, WedgeAFCCDXXC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDNXXC, WedgeAFCDXC, WedgeAFCDXXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
 
 export interface ShapeProps {
   selected: boolean;
@@ -17,6 +67,7 @@ export interface ShapeProps {
 }
 
 export const Shape: React.FC<ShapeProps> = (props) => {
+  console.log(props.shape.type);
   switch (props.shape.type) {
     case ShapeType.ARC_AFIDN:
       return <ArcAFIDN {...props} />;
@@ -121,17 +172,17 @@ export const Shape: React.FC<ShapeProps> = (props) => {
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXC:
       return <WedgeAFCDNXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXC:
-      return <AFCCDSXC {...props} />;
+      return <WedgeAFCCDSXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXC:
-      return <AFCCDNXC {...props} />;
+      return <WedgeAFCCDNXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDXXC:
-      return <AFCDXXC {...props} />;
+      return <WedgeAFCDXXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCDNXXC:
-      return <AFCDNXXC {...props} />;
+      return <WedgeAFCDNXXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDXXC:
-      return <AFCCDXXC {...props} />;
+      return <WedgeAFCCDXXC {...props} />;
     case ShapeType.INVERTED_HOLLOW_WEDGE_AFCCDNXXC:
-      return <AFCCDNXXC {...props} />;
+      return <WedgeAFCCDNXXC {...props} />;
     //
     case ShapeType.INVERTED_SOLID_WEDGE_AFWDSN:
       return <WedgeAFWDN {...props} />;
@@ -153,20 +204,79 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <WedgeAFCCDNC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXC:
       return <WedgeAFCDXC {...props} />;
+    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXC:
+      return <WedgeAFCDNXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXC:
-      return <AFCCDSXC {...props} />;
+      return <WedgeAFCCDSXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXC:
-      return <AFCCDNXC {...props} />;
+      return <WedgeAFCCDNXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXXC:
-      return <AFCDXXC {...props} />;
-    case ShapeType.INVERTED_SOLID_WEDGE_AFCDSXXC:
-      return <AFCDXXC {...props} />;
+      return <WedgeAFCDXXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXXC:
-      return <AFCDNXXC {...props} />;
+      return <WedgeAFCDNXXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXXC:
-      return <AFCCDXXC {...props} />;
+      return <WedgeAFCCDXXC {...props} />;
     case ShapeType.INVERTED_SOLID_WEDGE_AFCCDSNXXC:
-      return <AFCCDNXXC {...props} />;
+      return <WedgeAFCCDNXXC {...props} />;
+    //
+    case ShapeType.DOT_AFD:
+      return <DotAFD {...props} />;
+    case ShapeType.DOT_AFDDC:
+      return <DotAFDDC {...props} />;
+    case ShapeType.DOT_AF_DDC:
+      return <DotAF_DDC {...props} />;
+    case ShapeType.DOT_AFDUC:
+      return <DotAFDUC {...props} />;
+    case ShapeType.DOT_AF_DUC:
+      return <DotAF_DUC {...props} />;
+    case ShapeType.DOT_AFCDDC:
+      return <DotAFCDDC {...props} />;
+    case ShapeType.DOT_AFCDDNC:
+      return <DotAFCDDNC {...props} />;
+    case ShapeType.DOT_AF_CDDC:
+      return <DotAF_CDDC {...props} />;
+    case ShapeType.DOT_AF_CDDNC:
+      return <DotAF_CDDNC {...props} />;
+    case ShapeType.DOT_AFCUDC:
+      return <DotAFCUDC {...props} />;
+    case ShapeType.DOT_AFCUDNC:
+      return <DotAFCUDNC {...props} />;
+    case ShapeType.DOT_AF_CUDC:
+      return <DotAF_CUDC {...props} />;
+    case ShapeType.DOT_AF_CUDNC:
+      return <DotAF_CUDNC {...props} />;
+    case ShapeType.DOT_AFCDDXC:
+      return <DotAFCDDXC {...props} />;
+    case ShapeType.DOT_AFCDDNXC:
+      return <DotAFCDDNXC {...props} />;
+    case ShapeType.DOT_AF_CDDXC:
+      return <DotAF_CDDXC {...props} />;
+    case ShapeType.DOT_AF_CDDNXC:
+      return <DotAF_CDDNXC {...props} />;
+    case ShapeType.DOT_AFCUDXC:
+      return <DotAFCUDXC {...props} />;
+    case ShapeType.DOT_AFCUDNXC:
+      return <DotAFCUDNXC {...props} />;
+    case ShapeType.DOT_AF_CUDXC:
+      return <DotAF_CUDXC {...props} />;
+    case ShapeType.DOT_AF_CUDNXC:
+      return <DotAF_CUDNXC {...props} />;
+    case ShapeType.DOT_AFCDD_XC:
+      return <DotAFCDD_XC {...props} />;
+    case ShapeType.DOT_AFCDDN_XC:
+      return <DotAFCDDN_XC {...props} />;
+    case ShapeType.DOT_AF_CDD_XC:
+      return <DotAF_CDD_XC {...props} />;
+    case ShapeType.DOT_AF_CDDN_XC:
+      return <DotAF_CDDN_XC {...props} />;
+    case ShapeType.DOT_AFCUD_XC:
+      return <DotAFCUD_XC {...props} />;
+    case ShapeType.DOT_AFCUDN_XC:
+      return <DotAFCUDN_XC {...props} />;
+    case ShapeType.DOT_AF_CUD_XC:
+      return <DotAF_CUD_XC {...props} />;
+    case ShapeType.DOT_AF_CUDN_XC:
+      return <DotAF_CUDN_XC {...props} />;
     default:
       return <></>;
   }

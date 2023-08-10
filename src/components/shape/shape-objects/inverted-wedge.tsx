@@ -732,7 +732,7 @@ export const WedgeAFCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const AFCCDSXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCDSXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -804,7 +804,7 @@ export const AFCCDSXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const AFCCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -867,7 +867,7 @@ export const AFCCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const AFCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -930,7 +930,7 @@ export const AFCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
   );
 };
 
-export const AFCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -987,7 +987,7 @@ export const AFCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const AFCCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1060,7 +1060,7 @@ export const AFCCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const AFCCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);

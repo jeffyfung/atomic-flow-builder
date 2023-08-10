@@ -76,6 +76,35 @@ import afccdxxcIcon from "../../res/palette-icons/afccdxxc.png";
 import afccdsxxcIcon from "../../res/palette-icons/afccdsxxc.png";
 import afccdnxxcIcon from "../../res/palette-icons/afccdnxxc.png";
 import afccdsnxxcIcon from "../../res/palette-icons/afccdsnxxc.png";
+import afdIcon from "../../res/palette-icons/afd.png";
+import afddcIcon from "../../res/palette-icons/afddc.png";
+import af_ddcIcon from "../../res/palette-icons/af_ddc.png";
+import afducIcon from "../../res/palette-icons/afduc.png";
+import af_ducIcon from "../../res/palette-icons/af_duc.png";
+import afcddcIcon from "../../res/palette-icons/afcddc.png";
+import afcddncIcon from "../../res/palette-icons/afcddnc.png";
+import af_cddcIcon from "../../res/palette-icons/af_cddc.png";
+import af_cddncIcon from "../../res/palette-icons/af_cddnc.png";
+import afcudcIcon from "../../res/palette-icons/afcudc.png";
+import afcudncIcon from "../../res/palette-icons/afcudnc.png";
+import af_cudcIcon from "../../res/palette-icons/af_cudc.png";
+import af_cudncIcon from "../../res/palette-icons/af_cudnc.png";
+import afcddxcIcon from "../../res/palette-icons/afcddxc.png";
+import afcddnxcIcon from "../../res/palette-icons/afcddnxc.png";
+import af_cddxcIcon from "../../res/palette-icons/af_cddxc.png";
+import af_cddnxcIcon from "../../res/palette-icons/af_cddnxc.png";
+import afcudxcIcon from "../../res/palette-icons/afcudxc.png";
+import afcudnxcIcon from "../../res/palette-icons/afcudnxc.png";
+import af_cudxcIcon from "../../res/palette-icons/af_cudxc.png";
+import af_cudnxcIcon from "../../res/palette-icons/af_cudnxc.png";
+import afcdd_xcIcon from "../../res/palette-icons/afcdd_xc.png";
+import afcddn_xcIcon from "../../res/palette-icons/afcddn_xc.png";
+import af_cdd_xcIcon from "../../res/palette-icons/af_cdd_xc.png";
+import af_cddn_xcIcon from "../../res/palette-icons/af_cddn_xc.png";
+import afcud_xcIcon from "../../res/palette-icons/afcud_xc.png";
+import afcudn_xcIcon from "../../res/palette-icons/afcudn_xc.png";
+import af_cud_xcIcon from "../../res/palette-icons/af_cud_xc.png";
+import af_cudn_xcIcon from "../../res/palette-icons/af_cudn_xc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -474,7 +503,153 @@ const invertedSolidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   },
 ];
 
-const dotCatItemSchema: LeafPaletteItemSchema[] = [];
+const dotCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.DOT_AFD,
+    iconElement: <img src={afdIcon} alt="afd" width="20px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFDDC,
+    iconElement: <img src={afddcIcon} alt="afddc" width="18px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_DDC,
+    iconElement: <img src={af_ddcIcon} alt="af_ddc" width="18px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFDUC,
+    iconElement: <img src={afducIcon} alt="afduc" width="18px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_DUC,
+    iconElement: <img src={af_ducIcon} alt="af_duc" width="18px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDDC,
+    iconElement: <img src={afcddcIcon} alt="afcddc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDDNC,
+    iconElement: <img src={afcddncIcon} alt="afcddnc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDDC,
+    iconElement: <img src={af_cddcIcon} alt="af_cddc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDDNC,
+    iconElement: <img src={af_cddncIcon} alt="af_cddnc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUDC,
+    iconElement: <img src={afcudcIcon} alt="afcudc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUDNC,
+    iconElement: <img src={afcudncIcon} alt="afcudnc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUDC,
+    iconElement: <img src={af_cudcIcon} alt="af_cudc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUDNC,
+    iconElement: <img src={af_cudncIcon} alt="af_cudnc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDDXC,
+    iconElement: <img src={afcddxcIcon} alt="afcddxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDDNXC,
+    iconElement: <img src={afcddnxcIcon} alt="afcddnxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDDXC,
+    iconElement: <img src={af_cddxcIcon} alt="af_cddxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDDNXC,
+    iconElement: <img src={af_cddnxcIcon} alt="af_cddnxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUDXC,
+    iconElement: <img src={afcudxcIcon} alt="afcudxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUDNXC,
+    iconElement: <img src={afcudnxcIcon} alt="afcudnxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUDXC,
+    iconElement: <img src={af_cudxcIcon} alt="af_cudxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUDNXC,
+    iconElement: <img src={af_cudnxcIcon} alt="af_cudnxc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDD_XC,
+    iconElement: <img src={afcdd_xcIcon} alt="afcdd_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCDDN_XC,
+    iconElement: <img src={afcddn_xcIcon} alt="afcddn_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDD_XC,
+    iconElement: <img src={af_cdd_xcIcon} alt="af_cdd_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CDDN_XC,
+    iconElement: <img src={af_cddn_xcIcon} alt="af_cddn_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUD_XC,
+    iconElement: <img src={afcud_xcIcon} alt="afcud_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AFCUDN_XC,
+    iconElement: <img src={afcudn_xcIcon} alt="afcudn_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUD_XC,
+    iconElement: <img src={af_cud_xcIcon} alt="af_cud_xc" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.DOT_AF_CUDN_XC,
+    iconElement: <img src={af_cudn_xcIcon} alt="af_cudn_xc" width="24px" />,
+    nested: false,
+  },
+];
 
 export const paletteItemSchema: PaletteItemSchemaType[] = [
   {
