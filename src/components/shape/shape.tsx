@@ -67,7 +67,6 @@ export interface ShapeProps {
 }
 
 export const Shape: React.FC<ShapeProps> = (props) => {
-  console.log(props.shape.type);
   switch (props.shape.type) {
     case ShapeType.ARC_AFIDN:
       return <ArcAFIDN {...props} />;
