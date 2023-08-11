@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { ValidatorType } from "../../../features/form";
 import { Slider, TextField } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks";
 import { updateShape } from "../../../features/canvas";
 import { ShapeProperties } from "../../../features/shape";
 

@@ -467,7 +467,7 @@ export const DotAF_CDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
 };
 
 export const DotAF_CDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
-  const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
+  const { x, y, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 

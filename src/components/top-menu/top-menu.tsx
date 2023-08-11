@@ -4,7 +4,7 @@ import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import { MouseEvent, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import { selectCanvas } from "../../features/canvas";
-import { convertShapeToLatex } from "../../features/latex-converter";
+import { convertGraphToLatex } from "../../features/latex-converter";
 
 const StyledAppTitle = styled(Typography)({
   textAlign: "center",
@@ -25,7 +25,7 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
   const [exportedLatex, setExportedLatex] = useState<string>("");
 
   const handleClick = () => {
-    const latex = convertShapeToLatex(Object.values(shapes));
+    const latex = convertGraphToLatex(Object.values(shapes));
     setExportedLatex(latex);
   };
 

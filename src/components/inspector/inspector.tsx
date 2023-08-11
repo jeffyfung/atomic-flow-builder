@@ -1,4 +1,5 @@
 import { Box, Fab, Grid, TextField, Typography, styled } from "@mui/material";
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { validator } from "../../features/form";
@@ -9,6 +10,7 @@ import { FormDropDown } from "./inpector-forms/form-drop-down";
 import { deleteShape } from "../../features/canvas";
 import { useAppDispatch } from "../../hooks";
 import { FormTextField } from "./inpector-forms/form-text-field";
+import { convertShapeToLatex } from "../../features/latex-converter";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -112,7 +114,21 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             <Typography fontSize="1rem" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
               Metadata
             </Typography>
-            <Typography>Some info... </Typography>
+            <NestedGridContainer key={"component-latex"} container direction="row" spacing={0}>
+              <Grid item xs={3}>
+                <Typography fontSize="0.85rem">LaTex</Typography>
+                <Typography fontSize="0.7rem" color="grey" fontStyle="italic">
+                  (Read Only)
+                </Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <TextareaAutosize
+                  disabled //
+                  maxRows={5}
+                  value={convertShapeToLatex(shape)}
+                />
+              </Grid>
+            </NestedGridContainer>
           </StyledGridItem>
         </StyledGridContainer>
       </StyledBoxContainer>
