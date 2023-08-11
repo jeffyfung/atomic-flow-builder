@@ -12,8 +12,8 @@ import { FormTextField } from "./inpector-forms/form-text-field";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
-  width: "350px",
-  height: "90%",
+  width: "340px",
+  top: "12%",
   right: "7px",
   zIndex: 2,
 });
@@ -28,6 +28,7 @@ const StyledGridItem = styled(Grid)({
   border: "2px solid grey",
   borderRadius: "10px",
   margin: "5px",
+  paddingBottom: "12px",
 });
 
 const NestedGridContainer = styled(Grid)({
@@ -50,9 +51,9 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
     const components = shape.variables.map((field) => {
       if (field === "widthFactor") {
         return (
-          <NestedGridContainer key={field} container direction="row" spacing={2}>
+          <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              Width Factor
+              <Typography fontSize="0.85rem">Width Factor</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormTextFieldAndSlider shapeId={shapeId} shape={shape} fieldName={field} validator={validator.positiveNumberOnly} />
@@ -61,9 +62,9 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         );
       } else if (field.startsWith("stroke")) {
         return (
-          <NestedGridContainer key={field} container direction="row" spacing={2}>
+          <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              {`Stroke ${field.slice(6)}`}
+              <Typography fontSize="0.85rem">{`Stroke ${field.slice(6)}`}</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LatexColour)} />
@@ -72,9 +73,9 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         );
       } else if (field.startsWith("label")) {
         return (
-          <NestedGridContainer key={field} container direction="row" spacing={2}>
+          <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              {`Label ${field.slice(5)}`}
+              <Typography fontSize="0.85rem">{`Label ${field.slice(5)}`}</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormTextField shapeId={shapeId} shape={shape} fieldName={field} />
@@ -102,13 +103,13 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         </Fab>
         <StyledGridContainer id="inspector" width="100%" height="100%" container direction="row" spacing={2} sx={{ boxShadow: "3" }}>
           <StyledGridItem item xs={12}>
-            <Typography fontSize="1.2rem" fontWeight="bold" sx={{ marginBottom: "12px" }}>
+            <Typography fontSize="1rem" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
               Object Inspector
             </Typography>
             {getForm(shape)}
           </StyledGridItem>
           <StyledGridItem item xs={12}>
-            <Typography fontSize="1.2rem" fontWeight="bold" sx={{ marginBottom: "12px" }}>
+            <Typography fontSize="1rem" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
               Metadata
             </Typography>
             <Typography>Some info... </Typography>

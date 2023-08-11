@@ -135,8 +135,8 @@ export const Palette: React.FC<{}> = () => {
             marginLeft: "8px",
             "& .MuiList-root": {
               display: "grid",
-              gridTemplateColumns: `repeat(${numCols}, 3.5vw)`,
-              gridTemplateRows: `repeat(${numRows}, 6vh)`,
+              gridTemplateColumns: `repeat(${numCols}, 50px)`,
+              gridTemplateRows: `repeat(${numRows}, 50px)`,
               gridAutoFlow: "column",
               gridColumnGap: "0px",
               padding: "0px",
