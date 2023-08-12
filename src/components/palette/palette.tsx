@@ -63,9 +63,28 @@ const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClic
   };
 
   return (
-    <ListItem disableGutters style={{ justifyContent: "center" }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={clickHandler} onDragStart={(e) => e.preventDefault()}>
+    <ListItem
+      disableGutters //
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={clickHandler}
+      onDragStart={(e) => e.preventDefault()}
+      sx={{
+        justifyContent: "center",
+        border: "1px solid #e6e6e6",
+        padding: "0px 2px",
+        minHeight: "4vh",
+      }}
+    >
       <Box>
-        <ListItemButton sx={{ padding: 0 }}>
+        <ListItemButton
+          sx={{
+            padding: 0,
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+          }}
+        >
           <div className={`shape ${shapeType}`}>{iconElement}</div>
         </ListItemButton>
       </Box>
@@ -140,11 +159,6 @@ export const Palette: React.FC<{}> = () => {
               gridAutoFlow: "column",
               gridColumnGap: "0px",
               padding: "0px",
-            },
-            "& .MuiListItem-root": {
-              border: "1px solid #e6e6e6",
-              padding: "0px 2px",
-              minHeight: "4vh",
             },
           }}
           PaperProps={{ sx: { boxShadow: 2 } }}

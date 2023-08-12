@@ -1,16 +1,16 @@
-import { Box, Fab, Grid, TextField, Typography, styled } from "@mui/material";
+import { Box, Fab, Grid, Typography, styled } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { validator } from "../../features/form";
 import { FormTextFieldAndSlider } from "./inpector-forms/form-text-field-and-slider";
-import { LatexColour, ShapeProperties } from "../../features/shape";
+import { ShapeProperties } from "../../features/shape";
 import { MouseEvent, ReactNode } from "react";
-import { FormDropDown } from "./inpector-forms/form-drop-down";
 import { deleteShape } from "../../features/canvas";
 import { useAppDispatch } from "../../hooks";
 import { FormTextField } from "./inpector-forms/form-text-field";
 import { convertShapeToLatex } from "../../features/latex-converter";
+import { ColourPicker } from "./inpector-forms/colour-picker";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -62,14 +62,15 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             </Grid>
           </NestedGridContainer>
         );
-      } else if (field.startsWith("stroke")) {
+      } else if (field === "stroke1") {
+        const strokeNames = shape.variables.filter((v) => v.startsWith("stroke"));
         return (
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
               <Typography fontSize="0.85rem">{`Stroke ${field.slice(6)}`}</Typography>
             </Grid>
             <Grid item xs={9}>
-              <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LatexColour)} />
+              <ColourPicker shapeId={shapeId} strokeNames={strokeNames} shape={shape} />
             </Grid>
           </NestedGridContainer>
         );
