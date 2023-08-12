@@ -15,7 +15,7 @@ import { ColourPicker } from "./inpector-forms/colour-picker";
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
   width: "340px",
-  top: "12%",
+  top: "15%",
   right: "7px",
   zIndex: 2,
 });
