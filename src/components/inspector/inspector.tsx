@@ -67,7 +67,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         return (
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              <Typography fontSize="0.85rem">{`Stroke ${field.slice(6)}`}</Typography>
+              <Typography fontSize="0.85rem">Stroke Colours</Typography>
             </Grid>
             <Grid item xs={9}>
               <ColourPicker shapeId={shapeId} strokeNames={strokeNames} shape={shape} />

@@ -39,7 +39,7 @@ export const ColourPicker: React.FC<ColourPickerProps> = ({ shapeId, shape, stro
       <Grid container direction="row" spacing={0}>
         {strokeNames.map((strokeName) => {
           return (
-            <Grid item xs={12 / strokeNames.length}>
+            <Grid key={strokeName} item xs={12 / strokeNames.length}>
               <ColourButton id={strokeName} variant="contained" onClick={handleButtonClick} sx={{ backgroundColor: shape[strokeName] as string }} />
             </Grid>
           );
