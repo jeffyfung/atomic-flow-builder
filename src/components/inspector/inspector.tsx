@@ -4,13 +4,14 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { validator } from "../../features/form";
 import { FormTextFieldAndSlider } from "./inpector-forms/form-text-field-and-slider";
-import { ShapeProperties } from "../../features/shape";
+import { LabelPlacement, ShapeProperties } from "../../features/shape";
 import { MouseEvent, ReactNode } from "react";
 import { deleteShape } from "../../features/canvas";
 import { useAppDispatch } from "../../hooks";
 import { FormTextField } from "./inpector-forms/form-text-field";
 import { convertShapeToLatex } from "../../features/latex-converter";
 import { ColourPicker } from "./inpector-forms/colour-picker";
+import { FormDropDown } from "./inpector-forms/form-drop-down";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -50,9 +51,10 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
   const dispatch = useAppDispatch();
 
   const getForm = (shape: ShapeProperties): ReactNode[] => {
-    const components = shape.variables.map((field) => {
+    const components: React.ReactNode[] = [];
+    for (let field of shape.variables) {
       if (field === "widthFactor") {
-        return (
+        components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
               <Typography fontSize="0.85rem">Width Factor</Typography>
@@ -64,7 +66,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         );
       } else if (field === "stroke1") {
         const strokeNames = shape.variables.filter((v) => v.startsWith("stroke"));
-        return (
+        components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
               <Typography fontSize="0.85rem">Stroke Colours</Typography>
@@ -74,8 +76,8 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             </Grid>
           </NestedGridContainer>
         );
-      } else if (field.startsWith("label")) {
-        return (
+      } else if (/^label[0-9]$/.test(field)) {
+        components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
               <Typography fontSize="0.85rem">{`Label ${field.slice(5)}`}</Typography>
@@ -85,8 +87,19 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
             </Grid>
           </NestedGridContainer>
         );
+      } else if (field === "labelPlacement") {
+        components.push(
+          <NestedGridContainer key={field} container direction="row" spacing={0}>
+            <Grid item xs={3}>
+              <Typography fontSize="0.85rem">Label Placement</Typography>
+            </Grid>
+            <Grid item xs={9}>
+              <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LabelPlacement)} />
+            </Grid>
+          </NestedGridContainer>
+        );
       }
-    });
+    }
     return components;
   };
 

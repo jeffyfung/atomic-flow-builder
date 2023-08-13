@@ -105,6 +105,10 @@ import afcud_xcIcon from "../../res/palette-icons/afcud_xc.png";
 import afcudn_xcIcon from "../../res/palette-icons/afcudn_xc.png";
 import af_cud_xcIcon from "../../res/palette-icons/af_cud_xc.png";
 import af_cudn_xcIcon from "../../res/palette-icons/af_cudn_xc.png";
+import afbdIcon from "../../res/palette-icons/afbd.png";
+import afbuIcon from "../../res/palette-icons/afbu.png";
+import afvdjIcon from "../../res/palette-icons/afvdj.png";
+import afv$cIcon from "../../res/palette-icons/afv$c.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -651,47 +655,68 @@ const dotCatItemSchema: LeafPaletteItemSchema[] = [
   },
 ];
 
+const straightLineCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFBD,
+    iconElement: <img src={afbdIcon} alt="afbd" width="20px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFBU,
+    iconElement: <img src={afbuIcon} alt="afbu" width="20px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFVDJ,
+    iconElement: <img src={afvdjIcon} alt="afvdj" width="20px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFV$C,
+    iconElement: <img src={afv$cIcon} alt="afv$c" width="20px" />,
+    nested: false,
+  },
+];
+
 export const paletteItemSchema: PaletteItemSchemaType[] = [
   {
-    // shapeType: ShapeType.ARC,
     iconElement: <img src={afidnIcon} alt="arcCatIcon" width="30px" />,
     nested: true,
     children: arcCatItemSchema,
   },
   {
-    // shapeType: ShapeType.ARC_AFIUN,
     iconElement: <img src={afiunIcon} alt="invertedArcCatIcon" width="30px" />,
     nested: true,
     children: invertedArcCatItemSchema,
   },
   {
-    // shapeType: ShapeType.HOLLOW_WEDGE,
     iconElement: <img src={afwunIcon} alt="hollowWedgeIcon" width="25px" />,
     nested: true,
     children: hollowWedgeCatItemSchema,
   },
   {
-    // shapeType: ShapeType.INVERTED_HOLLOW_WEDGE,
     iconElement: <img src={invertedhollowWedgeIcon} alt="invertedhollowWedgeIcon" width="25px" />,
     nested: true,
     children: invertedhollowWedgeCatItemSchema,
   },
   {
-    // shapeType: ShapeType.SOLID_WEDGE,
     iconElement: <img src={solidWedgeIcon} alt="solidWedgeIcon" width="25px" />,
     nested: true,
     children: solidWedgeCatItemSchema,
   },
   {
-    // shapeType: ShapeType.INVERTED_SOLID_WEDGE,
     iconElement: <img src={invertedSolidWedgeIcon} alt="invertedSolidWedgeIcon" width="25px" />,
     nested: true,
     children: invertedSolidWedgeCatItemSchema,
   },
   {
-    // shapeType: ShapeType.DOT,
     iconElement: <img src={dotIcon} alt="dot" width="23px" />,
     nested: true,
     children: dotCatItemSchema,
+  },
+  {
+    iconElement: <img src={afv$cIcon} alt="afv$c" width="23px" />,
+    nested: true,
+    children: straightLineCatItemSchema,
   },
 ];

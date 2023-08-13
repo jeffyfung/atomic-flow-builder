@@ -1,7 +1,7 @@
-import { Box, Grid, List, ListItem, ListItemButton, Menu, MenuItem } from "@mui/material";
+import { Box, List, ListItem, ListItemButton, Menu } from "@mui/material";
 import styled from "@emotion/styled";
 import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
-import { addToPreview, toggleDragging } from "../../features/canvas";
+import { addToPreview, toggleDragging, toggleDrawing } from "../../features/canvas";
 import { ShapeType, getShapeProperties } from "../../features/shape";
 import { useAppDispatch } from "../../hooks";
 import { LeafPaletteItemSchema, PaletteItemSchema, paletteItemSchema } from "./constant";
@@ -114,7 +114,11 @@ export const Palette: React.FC<{}> = () => {
   const handleClick = (event: MouseEvent<HTMLElement>, shapeType: ShapeType) => {
     const payload = getShapeProperties(shapeType, event.nativeEvent.clientX, event.nativeEvent.clientY);
     dispatch(addToPreview(payload));
-    dispatch(toggleDragging(true));
+    if (payload.length || payload.width) {
+      dispatch(toggleDrawing(true));
+    } else {
+      dispatch(toggleDragging(true));
+    }
   };
 
   let numCols;

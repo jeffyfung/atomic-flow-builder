@@ -7,6 +7,7 @@ export interface CanvasState {
   shapes: Record<string, ShapeProperties>;
   previewShape: ShapeProperties | null;
   dragging: boolean;
+  drawing: boolean;
   // selectedShape: string | null;
   // displayInspector: boolean;
 }
@@ -30,6 +31,7 @@ const initialState: CanvasState = {
   shapes: {},
   previewShape: null,
   dragging: false,
+  drawing: false,
 };
 
 export const canvasSlice = createSlice({
@@ -43,13 +45,10 @@ export const canvasSlice = createSlice({
     addToPreview: (state, action: PayloadAction<ShapeProperties>) => {
       state.previewShape = action.payload;
     },
-    updatePreview: (state, action: PayloadAction<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY">>) => {
+    updatePreview: (state, action: PayloadAction<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => {
       state.previewShape = {
         ...state.previewShape!,
-        x: action.payload.x,
-        y: action.payload.y,
-        gridX: action.payload.gridX,
-        gridY: action.payload.gridY,
+        ...action.payload,
       };
     },
     clear: (state) => {
@@ -67,10 +66,13 @@ export const canvasSlice = createSlice({
     toggleDragging: (state, action: PayloadAction<boolean>) => {
       state.dragging = action.payload;
     },
+    toggleDrawing: (state, action: PayloadAction<boolean>) => {
+      state.drawing = action.payload;
+    },
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging } = canvasSlice.actions;
+export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging, toggleDrawing } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

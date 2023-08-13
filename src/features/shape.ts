@@ -18,9 +18,15 @@ export interface ShapeProperties {
   widthFactor?: number;
   heightFactor?: number;
   fill?: string;
+  labelPlacement?: LabelPlacement;
+  length?: number;
+  width?: number;
   variables: (keyof ShapeProperties)[];
-  // radius?: number;
-  // rotation?: number;
+}
+
+export enum LabelPlacement {
+  HIGH = "high",
+  LOW = "low",
 }
 
 export enum ShapeType {
@@ -127,6 +133,10 @@ export enum ShapeType {
   DOT_AFCUDN_XC = "afcudnXc",
   DOT_AF_CUD_XC = "afCudXc",
   DOT_AF_CUDN_XC = "afCudnXc",
+  STRAIGHT_LINE_AFBD = "afbd",
+  STRAIGHT_LINE_AFBU = "afbu",
+  STRAIGHT_LINE_AFVDJ = "afvdj",
+  STRAIGHT_LINE_AFV$C = "afv$c",
 }
 
 export enum LatexColour {
@@ -1894,27 +1904,47 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         stroke2: LatexColour.BLACK,
         variables: ["label1", "label2", "label3", "label4", "widthFactor", "stroke1", "stroke2"],
       };
-
-    // case AtomicFlowShapes.TEST.RECT:
-    //   return {
-    //     type,
-    //     width: 150,
-    //     height: 100,
-    //     stroke: "#000000",
-    //     rotation: 0,
-    //     x: clientX,
-    //     y: clientY,
-    //     // x: coordX - offsetX,
-    //     // y: coordY - offsetY,
-    //   };
-    // case ShapeType.CIRCLE:
-    // return {
-    //   type,
-    //   radius: 50,
-    //   stroke: "#000000",
-    //   x: coordX! - (offsetX - clientX / 2),
-    //   y: coordY! - (offsetY - clientY / 2),
-    // };
+    case ShapeType.STRAIGHT_LINE_AFBD:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        variables: [],
+      };
+    case ShapeType.STRAIGHT_LINE_AFBU:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        variables: [],
+      };
+    case ShapeType.STRAIGHT_LINE_AFVDJ:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        variables: [],
+      };
+    case ShapeType.STRAIGHT_LINE_AFV$C:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        labelPlacement: LabelPlacement.HIGH,
+        length: -1, // will be updated
+        variables: ["label1", "label2", "stroke1", "labelPlacement"],
+      };
     default:
       throw new Error("Invalid shape type");
   }

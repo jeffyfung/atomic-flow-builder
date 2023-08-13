@@ -50,6 +50,10 @@ import {
   WedgeAFWUC,
   WedgeAFWUN,
   WedgeAFWWUC,
+  StraightLine_AFBD,
+  StraightLine_AFBU,
+  StraightLine_AFVDJ,
+  StraightLine_AFV$C,
 } from "./shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
@@ -276,7 +280,16 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <DotAF_CUD_XC {...props} />;
     case ShapeType.DOT_AF_CUDN_XC:
       return <DotAF_CUDN_XC {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFBD:
+      return <StraightLine_AFBD {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFBU:
+      return <StraightLine_AFBU {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFVDJ:
+      return <StraightLine_AFVDJ {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFV$C:
+      return <StraightLine_AFV$C {...props} />;
     default:
       return <></>;
   }
+  //
 };

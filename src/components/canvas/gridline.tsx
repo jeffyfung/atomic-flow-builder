@@ -31,6 +31,10 @@ export const getStageDim = (val: number): number => {
   return val * stepSize;
 };
 
+export const getGridDim = (val: number): number => {
+  return val / stepSize;
+};
+
 export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   if (!stage) return <Layer></Layer>;
 
