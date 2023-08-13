@@ -8,8 +8,9 @@ export const FormDropDown: React.FC<{
   shapeId: string;
   shape: ShapeProperties;
   fieldName: keyof ShapeProperties;
+  label: string;
   options: any[];
-}> = ({ shapeId, shape, fieldName, options }) => {
+}> = ({ shapeId, shape, fieldName, label, options }) => {
   const dispatch = useAppDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
@@ -25,7 +26,7 @@ export const FormDropDown: React.FC<{
     <TextField
       variant="outlined" //
       size="small"
-      label="Colour"
+      label={label}
       select
       value={shape[fieldName]}
       onChange={handleChange}

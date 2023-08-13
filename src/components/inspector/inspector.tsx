@@ -94,7 +94,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
               <Typography fontSize="0.85rem">Label Placement</Typography>
             </Grid>
             <Grid item xs={9}>
-              <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} options={Object.values(LabelPlacement)} />
+              <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} label="Position" options={Object.values(LabelPlacement)} />
             </Grid>
           </NestedGridContainer>
         );

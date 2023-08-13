@@ -53,7 +53,7 @@ import {
   StraightLine_AFBD,
   StraightLine_AFBU,
   StraightLine_AFVDJ,
-  StraightLine_AFV$C,
+  StraightLine_AFV$1C,
 } from "./shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
@@ -68,6 +68,8 @@ export interface ShapeProps {
   handleMouseLeave: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleDragStart: (event: Konva.KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: Konva.KonvaEventObject<DragEvent>, id: string) => void;
+  handleAnchorDragMove: (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">) => void;
+  handleAnchorDragEnd: (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => void;
 }
 
 export const Shape: React.FC<ShapeProps> = (props) => {
@@ -286,8 +288,8 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <StraightLine_AFBU {...props} />;
     case ShapeType.STRAIGHT_LINE_AFVDJ:
       return <StraightLine_AFVDJ {...props} />;
-    case ShapeType.STRAIGHT_LINE_AFV$C:
-      return <StraightLine_AFV$C {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFV$1C:
+      return <StraightLine_AFV$1C {...props} />;
     default:
       return <></>;
   }

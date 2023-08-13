@@ -108,7 +108,7 @@ import af_cudn_xcIcon from "../../res/palette-icons/af_cudn_xc.png";
 import afbdIcon from "../../res/palette-icons/afbd.png";
 import afbuIcon from "../../res/palette-icons/afbu.png";
 import afvdjIcon from "../../res/palette-icons/afvdj.png";
-import afv$cIcon from "../../res/palette-icons/afv$c.png";
+import afv$1cIcon from "../../res/palette-icons/afv$c.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -672,8 +672,8 @@ const straightLineCatItemSchema: LeafPaletteItemSchema[] = [
     nested: false,
   },
   {
-    shapeType: ShapeType.STRAIGHT_LINE_AFV$C,
-    iconElement: <img src={afv$cIcon} alt="afv$c" width="20px" />,
+    shapeType: ShapeType.STRAIGHT_LINE_AFV$1C,
+    iconElement: <img src={afv$1cIcon} alt="afv$c" width="20px" />,
     nested: false,
   },
 ];
@@ -715,7 +715,7 @@ export const paletteItemSchema: PaletteItemSchemaType[] = [
     children: dotCatItemSchema,
   },
   {
-    iconElement: <img src={afv$cIcon} alt="afv$c" width="23px" />,
+    iconElement: <img src={afv$1cIcon} alt="afv$1c" width="23px" />,
     nested: true,
     children: straightLineCatItemSchema,
   },

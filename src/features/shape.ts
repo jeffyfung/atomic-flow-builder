@@ -136,7 +136,7 @@ export enum ShapeType {
   STRAIGHT_LINE_AFBD = "afbd",
   STRAIGHT_LINE_AFBU = "afbu",
   STRAIGHT_LINE_AFVDJ = "afvdj",
-  STRAIGHT_LINE_AFV$C = "afv$c",
+  STRAIGHT_LINE_AFV$1C = "afv$1c",
 }
 
 export enum LatexColour {
@@ -1931,7 +1931,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         gridY,
         variables: [],
       };
-    case ShapeType.STRAIGHT_LINE_AFV$C:
+    case ShapeType.STRAIGHT_LINE_AFV$1C:
       return {
         type,
         x,
@@ -1943,7 +1943,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         stroke1: LatexColour.BLACK,
         labelPlacement: LabelPlacement.HIGH,
         length: -1, // will be updated
-        variables: ["label1", "label2", "stroke1", "labelPlacement"],
+        variables: ["length", "label1", "label2", "stroke1", "labelPlacement"],
       };
     default:
       throw new Error("Invalid shape type");

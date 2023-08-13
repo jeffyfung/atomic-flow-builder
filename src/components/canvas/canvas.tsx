@@ -7,11 +7,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
 import { Gridline, getGridCoordinate, getGridDim, getStageCoordinate } from "./gridline";
+import { ShapeProperties } from "../../features/shape";
 
 interface DrawingAnchorPoint {
   x: number;
   y: number;
 }
+
+export const SNAP_GRID_THRESHOLD = 0.4;
 
 // TODO: make the canvas fit the layout/window perfectly
 export const Canvas: React.FC<{}> = () => {
@@ -23,7 +26,6 @@ export const Canvas: React.FC<{}> = () => {
   const [nearestSnap, setNearestSnap] = useState<{ x: number; y: number; gridX: number; gridY: number } | null>(null);
   const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<DrawingAnchorPoint | null>(null);
 
-  const snapGridDistanceThreshold = 0.4;
   const stageRef = useRef<Konva.Stage>(null);
 
   useEffect(() => {
@@ -42,11 +44,11 @@ export const Canvas: React.FC<{}> = () => {
           if (!drawingAnchorPoint) {
             setDrawingAnchorPoint({ x, y });
           } else {
-            const finalX = (drawingAnchorPoint.x + x) / 2;
-            const finalY = (drawingAnchorPoint.y + y) / 2;
+            const finalX = shape.width ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
+            const finalY = shape.length ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
+            const width = shape.width ? getGridDim(Math.abs(drawingAnchorPoint.x - x)) : undefined;
+            const length = shape.length ? getGridDim(Math.abs(drawingAnchorPoint.y - y)) : undefined;
             const { gridX, gridY } = getGridCoordinate(finalX, finalY);
-            const length = getGridDim(Math.abs(drawingAnchorPoint.y - y));
-            const width = getGridDim(Math.abs(drawingAnchorPoint.x - x));
             dispatch(addToCanvas({ ...shape, x: finalX, y: finalY, gridX, gridY, length, width }));
             dispatch(toggleDrawing(false));
             setDrawingAnchorPoint(null);
@@ -75,10 +77,11 @@ export const Canvas: React.FC<{}> = () => {
         if (drawingAnchorPoint === null) {
           dispatch(updatePreview({ x, y, gridX, gridY }));
         } else {
-          const previewX = (drawingAnchorPoint.x + x) / 2;
-          const previewY = (drawingAnchorPoint.y + y) / 2;
-          const length = getGridDim(Math.abs(drawingAnchorPoint.y - y));
-          const width = getGridDim(Math.abs(drawingAnchorPoint.x - x));
+          const shape = store.getState().canvas.previewShape!;
+          const previewX = shape.width ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
+          const previewY = shape.length ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
+          const width = shape.width ? getGridDim(Math.abs(drawingAnchorPoint.x - x)) : undefined;
+          const length = shape.length ? getGridDim(Math.abs(drawingAnchorPoint.y - y)) : undefined;
           const { gridX: previewGridX, gridY: previewGridY } = getGridCoordinate(previewX, previewY);
           dispatch(updatePreview({ x: previewX, y: previewY, gridX: previewGridX, gridY: previewGridY, length, width }));
         }
@@ -87,7 +90,7 @@ export const Canvas: React.FC<{}> = () => {
       setInspectorDisplay(false);
       const nearestSnapGridX = Math.round(gridX);
       const nearestSnapGridY = Math.round(gridY);
-      if (Math.abs(nearestSnapGridX - gridX) < snapGridDistanceThreshold && Math.abs(nearestSnapGridY - gridY) < snapGridDistanceThreshold) {
+      if (Math.abs(nearestSnapGridX - gridX) < SNAP_GRID_THRESHOLD && Math.abs(nearestSnapGridY - gridY) < SNAP_GRID_THRESHOLD) {
         const { stageX, stageY } = getStageCoordinate(nearestSnapGridX, nearestSnapGridY);
         setNearestSnap({ x: stageX, y: stageY, gridX: nearestSnapGridX, gridY: nearestSnapGridY });
       } else {
@@ -143,6 +146,28 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
+  const handleAnchorDragMove = (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">) => {
+    // TODO: morph into other shapes (if it is no longer vertical)
+    setInspectorDisplay(false);
+    dispatch(
+      updateShape({
+        id: shapeId,
+        properties: payload,
+      })
+    );
+  };
+
+  const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => {
+    if (Object.keys(payload).length > 0) {
+      dispatch(
+        updateShape({
+          id: shapeId,
+          properties: payload,
+        })
+      );
+    }
+  };
+
   return (
     <>
       <main className="canvas" onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
@@ -161,11 +186,12 @@ export const Canvas: React.FC<{}> = () => {
                   handleMouseLeave={handleMouseLeave}
                   handleDragEnd={handleSelectedShapeDragEnd}
                   handleDragStart={handleSelectedShapeDragStart}
+                  handleAnchorDragMove={handleAnchorDragMove}
+                  handleAnchorDragEnd={handleAnchorDragEnd}
                 />
               );
             })}
           </Layer>
-          {/* not sure about the following line */}
           {previewShape && previewShape.width !== -1 && previewShape.length !== -1 && (
             <Layer>
               <Shape
@@ -178,6 +204,8 @@ export const Canvas: React.FC<{}> = () => {
                 handleMouseLeave={() => {}}
                 handleDragEnd={() => {}}
                 handleDragStart={() => {}}
+                handleAnchorDragMove={() => {}}
+                handleAnchorDragEnd={() => {}}
               />
             </Layer>
           )}
