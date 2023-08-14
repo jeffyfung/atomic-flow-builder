@@ -19,9 +19,11 @@ export interface ShapeProperties {
   heightFactor?: number;
   fill?: string;
   labelPlacement?: LabelPlacement;
-  length?: number;
-  width?: number;
-  variables: (keyof ShapeProperties)[];
+  draw?: {
+    start?: { x: number; y: number; gridX: number; gridY: number };
+    end?: { x: number; y: number; gridX: number; gridY: number };
+  };
+  variables: (keyof ShapeProperties | "length" | "width")[];
 }
 
 export enum LabelPlacement {
@@ -137,6 +139,8 @@ export enum ShapeType {
   STRAIGHT_LINE_AFBU = "afbu",
   STRAIGHT_LINE_AFVDJ = "afvdj",
   STRAIGHT_LINE_AFV$1C = "afv$1c",
+  STRAIGHT_LINE_AF_V$1C = "afV$1c",
+  STRAIGHT_LINE_AFJ$1C = "afj$1c",
 }
 
 export enum LatexColour {
@@ -1942,8 +1946,36 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         label2: "",
         stroke1: LatexColour.BLACK,
         labelPlacement: LabelPlacement.HIGH,
-        length: -1, // will be updated
+        draw: {},
+        // length: -1, // will be updated
         variables: ["length", "label1", "label2", "stroke1", "labelPlacement"],
+      };
+    case ShapeType.STRAIGHT_LINE_AF_V$1C:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        label1: "",
+        label2: "",
+        stroke1: LatexColour.BLACK,
+        labelPlacement: LabelPlacement.HIGH,
+        draw: {},
+        variables: ["length", "label1", "label2", "stroke1", "labelPlacement"],
+      };
+    case ShapeType.STRAIGHT_LINE_AFJ$1C:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        draw: {},
+        // length: -1, // will be updated
+        // width: -1, // will be updated
+        variables: ["width", "length", "stroke1"],
       };
     default:
       throw new Error("Invalid shape type");

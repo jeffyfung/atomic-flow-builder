@@ -114,7 +114,7 @@ export const Palette: React.FC<{}> = () => {
   const handleClick = (event: MouseEvent<HTMLElement>, shapeType: ShapeType) => {
     const payload = getShapeProperties(shapeType, event.nativeEvent.clientX, event.nativeEvent.clientY);
     dispatch(addToPreview(payload));
-    if (payload.length || payload.width) {
+    if (payload.draw) {
       dispatch(toggleDrawing(true));
     } else {
       dispatch(toggleDragging(true));

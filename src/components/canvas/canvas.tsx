@@ -40,16 +40,25 @@ export const Canvas: React.FC<{}> = () => {
           dispatch(addToCanvas(nearestSnap ? { ...shape, ...nearestSnap } : shape));
           dispatch(toggleDragging(false));
         } else {
-          const { x, y } = nearestSnap ? { ...shape, ...nearestSnap } : shape;
+          const { x, y, gridX, gridY } = nearestSnap ? { ...shape, ...nearestSnap } : shape;
           if (!drawingAnchorPoint) {
             setDrawingAnchorPoint({ x, y });
           } else {
-            const finalX = shape.width ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
-            const finalY = shape.length ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
-            const width = shape.width ? getGridDim(Math.abs(drawingAnchorPoint.x - x)) : undefined;
-            const length = shape.length ? getGridDim(Math.abs(drawingAnchorPoint.y - y)) : undefined;
-            const { gridX, gridY } = getGridCoordinate(finalX, finalY);
-            dispatch(addToCanvas({ ...shape, x: finalX, y: finalY, gridX, gridY, length, width }));
+            const shape = store.getState().canvas.previewShape!;
+            const finalX = shape.variables.includes("width") ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
+            const finalY = shape.variables.includes("length") ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
+            const { gridX: finalGridX, gridY: finalGridY } = getGridCoordinate(finalX, finalY);
+            const { gridX: anchorGridX, gridY: anchorGridY } = getGridCoordinate(drawingAnchorPoint.x, drawingAnchorPoint.y);
+            const draw = {
+              start: { ...drawingAnchorPoint, gridX: anchorGridX, gridY: anchorGridY },
+              end: {
+                x: shape.variables.includes("width") ? x : drawingAnchorPoint.x,
+                y: shape.variables.includes("length") ? y : drawingAnchorPoint.y,
+                gridX: shape.variables.includes("width") ? gridX : anchorGridX,
+                gridY: shape.variables.includes("length") ? gridY : anchorGridY,
+              },
+            };
+            dispatch(addToCanvas({ ...shape, x: finalX, y: finalY, gridX: finalGridX, gridY: finalGridY, draw }));
             dispatch(toggleDrawing(false));
             setDrawingAnchorPoint(null);
           }
@@ -78,12 +87,21 @@ export const Canvas: React.FC<{}> = () => {
           dispatch(updatePreview({ x, y, gridX, gridY }));
         } else {
           const shape = store.getState().canvas.previewShape!;
-          const previewX = shape.width ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
-          const previewY = shape.length ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
-          const width = shape.width ? getGridDim(Math.abs(drawingAnchorPoint.x - x)) : undefined;
-          const length = shape.length ? getGridDim(Math.abs(drawingAnchorPoint.y - y)) : undefined;
+          const previewX = shape.variables.includes("width") ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
+          const previewY = shape.variables.includes("length") ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
           const { gridX: previewGridX, gridY: previewGridY } = getGridCoordinate(previewX, previewY);
-          dispatch(updatePreview({ x: previewX, y: previewY, gridX: previewGridX, gridY: previewGridY, length, width }));
+          const { gridX: anchorGridX, gridY: anchorGridY } = getGridCoordinate(drawingAnchorPoint.x, drawingAnchorPoint.y);
+          const draw = {
+            start: { ...drawingAnchorPoint, gridX: anchorGridX, gridY: anchorGridY },
+            end: {
+              x: shape.variables.includes("width") ? x : drawingAnchorPoint.x,
+              y: shape.variables.includes("length") ? y : drawingAnchorPoint.y,
+              gridX: shape.variables.includes("width") ? gridX : anchorGridX,
+              gridY: shape.variables.includes("length") ? gridY : anchorGridY,
+            },
+          };
+          console.log({ x, y, previewGridX, previewGridY, draw });
+          dispatch(updatePreview({ x: previewX, y: previewY, gridX: previewGridX, gridY: previewGridY, draw }));
         }
       }
 
@@ -146,7 +164,7 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  const handleAnchorDragMove = (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">) => {
+  const handleAnchorDragMove = (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">) => {
     // TODO: morph into other shapes (if it is no longer vertical)
     setInspectorDisplay(false);
     dispatch(
@@ -157,7 +175,7 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => {
+  const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => {
     if (Object.keys(payload).length > 0) {
       dispatch(
         updateShape({
@@ -192,7 +210,7 @@ export const Canvas: React.FC<{}> = () => {
               );
             })}
           </Layer>
-          {previewShape && previewShape.width !== -1 && previewShape.length !== -1 && (
+          {previewShape && previewShape.draw?.start && (
             <Layer>
               <Shape
                 selected={false}

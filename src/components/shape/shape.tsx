@@ -53,11 +53,11 @@ import {
   StraightLine_AFBD,
   StraightLine_AFBU,
   StraightLine_AFVDJ,
-  StraightLine_AFV$1C,
 } from "./shape-objects";
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
 import { WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCCDNXC, WedgeAFCCDNXXC, WedgeAFCCDSXC, WedgeAFCCDXXC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDNXXC, WedgeAFCDXC, WedgeAFCDXXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
+import { AFV$1C, AF_V$1C } from "./shape-objects/drawable-shapes";
 
 export interface ShapeProps {
   selected: boolean;
@@ -68,8 +68,8 @@ export interface ShapeProps {
   handleMouseLeave: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleDragStart: (event: Konva.KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: Konva.KonvaEventObject<DragEvent>, id: string) => void;
-  handleAnchorDragMove: (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">) => void;
-  handleAnchorDragEnd: (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => void;
+  handleAnchorDragMove: (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">) => void;
+  handleAnchorDragEnd: (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => void;
 }
 
 export const Shape: React.FC<ShapeProps> = (props) => {
@@ -289,7 +289,11 @@ export const Shape: React.FC<ShapeProps> = (props) => {
     case ShapeType.STRAIGHT_LINE_AFVDJ:
       return <StraightLine_AFVDJ {...props} />;
     case ShapeType.STRAIGHT_LINE_AFV$1C:
-      return <StraightLine_AFV$1C {...props} />;
+      return <AFV$1C {...props} />;
+    case ShapeType.STRAIGHT_LINE_AF_V$1C:
+      return <AF_V$1C {...props} />;
+    // case ShapeType.STRAIGHT_LINE_AFJ$1C:
+    //   return <AFJ$1C {...props} />;
     default:
       return <></>;
   }

@@ -12,6 +12,7 @@ import { FormTextField } from "./inpector-forms/form-text-field";
 import { convertShapeToLatex } from "../../features/latex-converter";
 import { ColourPicker } from "./inpector-forms/colour-picker";
 import { FormDropDown } from "./inpector-forms/form-drop-down";
+import { isShapePropertiesKey } from "../../features/type-util";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -65,7 +66,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
           </NestedGridContainer>
         );
       } else if (field === "stroke1") {
-        const strokeNames = shape.variables.filter((v) => v.startsWith("stroke"));
+        const strokeNames = shape.variables.filter((v) => v.startsWith("stroke")) as (keyof ShapeProperties)[];
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
@@ -77,6 +78,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
           </NestedGridContainer>
         );
       } else if (/^label[0-9]$/.test(field)) {
+        if (!isShapePropertiesKey(field)) throw new Error("Incorrect Type");
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>

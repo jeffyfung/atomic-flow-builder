@@ -1,7 +1,7 @@
 import { Group, Shape as KonvaShape, Line, Transformer } from "react-konva";
 import { LatexColour } from "../../../features/shape";
 import { ShapeProps } from "../shape";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
 import { getStageDim } from "../../canvas/gridline";
@@ -11,15 +11,18 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   const shapeRef = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
-  const arcWidth = getStageDim(5);
-  const arcHeight = getStageDim(0.3);
-  const arcBottomToCenter = getStageDim(0.1);
-  const borderBox = {
-    x: -arcWidth * 0.5,
-    y: arcBottomToCenter - arcHeight,
-    width: arcWidth,
-    height: arcHeight,
-  };
+  const arcWidth = useMemo(() => getStageDim(5), []);
+  const arcHeight = useMemo(() => getStageDim(0.3), []);
+  const arcBottomToCenter = useMemo(() => getStageDim(0.1), []);
+  const borderBox = useMemo(
+    () => ({
+      x: -arcWidth * 0.5,
+      y: arcBottomToCenter - arcHeight,
+      width: arcWidth,
+      height: arcHeight,
+    }),
+    [arcWidth, arcHeight, arcBottomToCenter]
+  );
 
   useEffect(() => {
     if (selected) {
@@ -27,7 +30,7 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
       transformerRef.current!.nodes([shapeRef.current!]);
       transformerRef.current!.getLayer()!.batchDraw();
     }
-  }, [selected]);
+  }, [selected, borderBox]);
 
   return (
     <>
@@ -84,7 +87,7 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
       transformerRef.current!.nodes([shapeRef1.current!, shapeRef2.current!, shapeRef3.current!]);
       transformerRef.current!.getLayer()!.batchDraw();
     }
-  }, [selected, widthFactor]);
+  }, [selected, widthFactor, borderBox]);
 
   return (
     <>

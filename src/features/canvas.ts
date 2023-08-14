@@ -45,7 +45,7 @@ export const canvasSlice = createSlice({
     addToPreview: (state, action: PayloadAction<ShapeProperties>) => {
       state.previewShape = action.payload;
     },
-    updatePreview: (state, action: PayloadAction<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "length" | "width">>) => {
+    updatePreview: (state, action: PayloadAction<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => {
       state.previewShape = {
         ...state.previewShape!,
         ...action.payload,

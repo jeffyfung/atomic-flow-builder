@@ -3,18 +3,19 @@ import React from "react";
 import { Circle } from "react-konva";
 
 export interface AnchorProps {
-  vertex: { offsetX: number; offsetY: number };
+  vertex: { x: number; y: number };
   handlDragMove: (event: KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: KonvaEventObject<DragEvent>) => void;
   handleDragStart: () => void;
 }
 
 export const Anchor: React.FC<AnchorProps> = ({ vertex, handleDragStart, handlDragMove, handleDragEnd }) => {
-  const { offsetX, offsetY } = vertex;
+  const { x, y } = vertex;
+  console.log(x, y);
   return (
     <Circle
-      x={offsetX} //
-      y={offsetY}
+      x={x} //
+      y={y}
       radius={5}
       stroke="#0077b3"
       strokeWidth={1}

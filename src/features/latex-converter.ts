@@ -1,3 +1,4 @@
+import { getGridDim } from "../components/canvas/gridline";
 import { LabelPlacement, ShapeProperties } from "./shape";
 
 const roundTo1dp = (val: number): number => {
@@ -19,8 +20,12 @@ export const convertShapeToLatex = (shape: ShapeProperties): string => {
   let shapeSyntax: string = type;
 
   const params = variables.reduce((accu, key) => {
-    if (key === "length" || key === "width") {
-      accu += `{${roundTo1dp(shape[key]!)}}`;
+    if (key === "width") {
+      const width = getGridDim(Math.abs(shape.draw!.end!.x - shape.draw!.start!.x));
+      accu += `{${roundTo1dp(width)}}`;
+    } else if (key === "length") {
+      const length = getGridDim(Math.abs(shape.draw!.end!.y - shape.draw!.start!.y));
+      accu += `{${roundTo1dp(length)}}`;
     } else if (/^label[0-9]$/.test(key)) {
       accu += `{${shape[key]}}`;
     } else if (key === "widthFactor") {
