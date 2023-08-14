@@ -210,7 +210,7 @@ export const Canvas: React.FC<{}> = () => {
               );
             })}
           </Layer>
-          {previewShape && previewShape.draw?.start && (
+          {previewShape && (dragging || drawingAnchorPoint) && (
             <Layer>
               <Shape
                 selected={false}
