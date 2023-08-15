@@ -110,7 +110,10 @@ import afbuIcon from "../../res/palette-icons/afbu.png";
 import afvdjIcon from "../../res/palette-icons/afvdj.png";
 import afv$1cIcon from "../../res/palette-icons/afv$c.png";
 import af_v$1cIcon from "../../res/palette-icons/af_v$c.png";
-import afj$1cIcon from "../../res/palette-icons/afj$c.png";
+import afj$2cIcon from "../../res/palette-icons/afj$2c.png";
+import af_j$2cIcon from "../../res/palette-icons/af_j$2c.png";
+import afclcIcon from "../../res/palette-icons/afclc.png";
+import afcrcIcon from "../../res/palette-icons/afcrc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -687,8 +690,23 @@ const straightLineCatItemSchema: LeafPaletteItemSchema[] = [
 
 const curvedLineCatItemSchema: LeafPaletteItemSchema[] = [
   {
-    shapeType: ShapeType.STRAIGHT_LINE_AFJ$1C,
-    iconElement: <img src={afj$1cIcon} alt="afj$1c" width="20px" />,
+    shapeType: ShapeType.STRAIGHT_LINE_AFJ$2C,
+    iconElement: <img src={afj$2cIcon} alt="afj$2c" width="22px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AF_J$2C,
+    iconElement: <img src={af_j$2cIcon} alt="af_j$2c" width="22px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFCLC,
+    iconElement: <img src={afclcIcon} alt="afclc" width="15px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFCRC,
+    iconElement: <img src={afcrcIcon} alt="afcrc" width="15px" />,
     nested: false,
   },
 ];
@@ -735,7 +753,7 @@ export const paletteItemSchema: PaletteItemSchemaType[] = [
     children: straightLineCatItemSchema,
   },
   {
-    iconElement: <img src={afj$1cIcon} alt="afj$1c" width="23px" />,
+    iconElement: <img src={afj$2cIcon} alt="afj$2c" width="23px" />,
     nested: true,
     children: curvedLineCatItemSchema,
   },

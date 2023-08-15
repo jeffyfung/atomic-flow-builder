@@ -19,11 +19,35 @@ export interface ShapeProperties {
   heightFactor?: number;
   fill?: string;
   labelPlacement?: LabelPlacement;
-  draw?: {
-    start?: { x: number; y: number; gridX: number; gridY: number };
-    end?: { x: number; y: number; gridX: number; gridY: number };
-  };
+  draw?: DrawProperties2V | DrawPropertiesArc;
   variables: (keyof ShapeProperties | "length" | "width")[];
+}
+
+export interface Coordinates {
+  x: number;
+  y: number;
+  gridX: number;
+  gridY: number;
+}
+
+export enum DrawableShapeType {
+  TWO_VERTEX = "2v",
+  ARC = "arc",
+}
+
+interface DrawProperties2V {
+  type: DrawableShapeType.TWO_VERTEX;
+  preview: boolean;
+  start?: Coordinates;
+  end?: Coordinates;
+}
+
+interface DrawPropertiesArc {
+  type: DrawableShapeType.ARC;
+  preview: boolean;
+  top?: { x: number; y: number; gridX: number; gridY: number };
+  bottom?: { x: number; y: number; gridX: number; gridY: number };
+  middle?: { x: number; y: number; gridX: number; gridY: number };
 }
 
 export enum LabelPlacement {
@@ -140,7 +164,10 @@ export enum ShapeType {
   STRAIGHT_LINE_AFVDJ = "afvdj",
   STRAIGHT_LINE_AFV$1C = "afv$1c",
   STRAIGHT_LINE_AF_V$1C = "afV$1c",
-  STRAIGHT_LINE_AFJ$1C = "afj$1c",
+  STRAIGHT_LINE_AFJ$2C = "afj$2c",
+  STRAIGHT_LINE_AF_J$2C = "afJ$2c",
+  STRAIGHT_LINE_AFCLC = "afclc",
+  STRAIGHT_LINE_AFCRC = "afcrc",
 }
 
 export enum LatexColour {
@@ -1946,8 +1973,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         label2: "",
         stroke1: LatexColour.BLACK,
         labelPlacement: LabelPlacement.HIGH,
-        draw: {},
-        // length: -1, // will be updated
+        draw: { type: DrawableShapeType.TWO_VERTEX, preview: false },
         variables: ["length", "label1", "label2", "stroke1", "labelPlacement"],
       };
     case ShapeType.STRAIGHT_LINE_AF_V$1C:
@@ -1961,10 +1987,10 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         label2: "",
         stroke1: LatexColour.BLACK,
         labelPlacement: LabelPlacement.HIGH,
-        draw: {},
+        draw: { type: DrawableShapeType.TWO_VERTEX, preview: false },
         variables: ["length", "label1", "label2", "stroke1", "labelPlacement"],
       };
-    case ShapeType.STRAIGHT_LINE_AFJ$1C:
+    case ShapeType.STRAIGHT_LINE_AFJ$2C:
       return {
         type,
         x,
@@ -1972,9 +1998,40 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         gridX,
         gridY,
         stroke1: LatexColour.BLACK,
-        draw: {},
-        // length: -1, // will be updated
-        // width: -1, // will be updated
+        draw: { type: DrawableShapeType.TWO_VERTEX, preview: false },
+        variables: ["width", "length", "stroke1"],
+      };
+    case ShapeType.STRAIGHT_LINE_AF_J$2C:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        draw: { type: DrawableShapeType.TWO_VERTEX, preview: false },
+        variables: ["width", "length", "stroke1"],
+      };
+    case ShapeType.STRAIGHT_LINE_AFCLC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        draw: { type: DrawableShapeType.ARC, preview: false },
+        variables: ["width", "length", "stroke1"],
+      };
+    case ShapeType.STRAIGHT_LINE_AFCRC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        draw: { type: DrawableShapeType.ARC, preview: false },
         variables: ["width", "length", "stroke1"],
       };
     default:

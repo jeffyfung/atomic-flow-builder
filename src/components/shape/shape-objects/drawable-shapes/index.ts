@@ -1,16 +1,17 @@
-import { ShapeProperties } from "../../../../features/shape";
-import { SNAP_GRID_THRESHOLD } from "../../../canvas/canvas";
-import { getGridCoordinate, getGridDim, getStageCoordinate } from "../../../canvas/gridline";
+import { Coordinates, DrawableShapeType, ShapeProperties } from "../../../../features/shape";
+import { getGridCoordinate } from "../../../canvas/gridline";
 
 export * from "./straight-line";
+export * from "./curves";
+export * from "./arcs";
 
-const computeDimension2V = (displacedV: { x: number; y: number }, existingV: { x: number; y: number; gridX: number; gridY: number }): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
-  const newX = (existingV.x + displacedV.x) / 2;
-  const newY = (existingV.y + displacedV.y) / 2;
+const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinates, fixedV: Coordinates): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
+  const variableWidth = shape.variables.includes("width");
+  const variableLength = shape.variables.includes("length");
+
+  const newX = variableWidth ? (fixedV.x + displacedV.x) / 2 : displacedV.x;
+  const newY = variableLength ? (fixedV.y + displacedV.y) / 2 : displacedV.y;
   const { gridX: newGridX, gridY: newGridY } = getGridCoordinate(newX, newY);
-  // const length = getGridDim(Math.abs(existingV.y - displacedV.y));
-  // const width = getGridDim(Math.abs(existingV.x - displacedV.x));
-  const { gridX: displacedVGridX, gridY: displacedVGridY } = getGridCoordinate(displacedV.x, displacedV.y);
 
   return {
     x: newX,
@@ -18,30 +19,25 @@ const computeDimension2V = (displacedV: { x: number; y: number }, existingV: { x
     gridX: newGridX,
     gridY: newGridY,
     draw: {
-      start: existingV,
-      end: {
-        ...displacedV,
-        gridX: displacedVGridX,
-        gridY: displacedVGridY,
+      type: DrawableShapeType.TWO_VERTEX,
+      preview: true,
+      start: {
+        x: variableWidth ? fixedV.x : displacedV.x,
+        y: variableLength ? fixedV.y : displacedV.y,
+        gridX: variableWidth ? fixedV.gridX : displacedV.gridX,
+        gridY: variableLength ? fixedV.gridY : displacedV.gridY,
       },
-      // length,
-      // width,
+      end: displacedV,
     },
   };
 };
 
-export const computeDimension = {
-  "2V": computeDimension2V,
+// TODO:
+const computeDimensionArc = (): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
+  throw new Error("not implemented");
 };
 
-export const computeNearestSnap = (x: number, y: number): { x: number; y: number; gridX: number; gridY: number } | null => {
-  const { gridX, gridY } = getGridCoordinate(x, y);
-  const nearestSnapGridX = Math.round(gridX);
-  const nearestSnapGridY = Math.round(gridY);
-  if (Math.abs(nearestSnapGridX - gridX) < SNAP_GRID_THRESHOLD && Math.abs(nearestSnapGridY - gridY) < SNAP_GRID_THRESHOLD) {
-    const { stageX: x, stageY: y } = getStageCoordinate(nearestSnapGridX, nearestSnapGridY);
-    return { x, y, gridX: nearestSnapGridX, gridY: nearestSnapGridY };
-  } else {
-    return null;
-  }
+export const computeDimension: Record<DrawableShapeType, (...args: Parameters<typeof computeDimension2V>) => Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">> = {
+  [DrawableShapeType.TWO_VERTEX]: computeDimension2V,
+  [DrawableShapeType.ARC]: computeDimensionArc,
 };

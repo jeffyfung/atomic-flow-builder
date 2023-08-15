@@ -11,7 +11,6 @@ export interface AnchorProps {
 
 export const Anchor: React.FC<AnchorProps> = ({ vertex, handleDragStart, handlDragMove, handleDragEnd }) => {
   const { x, y } = vertex;
-  console.log(x, y);
   return (
     <Circle
       x={x} //

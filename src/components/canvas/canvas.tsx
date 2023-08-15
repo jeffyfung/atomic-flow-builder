@@ -6,17 +6,13 @@ import { addToCanvas, selectCanvas, toggleDragging, toggleDrawing, updatePreview
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
-import { Gridline, getGridCoordinate, getGridDim, getStageCoordinate } from "./gridline";
-import { ShapeProperties } from "../../features/shape";
-
-interface DrawingAnchorPoint {
-  x: number;
-  y: number;
-}
+import { Gridline, computeNearestSnap, getGridCoordinate } from "./gridline";
+import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
+import { computeDimension } from "../shape/shape-objects/drawable-shapes";
 
 export const SNAP_GRID_THRESHOLD = 0.4;
 
-// TODO: make the canvas fit the layout/window perfectly
+// TODO: make the canvas fit the layout/window perfectly (by fixing the stage area? inresponsive to viewport size?)
 export const Canvas: React.FC<{}> = () => {
   const { shapes, previewShape, dragging, drawing } = useAppSelector(selectCanvas);
   const dispatch = useAppDispatch();
@@ -24,7 +20,7 @@ export const Canvas: React.FC<{}> = () => {
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
   const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
   const [nearestSnap, setNearestSnap] = useState<{ x: number; y: number; gridX: number; gridY: number } | null>(null);
-  const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<DrawingAnchorPoint | null>(null);
+  const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<Coordinates | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
 
@@ -37,36 +33,40 @@ export const Canvas: React.FC<{}> = () => {
       const shape = store.getState().canvas.previewShape;
       if (shape !== null) {
         if (dragging) {
-          dispatch(addToCanvas(nearestSnap ? { ...shape, ...nearestSnap } : shape));
-          dispatch(toggleDragging(false));
+          handleClickDragging(shape);
         } else {
-          const { x, y, gridX, gridY } = nearestSnap ? { ...shape, ...nearestSnap } : shape;
-          if (!drawingAnchorPoint) {
-            setDrawingAnchorPoint({ x, y });
-          } else {
-            const shape = store.getState().canvas.previewShape!;
-            const finalX = shape.variables.includes("width") ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
-            const finalY = shape.variables.includes("length") ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
-            const { gridX: finalGridX, gridY: finalGridY } = getGridCoordinate(finalX, finalY);
-            const { gridX: anchorGridX, gridY: anchorGridY } = getGridCoordinate(drawingAnchorPoint.x, drawingAnchorPoint.y);
-            const draw = {
-              start: { ...drawingAnchorPoint, gridX: anchorGridX, gridY: anchorGridY },
-              end: {
-                x: shape.variables.includes("width") ? x : drawingAnchorPoint.x,
-                y: shape.variables.includes("length") ? y : drawingAnchorPoint.y,
-                gridX: shape.variables.includes("width") ? gridX : anchorGridX,
-                gridY: shape.variables.includes("length") ? gridY : anchorGridY,
-              },
-            };
-            dispatch(addToCanvas({ ...shape, x: finalX, y: finalY, gridX: finalGridX, gridY: finalGridY, draw }));
-            dispatch(toggleDrawing(false));
-            setDrawingAnchorPoint(null);
-          }
+          handleClickDrawing(shape);
         }
       }
       if (nearestSnap) {
         setNearestSnap(null);
       }
+    }
+  };
+
+  const handleClickDragging = (shape: ShapeProperties) => {
+    dispatch(addToCanvas(nearestSnap ? { ...shape, ...nearestSnap } : shape));
+    dispatch(toggleDragging(false));
+  };
+
+  const handleClickDrawing = (shape: ShapeProperties) => {
+    const _shape = nearestSnap ? { ...shape, ...nearestSnap } : shape;
+    const { x, y, gridX, gridY } = _shape;
+    if (!drawingAnchorPoint) return setDrawingAnchorPoint({ x, y, gridX, gridY });
+
+    // there is at least 1 existing drawing point
+    switch (shape.draw!.type) {
+      case DrawableShapeType.TWO_VERTEX:
+        const updatedProperties = computeDimension["2v"](_shape, { x, y, gridX, gridY }, drawingAnchorPoint);
+        dispatch(addToCanvas({ ...shape, ...updatedProperties }));
+        dispatch(toggleDrawing(false));
+        setDrawingAnchorPoint(null);
+        break;
+      case DrawableShapeType.ARC:
+        // TODO:
+        break;
+      default:
+        throw new Error("Invalid drawable shape type");
     }
   };
 
@@ -80,40 +80,31 @@ export const Canvas: React.FC<{}> = () => {
       const { gridX, gridY } = getGridCoordinate(x, y);
 
       if (dragging) {
-        dispatch(updatePreview({ x, y, gridX, gridY }));
+        handleMouseOverDragging({ x, y, gridX, gridY });
       } else {
-        // drawing
-        if (drawingAnchorPoint === null) {
-          dispatch(updatePreview({ x, y, gridX, gridY }));
-        } else {
-          const shape = store.getState().canvas.previewShape!;
-          const previewX = shape.variables.includes("width") ? (drawingAnchorPoint.x + x) / 2 : drawingAnchorPoint.x;
-          const previewY = shape.variables.includes("length") ? (drawingAnchorPoint.y + y) / 2 : drawingAnchorPoint.y;
-          const { gridX: previewGridX, gridY: previewGridY } = getGridCoordinate(previewX, previewY);
-          const { gridX: anchorGridX, gridY: anchorGridY } = getGridCoordinate(drawingAnchorPoint.x, drawingAnchorPoint.y);
-          const draw = {
-            start: { ...drawingAnchorPoint, gridX: anchorGridX, gridY: anchorGridY },
-            end: {
-              x: shape.variables.includes("width") ? x : drawingAnchorPoint.x,
-              y: shape.variables.includes("length") ? y : drawingAnchorPoint.y,
-              gridX: shape.variables.includes("width") ? gridX : anchorGridX,
-              gridY: shape.variables.includes("length") ? gridY : anchorGridY,
-            },
-          };
-          console.log({ x, y, previewGridX, previewGridY, draw });
-          dispatch(updatePreview({ x: previewX, y: previewY, gridX: previewGridX, gridY: previewGridY, draw }));
-        }
+        handleMouseOverDrawing({ x, y, gridX, gridY });
       }
-
       setInspectorDisplay(false);
-      const nearestSnapGridX = Math.round(gridX);
-      const nearestSnapGridY = Math.round(gridY);
-      if (Math.abs(nearestSnapGridX - gridX) < SNAP_GRID_THRESHOLD && Math.abs(nearestSnapGridY - gridY) < SNAP_GRID_THRESHOLD) {
-        const { stageX, stageY } = getStageCoordinate(nearestSnapGridX, nearestSnapGridY);
-        setNearestSnap({ x: stageX, y: stageY, gridX: nearestSnapGridX, gridY: nearestSnapGridY });
-      } else {
-        setNearestSnap(null);
-      }
+      setNearestSnap(computeNearestSnap(gridX, gridY));
+    }
+  };
+
+  const handleMouseOverDragging = (coor: Coordinates) => {
+    dispatch(updatePreview(coor));
+  };
+
+  const handleMouseOverDrawing = (coor: Coordinates) => {
+    if (drawingAnchorPoint === null) return dispatch(updatePreview(coor));
+
+    const shape = store.getState().canvas.previewShape!;
+    // TODO: can potentially be combined into 1 function if the arguments are the same
+    switch (shape.draw!.type) {
+      case DrawableShapeType.TWO_VERTEX:
+        const updatedProperties = computeDimension["2v"](shape, coor, drawingAnchorPoint);
+        dispatch(updatePreview(updatedProperties));
+        break;
+      case DrawableShapeType.ARC:
+        break;
     }
   };
 
@@ -165,7 +156,6 @@ export const Canvas: React.FC<{}> = () => {
   };
 
   const handleAnchorDragMove = (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">) => {
-    // TODO: morph into other shapes (if it is no longer vertical)
     setInspectorDisplay(false);
     dispatch(
       updateShape({
@@ -210,7 +200,7 @@ export const Canvas: React.FC<{}> = () => {
               );
             })}
           </Layer>
-          {previewShape && (dragging || previewShape.draw?.start) && (
+          {previewShape && (dragging || previewShape.draw?.preview) && (
             <Layer>
               <Shape
                 selected={false}

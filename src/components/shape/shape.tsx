@@ -57,7 +57,7 @@ import {
 import { ArcAFIIUXC, ArcAFIUN, ArcAFIUXC } from "./shape-objects/inverted-arc";
 import Konva from "konva";
 import { WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCCDNXC, WedgeAFCCDNXXC, WedgeAFCCDSXC, WedgeAFCCDXXC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDNXXC, WedgeAFCDXC, WedgeAFCDXXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
-import { AFV$1C, AF_V$1C } from "./shape-objects/drawable-shapes";
+import { AFCLC, AFCRC, AFJ$2C, AFV$1C, AF_J$2C, AF_V$1C } from "./shape-objects/drawable-shapes";
 
 export interface ShapeProps {
   selected: boolean;
@@ -292,8 +292,14 @@ export const Shape: React.FC<ShapeProps> = (props) => {
       return <AFV$1C {...props} />;
     case ShapeType.STRAIGHT_LINE_AF_V$1C:
       return <AF_V$1C {...props} />;
-    // case ShapeType.STRAIGHT_LINE_AFJ$1C:
-    //   return <AFJ$1C {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFJ$2C:
+      return <AFJ$2C {...props} />;
+    case ShapeType.STRAIGHT_LINE_AF_J$2C:
+      return <AF_J$2C {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFCLC:
+      return <AFCLC {...props} />;
+    case ShapeType.STRAIGHT_LINE_AFCRC:
+      return <AFCRC {...props} />;
     default:
       return <></>;
   }

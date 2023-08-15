@@ -1,5 +1,7 @@
 import Konva from "konva";
 import { Layer, Line, Text } from "react-konva";
+import { Coordinates } from "../../features/shape";
+import { SNAP_GRID_THRESHOLD } from "./canvas";
 
 export interface GridlineProps {
   stage: Konva.Stage | null;
@@ -33,6 +35,17 @@ export const getStageDim = (val: number): number => {
 
 export const getGridDim = (val: number): number => {
   return val / stepSize;
+};
+
+export const computeNearestSnap = (gridX: number, gridY: number): Coordinates | null => {
+  const nearestSnapGridX = Math.round(gridX);
+  const nearestSnapGridY = Math.round(gridY);
+  if (Math.abs(nearestSnapGridX - gridX) < SNAP_GRID_THRESHOLD && Math.abs(nearestSnapGridY - gridY) < SNAP_GRID_THRESHOLD) {
+    const { stageX: x, stageY: y } = getStageCoordinate(nearestSnapGridX, nearestSnapGridY);
+    return { x, y, gridX: nearestSnapGridX, gridY: nearestSnapGridY };
+  } else {
+    return null;
+  }
 };
 
 export const Gridline: React.FC<GridlineProps> = ({ stage }) => {

@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { ShapeProps } from "../../../shape";
-import { Coordinates, DrawableShapeType, LabelPlacement } from "../../../../../features/shape";
 import { KonvaEventObject } from "konva/lib/Node";
-import { Circle, Group, Line } from "react-konva";
-import { GraphLabel } from "../../graph-label";
-import { Anchor } from "../anchor";
 import { computeDimension } from "..";
-import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
+import { Circle, Group, Line } from "react-konva";
+import { Anchor } from "../anchor";
+import { computeNearestSnap, getGridCoordinate, getStageDim } from "../../../../canvas/gridline";
+import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 
-export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
-  const { x, y, stroke1, label1, label2, draw, labelPlacement } = shape;
+export const AF_J$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+  const { stroke1, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.TWO_VERTEX) throw new Error("Wrong drawable shape type");
   const { start, end } = draw;
   const [nearestSnap, setNearestSnap] = useState<Coordinates | null>(null);
   const [existingVertex, setExistingVertex] = useState<Coordinates | null>(null);
 
-  const length = Math.abs(end!.y - start!.y);
-  const points = [start!.x, start!.y, end!.x, end!.y];
-  const labelY = labelPlacement! === LabelPlacement.HIGH ? length * -0.2 : length * 0.1;
+  const offset = getStageDim(0.15);
+  const width = end!.x - start!.x;
+  const length = end!.y - start!.y;
+  const line1Points = [-offset + start!.x, start!.y, -offset + start!.x + width * 0.1, start!.y + length * 0.25, -offset + start!.x + width * 0.9, start!.y + length * 0.75, -offset + end!.x, end!.y];
+  const line2Points = [offset + start!.x, start!.y, offset + start!.x + width * 0.1, start!.y + length * 0.25, offset + start!.x + width * 0.9, start!.y + length * 0.75, offset + end!.x, end!.y];
 
-  // TODO: can i simplify the handlers? canvas.tsx contains similar state (e.g. anchor point, nearestSnap)
   const handleAnchorDragStart = (v: Coordinates) => {
     setExistingVertex(v);
   };
@@ -50,9 +50,8 @@ export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Line points={points} stroke={stroke1} strokeWidth={2} lineCap="round" />
-        {label1 && <GraphLabel x={x - 10 - 5 * label1.length} y={y + labelY} text={label1} />}
-        {label2 && <GraphLabel x={x + 5} y={y + labelY} text={label2} />}
+        <Line points={line1Points} stroke={stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
+        <Line points={line2Points} stroke={stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
         {selected && <Anchor vertex={start!} handleDragStart={() => handleAnchorDragStart(end!)} handlDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))} handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))} />}
         {selected && <Anchor vertex={end!} handleDragStart={() => handleAnchorDragStart(start!)} handlDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))} handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))} />}
       </Group>

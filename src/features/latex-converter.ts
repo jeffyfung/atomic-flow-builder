@@ -1,5 +1,6 @@
 import { getGridDim } from "../components/canvas/gridline";
-import { LabelPlacement, ShapeProperties } from "./shape";
+import { DrawableShapeType, LabelPlacement, ShapeProperties } from "./shape";
+import { isShapePropertiesKey } from "./type-util";
 
 const roundTo1dp = (val: number): number => {
   return Math.round(val * 10) / 10;
@@ -15,18 +16,51 @@ export const convertGraphToLatex = (shapes: ShapeProperties[], compact: boolean 
 };
 
 export const convertShapeToLatex = (shape: ShapeProperties): string => {
-  const { type, gridX, gridY, variables } = shape;
+  const { type, gridX, gridY, variables, draw } = shape;
 
   let shapeSyntax: string = type;
+  if (draw) {
+    switch (draw.type) {
+      case DrawableShapeType.TWO_VERTEX:
+        const leadingToRight = draw.start!.y > draw.end!.y ? draw.start!.x < draw.end!.x : draw.start!.x > draw.end!.x;
+        shapeSyntax = shapeSyntax.replace("$2", leadingToRight ? "r" : "l");
+        break;
+      case DrawableShapeType.ARC:
+        // TODO: sth
+        break;
+    }
+  }
 
   const params = variables.reduce((accu, key) => {
-    if (key === "width") {
-      const width = getGridDim(Math.abs(shape.draw!.end!.x - shape.draw!.start!.x));
-      accu += `{${roundTo1dp(width)}}`;
-    } else if (key === "length") {
-      const length = getGridDim(Math.abs(shape.draw!.end!.y - shape.draw!.start!.y));
-      accu += `{${roundTo1dp(length)}}`;
-    } else if (/^label[0-9]$/.test(key)) {
+    if (shape.draw) {
+      if (key === "width") {
+        switch (shape.draw.type) {
+          case DrawableShapeType.TWO_VERTEX:
+            const width = getGridDim(Math.abs(shape.draw.end!.x - shape.draw.start!.x));
+            return accu + `{${roundTo1dp(width)}}`;
+          case DrawableShapeType.ARC:
+            // TODO: sth
+            break;
+          default:
+            throw new Error("Invalid drawable shape type");
+        }
+      } else if (key === "length") {
+        switch (shape.draw.type) {
+          case DrawableShapeType.TWO_VERTEX:
+            const length = getGridDim(Math.abs(shape.draw.end!.y - shape.draw.start!.y));
+            return accu + `{${roundTo1dp(length)}}`;
+          case DrawableShapeType.ARC:
+            // TODO: sth
+            break;
+          default:
+            throw new Error("Invalid drawable shape type");
+        }
+      }
+    }
+
+    if (!isShapePropertiesKey(key)) throw new Error("");
+
+    if (/^label[0-9]$/.test(key)) {
       accu += `{${shape[key]}}`;
     } else if (key === "widthFactor") {
       const widthFactor = shape[key];
