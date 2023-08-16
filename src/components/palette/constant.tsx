@@ -117,6 +117,8 @@ import af_c$2cIcon from "../../res/palette-icons/af_c$2c.png";
 import afexcIcon from "../../res/palette-icons/afexc.png";
 import afcxcIcon from "../../res/palette-icons/afcxc.png";
 import af_cxcIcon from "../../res/palette-icons/af_cxc.png";
+import affrIcon from "../../res/palette-icons/affr.png";
+import affrbIcon from "../../res/palette-icons/affrb.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -729,6 +731,19 @@ const curvedLineCatItemSchema: LeafPaletteItemSchema[] = [
   },
 ];
 
+const boxCatItemSchema: LeafPaletteItemSchema[] = [
+  {
+    shapeType: ShapeType.BOX_AFFR,
+    iconElement: <img src={affrIcon} alt="affr" width="24px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.BOX_AFFRB,
+    iconElement: <img src={affrbIcon} alt="affrb" width="24px" />,
+    nested: false,
+  },
+];
+
 export const paletteItemSchema: PaletteItemSchemaType[] = [
   {
     iconElement: <img src={afidnIcon} alt="arcCatIcon" width="30px" />,
@@ -774,5 +789,10 @@ export const paletteItemSchema: PaletteItemSchemaType[] = [
     iconElement: <img src={afj$2cIcon} alt="afj$2c" width="23px" />,
     nested: true,
     children: curvedLineCatItemSchema,
+  },
+  {
+    iconElement: <img src={affrIcon} alt="affr" width="23px" />,
+    nested: true,
+    children: boxCatItemSchema,
   },
 ];

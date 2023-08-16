@@ -181,6 +181,8 @@ export enum ShapeType {
   STRAIGHT_LINE_AFEXC = "afexc",
   STRAIGHT_LINE_AFCXC = "afcxc",
   STRAIGHT_LINE_AF_CXC = "afCxc",
+  BOX_AFFR = "affr",
+  BOX_AFFRB = "affrb",
 }
 
 export enum LatexColour {
@@ -2082,6 +2084,27 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         stroke2: LatexColour.BLACK,
         draw: { type: DrawableShapeType.RECT, preview: false },
         variables: ["width", "length", "stroke1", "stroke2"],
+      };
+    case ShapeType.BOX_AFFR:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        draw: { type: DrawableShapeType.RECT, preview: false },
+        variables: ["width", "length"],
+      };
+    case ShapeType.BOX_AFFRB:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        fill: "#C9C9C9",
+        draw: { type: DrawableShapeType.RECT, preview: false },
+        variables: ["width", "length"],
       };
     default:
       throw new Error("Invalid shape type");

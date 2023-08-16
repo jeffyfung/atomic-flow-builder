@@ -4,6 +4,7 @@ import { getGridCoordinate } from "../../../canvas/gridline";
 export * from "./straight-line";
 export * from "./curves";
 export * from "./arcs";
+export * from "./boxes";
 
 export const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinates, fixedV: Coordinates): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
   const variableWidth = shape.variables.includes("width");
