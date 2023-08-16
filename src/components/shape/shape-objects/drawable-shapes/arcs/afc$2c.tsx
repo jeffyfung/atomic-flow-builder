@@ -6,6 +6,7 @@ import { Anchor } from "../anchor";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
 import { computeDimensionArc } from "..";
+import { isArcVertexName } from "../../../../../features/type-util";
 
 export const AFC$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, draw } = shape;
@@ -49,8 +50,8 @@ export const AFC$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={top!} //
             vertexName="top"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
         {selected && (
@@ -58,8 +59,8 @@ export const AFC$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={middle!} //
             vertexName="middle"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
         {selected && (
@@ -67,8 +68,8 @@ export const AFC$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={bottom!} //
             vertexName="bottom"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
       </Group>

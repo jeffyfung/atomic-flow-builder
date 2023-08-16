@@ -6,6 +6,7 @@ import { Anchor } from "../anchor";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { computeNearestSnap, getGridCoordinate, getStageDim } from "../../../../canvas/gridline";
 import { computeDimensionArc } from "..";
+import { isArcVertexName } from "../../../../../features/type-util";
 
 export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, draw } = shape;
@@ -54,8 +55,8 @@ export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
             vertex={top!} //
             vertexName="top"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
         {selected && (
@@ -63,8 +64,8 @@ export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
             vertex={middle!} //
             vertexName="middle"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
         {selected && (
