@@ -166,8 +166,7 @@ export enum ShapeType {
   STRAIGHT_LINE_AF_V$1C = "afV$1c",
   STRAIGHT_LINE_AFJ$2C = "afj$2c",
   STRAIGHT_LINE_AF_J$2C = "afJ$2c",
-  STRAIGHT_LINE_AFCLC = "afclc",
-  STRAIGHT_LINE_AFCRC = "afcrc",
+  STRAIGHT_LINE_AFC$2C = "afc$2c",
 }
 
 export enum LatexColour {
@@ -2012,18 +2011,7 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         draw: { type: DrawableShapeType.TWO_VERTEX, preview: false },
         variables: ["width", "length", "stroke1"],
       };
-    case ShapeType.STRAIGHT_LINE_AFCLC:
-      return {
-        type,
-        x,
-        y,
-        gridX,
-        gridY,
-        stroke1: LatexColour.BLACK,
-        draw: { type: DrawableShapeType.ARC, preview: false },
-        variables: ["width", "length", "stroke1"],
-      };
-    case ShapeType.STRAIGHT_LINE_AFCRC:
+    case ShapeType.STRAIGHT_LINE_AFC$2C:
       return {
         type,
         x,

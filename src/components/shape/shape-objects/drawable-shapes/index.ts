@@ -5,7 +5,7 @@ export * from "./straight-line";
 export * from "./curves";
 export * from "./arcs";
 
-const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinates, fixedV: Coordinates): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
+export const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinates, fixedV: Coordinates): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
   const variableWidth = shape.variables.includes("width");
   const variableLength = shape.variables.includes("length");
 
@@ -32,12 +32,45 @@ const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinates, fix
   };
 };
 
-// TODO:
-const computeDimensionArc = (): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
-  throw new Error("not implemented");
+export const computeDimensionArc = (displacedV: Record<string, Coordinates>, allVs: Record<string, Coordinates>): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
+  const displacedVName = Object.keys(displacedV)[0];
+  let { top, middle, bottom } = allVs;
+  const { x, gridX } = displacedV[displacedVName];
+  if (displacedVName === "middle") {
+    middle = { ...middle, x, gridX };
+  } else {
+    if (displacedVName === "top") {
+      middle = { ...middle, y: (displacedV[displacedVName].y + bottom.y) / 2, gridY: (displacedV[displacedVName].gridY + bottom.gridY) / 2 };
+      top = displacedV[displacedVName];
+      bottom = { ...bottom, x, gridX };
+    } else {
+      middle = { ...middle, y: (displacedV[displacedVName].y + top.y) / 2, gridY: (displacedV[displacedVName].gridY + top.gridY) / 2 };
+      bottom = displacedV[displacedVName];
+      top = { ...top, x, gridX };
+    }
+  }
+
+  const newX = top.x;
+  const newY = (top.y + bottom.y) / 2;
+  const { gridX: newGridX, gridY: newGridY } = getGridCoordinate(newX, newY);
+
+  return {
+    x: newX,
+    y: newY,
+    gridX: newGridX,
+    gridY: newGridY,
+    draw: {
+      type: DrawableShapeType.ARC,
+      preview: true,
+      top,
+      bottom,
+      middle,
+    },
+  };
 };
 
-export const computeDimension: Record<DrawableShapeType, (...args: Parameters<typeof computeDimension2V>) => Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">> = {
-  [DrawableShapeType.TWO_VERTEX]: computeDimension2V,
-  [DrawableShapeType.ARC]: computeDimensionArc,
-};
+// TODO: type this properly, or split it into 2 separate functions
+// export const computeDimension: Record<DrawableShapeType, (...args: any) => Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">> = {
+//   [DrawableShapeType.TWO_VERTEX]: computeDimension2V,
+//   [DrawableShapeType.ARC]: computeDimensionArc,
+// };

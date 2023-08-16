@@ -1,15 +1,17 @@
 import { KonvaEventObject } from "konva/lib/Node";
 import React from "react";
 import { Circle } from "react-konva";
+import { Coordinates } from "../../../../features/shape";
 
 export interface AnchorProps {
-  vertex: { x: number; y: number };
-  handlDragMove: (event: KonvaEventObject<DragEvent>) => void;
-  handleDragEnd: (event: KonvaEventObject<DragEvent>) => void;
+  vertex: Coordinates;
+  vertexName: string;
   handleDragStart: () => void;
+  handleDragMove: (event: KonvaEventObject<DragEvent>, vName: string) => void; // optional?
+  handleDragEnd: (event: KonvaEventObject<DragEvent>, vName: string) => void;
 }
 
-export const Anchor: React.FC<AnchorProps> = ({ vertex, handleDragStart, handlDragMove, handleDragEnd }) => {
+export const Anchor: React.FC<AnchorProps> = ({ vertex, vertexName, handleDragStart, handleDragMove, handleDragEnd }) => {
   const { x, y } = vertex;
   return (
     <Circle
@@ -21,8 +23,8 @@ export const Anchor: React.FC<AnchorProps> = ({ vertex, handleDragStart, handlDr
       fill="#e6e6e6"
       draggable
       onDragStart={handleDragStart}
-      onDragMove={handlDragMove}
-      onDragEnd={handleDragEnd}
+      onDragMove={(e) => handleDragMove(e, vertexName)}
+      onDragEnd={(e) => handleDragEnd(e, vertexName)}
     />
   );
 };

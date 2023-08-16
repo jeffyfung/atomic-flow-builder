@@ -112,8 +112,7 @@ import afv$1cIcon from "../../res/palette-icons/afv$c.png";
 import af_v$1cIcon from "../../res/palette-icons/af_v$c.png";
 import afj$2cIcon from "../../res/palette-icons/afj$2c.png";
 import af_j$2cIcon from "../../res/palette-icons/af_j$2c.png";
-import afclcIcon from "../../res/palette-icons/afclc.png";
-import afcrcIcon from "../../res/palette-icons/afcrc.png";
+import afc$2cIcon from "../../res/palette-icons/afc$2c.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -700,13 +699,8 @@ const curvedLineCatItemSchema: LeafPaletteItemSchema[] = [
     nested: false,
   },
   {
-    shapeType: ShapeType.STRAIGHT_LINE_AFCLC,
-    iconElement: <img src={afclcIcon} alt="afclc" width="15px" />,
-    nested: false,
-  },
-  {
-    shapeType: ShapeType.STRAIGHT_LINE_AFCRC,
-    iconElement: <img src={afcrcIcon} alt="afcrc" width="15px" />,
+    shapeType: ShapeType.STRAIGHT_LINE_AFC$2C,
+    iconElement: <img src={afc$2cIcon} alt="afc$2c" width="13px" />,
     nested: false,
   },
 ];

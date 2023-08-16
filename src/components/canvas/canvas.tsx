@@ -8,7 +8,8 @@ import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
 import { Gridline, computeNearestSnap, getGridCoordinate } from "./gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
-import { computeDimension } from "../shape/shape-objects/drawable-shapes";
+import { computeDimension2V, computeDimensionArc } from "../shape/shape-objects/drawable-shapes";
+import { KonvaEventObject } from "konva/lib/Node";
 
 export const SNAP_GRID_THRESHOLD = 0.4;
 
@@ -55,19 +56,32 @@ export const Canvas: React.FC<{}> = () => {
     if (!drawingAnchorPoint) return setDrawingAnchorPoint({ x, y, gridX, gridY });
 
     // there is at least 1 existing drawing point
+    let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
     switch (shape.draw!.type) {
       case DrawableShapeType.TWO_VERTEX:
-        const updatedProperties = computeDimension["2v"](_shape, { x, y, gridX, gridY }, drawingAnchorPoint);
-        dispatch(addToCanvas({ ...shape, ...updatedProperties }));
-        dispatch(toggleDrawing(false));
-        setDrawingAnchorPoint(null);
+        updatedProperties = computeDimension2V(_shape, { x, y, gridX, gridY }, drawingAnchorPoint);
         break;
       case DrawableShapeType.ARC:
-        // TODO:
+        updatedProperties = {
+          x: drawingAnchorPoint.x,
+          y: (drawingAnchorPoint.y + y) / 2,
+          gridX: drawingAnchorPoint.gridX,
+          gridY: (drawingAnchorPoint.gridY + gridY) / 2,
+          draw: {
+            type: DrawableShapeType.ARC,
+            preview: true,
+            top: drawingAnchorPoint,
+            bottom: { x: drawingAnchorPoint.x, y, gridX: drawingAnchorPoint.gridX, gridY },
+            middle: { x, y: (drawingAnchorPoint.y + y) / 2, gridX, gridY: (drawingAnchorPoint.gridY + gridY) / 2 },
+          },
+        };
         break;
       default:
         throw new Error("Invalid drawable shape type");
     }
+    dispatch(addToCanvas({ ...shape, ...updatedProperties }));
+    dispatch(toggleDrawing(false));
+    setDrawingAnchorPoint(null);
   };
 
   const handleMouseOver = (event: React.MouseEvent<HTMLElement>) => {
@@ -97,15 +111,30 @@ export const Canvas: React.FC<{}> = () => {
     if (drawingAnchorPoint === null) return dispatch(updatePreview(coor));
 
     const shape = store.getState().canvas.previewShape!;
-    // TODO: can potentially be combined into 1 function if the arguments are the same
+    const { x, y, gridX, gridY } = coor;
+    // TODO: can potentially be combined into 1 function if the arguments are the same?
+    let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
     switch (shape.draw!.type) {
       case DrawableShapeType.TWO_VERTEX:
-        const updatedProperties = computeDimension["2v"](shape, coor, drawingAnchorPoint);
-        dispatch(updatePreview(updatedProperties));
+        updatedProperties = computeDimension2V(shape, coor, drawingAnchorPoint);
         break;
       case DrawableShapeType.ARC:
+        updatedProperties = {
+          x: drawingAnchorPoint.x,
+          y: (drawingAnchorPoint.y + y) / 2,
+          gridX: drawingAnchorPoint.gridX,
+          gridY: (drawingAnchorPoint.gridY + gridY) / 2,
+          draw: {
+            type: DrawableShapeType.ARC,
+            preview: true,
+            top: drawingAnchorPoint,
+            bottom: { x: drawingAnchorPoint.x, y, gridX: drawingAnchorPoint.gridX, gridY },
+            middle: { x, y: (drawingAnchorPoint.y + y) / 2, gridX, gridY: (drawingAnchorPoint.gridY + gridY) / 2 },
+          },
+        };
         break;
     }
+    dispatch(updatePreview(updatedProperties));
   };
 
   const handleClickShape = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
@@ -165,6 +194,28 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
+  // const handleAnchorDragMove = (e: KonvaEventObject<DragEvent>, shapeId: string, vName: string, drawType: DrawableShapeType, existingVertex: Record<string, Coordinates>) => {
+  //   const { x, y } = e.target!.absolutePosition();
+  //   const { gridX, gridY } = getGridCoordinate(x, y);
+  //   setNearestSnap(computeNearestSnap(gridX, gridY));
+  //   let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
+  //   if (drawType === DrawableShapeType.TWO_VERTEX) {
+  //     // const updatedProperties = computeDimension2V(shape, { [vName]: { x: _x, y: _y, gridX, gridY } }, existingVertex);
+  //     updatedProperties = {};
+  //   } else {
+  //     // Arc
+  //     updatedProperties = computeDimensionArc({ [vName]: { x, y, gridX, gridY } }, existingVertex);
+  //   }
+
+  //   setInspectorDisplay(false);
+  //   dispatch(
+  //     updateShape({
+  //       id: shapeId,
+  //       properties: updatedProperties,
+  //     })
+  //   );
+  // };
+
   const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => {
     if (Object.keys(payload).length > 0) {
       dispatch(
@@ -175,6 +226,27 @@ export const Canvas: React.FC<{}> = () => {
       );
     }
   };
+
+  // const handleAnchorDragEnd = (e: KonvaEventObject<DragEvent>, shapeId: string, vName: string, drawType: DrawableShapeType, existingVertex: Record<string, Coordinates>) => {
+  //   if (nearestSnap) {
+  //     const payload = computeDimensionArc(shape, { [vName]: nearestSnap }, existingVertex!);
+  //     setNearestSnap(null);
+  //     setExistingVertex(null);
+  //     return payload;
+  //   } else {
+  //     setExistingVertex(null);
+  //     return {};
+  //   }
+
+  //   if (Object.keys(payload).length > 0) {
+  //     dispatch(
+  //       updateShape({
+  //         id: shapeId,
+  //         properties: payload,
+  //       })
+  //     );
+  //   }
+  // }
 
   return (
     <>

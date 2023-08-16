@@ -26,7 +26,8 @@ export const convertShapeToLatex = (shape: ShapeProperties): string => {
         shapeSyntax = shapeSyntax.replace("$2", leadingToRight ? "r" : "l");
         break;
       case DrawableShapeType.ARC:
-        // TODO: sth
+        const bendRight = draw.top!.x < draw.middle!.x;
+        shapeSyntax = shapeSyntax.replace("$2", bendRight ? "r" : "l");
         break;
     }
   }
@@ -34,27 +35,31 @@ export const convertShapeToLatex = (shape: ShapeProperties): string => {
   const params = variables.reduce((accu, key) => {
     if (shape.draw) {
       if (key === "width") {
+        let width: number;
         switch (shape.draw.type) {
           case DrawableShapeType.TWO_VERTEX:
-            const width = getGridDim(Math.abs(shape.draw.end!.x - shape.draw.start!.x));
-            return accu + `{${roundTo1dp(width)}}`;
+            width = getGridDim(Math.abs(shape.draw.end!.x - shape.draw.start!.x));
+            break;
           case DrawableShapeType.ARC:
-            // TODO: sth
+            width = getGridDim(Math.abs(shape.draw.top!.x - shape.draw.middle!.x) * 2);
             break;
           default:
             throw new Error("Invalid drawable shape type");
         }
+        return accu + `{${roundTo1dp(width)}}`;
       } else if (key === "length") {
+        let length: number;
         switch (shape.draw.type) {
           case DrawableShapeType.TWO_VERTEX:
-            const length = getGridDim(Math.abs(shape.draw.end!.y - shape.draw.start!.y));
-            return accu + `{${roundTo1dp(length)}}`;
+            length = getGridDim(Math.abs(shape.draw.end!.y - shape.draw.start!.y));
+            break;
           case DrawableShapeType.ARC:
-            // TODO: sth
+            length = getGridDim(Math.abs(shape.draw.top!.y - shape.draw.bottom!.y));
             break;
           default:
             throw new Error("Invalid drawable shape type");
         }
+        return accu + `{${roundTo1dp(length)}}`;
       }
     }
 

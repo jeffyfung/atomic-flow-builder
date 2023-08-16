@@ -5,8 +5,8 @@ import { KonvaEventObject } from "konva/lib/Node";
 import { Circle, Group, Line } from "react-konva";
 import { GraphLabel } from "../../graph-label";
 import { Anchor } from "../anchor";
-import { computeDimension } from "..";
 import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
+import { computeDimension2V } from "..";
 
 export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { x, y, stroke1, label1, label2, draw, labelPlacement } = shape;
@@ -19,21 +19,16 @@ export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const points = [start!.x, start!.y, end!.x, end!.y];
   const labelY = labelPlacement! === LabelPlacement.HIGH ? length * -0.2 : length * 0.1;
 
-  // TODO: can i simplify the handlers? canvas.tsx contains similar state (e.g. anchor point, nearestSnap)
-  const handleAnchorDragStart = (v: Coordinates) => {
-    setExistingVertex(v);
-  };
-
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
     const { x: _x, y: _y } = event.target!.absolutePosition();
     const { gridX, gridY } = getGridCoordinate(_x, _y);
     setNearestSnap(computeNearestSnap(gridX, gridY));
-    return computeDimension["2v"](shape, { x: _x, y: _y, gridX, gridY }, existingVertex!);
+    return computeDimension2V(shape, { x: _x, y: _y, gridX, gridY }, existingVertex!);
   };
 
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>) => {
     if (nearestSnap) {
-      const payload = computeDimension["2v"](shape, nearestSnap, existingVertex!);
+      const payload = computeDimension2V(shape, nearestSnap, existingVertex!);
       setNearestSnap(null);
       setExistingVertex(null);
       return payload;
@@ -53,8 +48,24 @@ export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
         <Line points={points} stroke={stroke1} strokeWidth={2} lineCap="round" />
         {label1 && <GraphLabel x={x - 10 - 5 * label1.length} y={y + labelY} text={label1} />}
         {label2 && <GraphLabel x={x + 5} y={y + labelY} text={label2} />}
-        {selected && <Anchor vertex={start!} handleDragStart={() => handleAnchorDragStart(end!)} handlDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))} handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))} />}
-        {selected && <Anchor vertex={end!} handleDragStart={() => handleAnchorDragStart(start!)} handlDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))} handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))} />}
+        {selected && (
+          <Anchor
+            vertex={start!} //
+            vertexName="start"
+            handleDragStart={() => setExistingVertex(end!)}
+            handleDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))}
+            handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))}
+          />
+        )}
+        {selected && (
+          <Anchor
+            vertex={end!} //
+            vertexName="end"
+            handleDragStart={() => setExistingVertex(start!)}
+            handleDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))}
+            handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))}
+          />
+        )}
       </Group>
       {nearestSnap && <Circle x={nearestSnap!.x} y={nearestSnap!.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />}
     </>

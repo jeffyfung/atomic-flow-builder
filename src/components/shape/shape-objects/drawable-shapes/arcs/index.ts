@@ -1,2 +1,1 @@
-export * from "./afclc";
-export * from "./afcrc";
+export * from "./afc$2c";
