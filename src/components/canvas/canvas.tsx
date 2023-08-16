@@ -76,6 +76,22 @@ export const Canvas: React.FC<{}> = () => {
           },
         };
         break;
+      case DrawableShapeType.RECT:
+        updatedProperties = {
+          x: (drawingAnchorPoint.x + x) / 2,
+          y: (drawingAnchorPoint.y + y) / 2,
+          gridX: (drawingAnchorPoint.gridX + gridX) / 2,
+          gridY: (drawingAnchorPoint.gridY + gridY) / 2,
+          draw: {
+            type: DrawableShapeType.RECT,
+            preview: true,
+            p1: drawingAnchorPoint,
+            p2: { x, y: drawingAnchorPoint.y, gridX, gridY: drawingAnchorPoint.gridY },
+            p3: { x: drawingAnchorPoint.x, y, gridX: drawingAnchorPoint.gridX, gridY },
+            p4: { x, y, gridX, gridY },
+          },
+        };
+        break;
       default:
         throw new Error("Invalid drawable shape type");
     }
@@ -130,6 +146,22 @@ export const Canvas: React.FC<{}> = () => {
             top: drawingAnchorPoint,
             bottom: { x: drawingAnchorPoint.x, y, gridX: drawingAnchorPoint.gridX, gridY },
             middle: { x, y: (drawingAnchorPoint.y + y) / 2, gridX, gridY: (drawingAnchorPoint.gridY + gridY) / 2 },
+          },
+        };
+        break;
+      case DrawableShapeType.RECT:
+        updatedProperties = {
+          x: (drawingAnchorPoint.x + x) / 2,
+          y: (drawingAnchorPoint.y + y) / 2,
+          gridX: (drawingAnchorPoint.gridX + gridX) / 2,
+          gridY: (drawingAnchorPoint.gridY + gridY) / 2,
+          draw: {
+            type: DrawableShapeType.RECT,
+            preview: true,
+            p1: drawingAnchorPoint,
+            p2: { x, y: drawingAnchorPoint.y, gridX, gridY: drawingAnchorPoint.gridY },
+            p3: { x: drawingAnchorPoint.x, y, gridX: drawingAnchorPoint.gridX, gridY },
+            p4: { x, y, gridX, gridY },
           },
         };
         break;

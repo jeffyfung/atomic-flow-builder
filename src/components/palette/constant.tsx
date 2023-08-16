@@ -114,6 +114,7 @@ import afj$2cIcon from "../../res/palette-icons/afj$2c.png";
 import af_j$2cIcon from "../../res/palette-icons/af_j$2c.png";
 import afc$2cIcon from "../../res/palette-icons/afc$2c.png";
 import af_c$2cIcon from "../../res/palette-icons/af_c$2c.png";
+import afexcIcon from "../../res/palette-icons/afexc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -707,6 +708,11 @@ const curvedLineCatItemSchema: LeafPaletteItemSchema[] = [
   {
     shapeType: ShapeType.STRAIGHT_LINE_AF_C$2C,
     iconElement: <img src={af_c$2cIcon} alt="af_c$2c" width="15px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.STRAIGHT_LINE_AFEXC,
+    iconElement: <img src={afexcIcon} alt="afexc" width="22px" />,
     nested: false,
   },
 ];

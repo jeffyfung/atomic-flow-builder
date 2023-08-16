@@ -69,6 +69,53 @@ export const computeDimensionArc = (displacedV: Record<string, Coordinates>, all
   };
 };
 
+export const computeDimensionRect = (displacedV: Record<string, Coordinates>, allVs: Record<string, Coordinates>): Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw"> => {
+  const displacedVName = Object.keys(displacedV)[0];
+  let { p1, p2, p3, p4 } = allVs;
+  const { x, y, gridX, gridY } = displacedV[displacedVName];
+  switch (displacedVName) {
+    case "p1":
+      p1 = displacedV[displacedVName];
+      p2 = { ...p2, y, gridY };
+      p3 = { ...p3, x, gridX };
+      break;
+    case "p2":
+      p2 = displacedV[displacedVName];
+      p1 = { ...p1, y, gridY };
+      p4 = { ...p4, x, gridX };
+      break;
+    case "p3":
+      p3 = displacedV[displacedVName];
+      p1 = { ...p1, x, gridX };
+      p4 = { ...p4, y, gridY };
+      break;
+    case "p4":
+      p4 = displacedV[displacedVName];
+      p2 = { ...p2, x, gridX };
+      p3 = { ...p3, y, gridY };
+      break;
+  }
+
+  const newX = (p1.x + p2.x) / 2;
+  const newY = (p1.y + p3.y) / 2;
+  const { gridX: newGridX, gridY: newGridY } = getGridCoordinate(newX, newY);
+
+  return {
+    x: newX,
+    y: newY,
+    gridX: newGridX,
+    gridY: newGridY,
+    draw: {
+      type: DrawableShapeType.RECT,
+      preview: true,
+      p1,
+      p2,
+      p3,
+      p4,
+    },
+  };
+};
+
 // TODO: type this properly, or split it into 2 separate functions
 // export const computeDimension: Record<DrawableShapeType, (...args: any) => Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">> = {
 //   [DrawableShapeType.TWO_VERTEX]: computeDimension2V,

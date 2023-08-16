@@ -7,3 +7,7 @@ export const isShapePropertiesKey = (val: keyof ShapeProperties | "length" | "wi
 export const isArcVertexName = (val: string): val is "top" | "middle" | "bottom" => {
   return ["top", "middle", "bottom"].includes(val);
 };
+
+export const isRectVertexName = (val: string): val is "p1" | "p2" | "p3" | "p4" => {
+  return ["p1", "p2", "p3", "p4"].includes(val);
+};

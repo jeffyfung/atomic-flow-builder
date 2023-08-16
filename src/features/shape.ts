@@ -19,7 +19,7 @@ export interface ShapeProperties {
   heightFactor?: number;
   fill?: string;
   labelPlacement?: LabelPlacement;
-  draw?: DrawProperties2V | DrawPropertiesArc;
+  draw?: DrawProperties2V | DrawPropertiesArc | DrawPropertiesRect;
   variables: (keyof ShapeProperties | "length" | "width")[];
 }
 
@@ -33,6 +33,7 @@ export interface Coordinates {
 export enum DrawableShapeType {
   TWO_VERTEX = "2v",
   ARC = "arc",
+  RECT = "rect",
 }
 
 interface DrawProperties2V {
@@ -45,9 +46,18 @@ interface DrawProperties2V {
 interface DrawPropertiesArc {
   type: DrawableShapeType.ARC;
   preview: boolean;
-  top?: { x: number; y: number; gridX: number; gridY: number };
-  bottom?: { x: number; y: number; gridX: number; gridY: number };
-  middle?: { x: number; y: number; gridX: number; gridY: number };
+  top?: Coordinates;
+  bottom?: Coordinates;
+  middle?: Coordinates;
+}
+
+interface DrawPropertiesRect {
+  type: DrawableShapeType.RECT;
+  preview: boolean;
+  p1?: Coordinates; // topLeft
+  p2?: Coordinates; // topRight
+  p3?: Coordinates; // bottomLeft
+  p4?: Coordinates; // bottomRight
 }
 
 export enum LabelPlacement {
@@ -168,6 +178,7 @@ export enum ShapeType {
   STRAIGHT_LINE_AF_J$2C = "afJ$2c",
   STRAIGHT_LINE_AFC$2C = "afc$2c",
   STRAIGHT_LINE_AF_C$2C = "afC$2c",
+  STRAIGHT_LINE_AFEXC = "afexc",
 }
 
 export enum LatexColour {
@@ -2033,6 +2044,18 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         stroke1: LatexColour.BLACK,
         draw: { type: DrawableShapeType.ARC, preview: false },
         variables: ["width", "length", "stroke1"],
+      };
+    case ShapeType.STRAIGHT_LINE_AFEXC:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        stroke2: LatexColour.BLACK,
+        draw: { type: DrawableShapeType.RECT, preview: false },
+        variables: ["width", "length", "stroke1", "stroke2"],
       };
     default:
       throw new Error("Invalid shape type");

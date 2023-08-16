@@ -43,6 +43,9 @@ export const convertShapeToLatex = (shape: ShapeProperties): string => {
           case DrawableShapeType.ARC:
             width = getGridDim(Math.abs(shape.draw.top!.x - shape.draw.middle!.x) * 2);
             break;
+          case DrawableShapeType.RECT:
+            width = getGridDim(Math.abs(shape.draw.p2!.x - shape.draw.p1!.x));
+            break;
           default:
             throw new Error("Invalid drawable shape type");
         }
@@ -55,6 +58,9 @@ export const convertShapeToLatex = (shape: ShapeProperties): string => {
             break;
           case DrawableShapeType.ARC:
             length = getGridDim(Math.abs(shape.draw.top!.y - shape.draw.bottom!.y));
+            break;
+          case DrawableShapeType.RECT:
+            length = getGridDim(Math.abs(shape.draw.p3!.y - shape.draw.p1!.y));
             break;
           default:
             throw new Error("Invalid drawable shape type");
