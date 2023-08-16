@@ -8,7 +8,7 @@ import { Circle, Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { isRectVertexName } from "../../../../../features/type-util";
 
-export const AFEXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, stroke2, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.RECT) throw new Error("Wrong drawable shape type");
   const { p1, p2, p3, p4 } = draw;
@@ -19,8 +19,8 @@ export const AFEXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
   const invertStrokeColour: boolean = (p2!.x < p1!.x || p3!.y < p1!.y) && !(p2!.x < p1!.x && p3!.y < p1!.y);
   const width = p2!.x - p1!.x;
   const length = p3!.y - p1!.y;
-  const line1Points = [p2!.x, p2!.y, p2!.x - width * 0.1, p2!.y + length * 0.25, p2!.x - width * 0.9, p2!.y + length * 0.75, p3!.x, p3!.y];
-  const line2Points = [p1!.x, p1!.y, p1!.x + width * 0.1, p1!.y + length * 0.25, p1!.x + width * 0.9, p1!.y + length * 0.75, p4!.x, p4!.y];
+  const line1Points = [p2!.x, p2!.y, p2!.x - width * 0.25, p2!.y + length * 0.1, p2!.x - width * 0.75, p2!.y + length * 0.9, p3!.x, p3!.y];
+  const line2Points = [p1!.x, p1!.y, p1!.x + width * 0.25, p1!.y + length * 0.1, p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4"): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
     const { x: _x, y: _y } = event.target!.absolutePosition();

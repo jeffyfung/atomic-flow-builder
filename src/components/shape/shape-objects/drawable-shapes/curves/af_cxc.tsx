@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { ShapeProps } from "../../../shape";
 import { KonvaEventObject } from "konva/lib/Node";
-import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getStageDim } from "../../../../canvas/gridline";
 import { computeDimensionRect } from "..";
 import { Circle, Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { isRectVertexName } from "../../../../../features/type-util";
 
-export const AFEXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, stroke2, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.RECT) throw new Error("Wrong drawable shape type");
   const { p1, p2, p3, p4 } = draw;
@@ -16,11 +16,14 @@ export const AFEXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
   const [nearestSnap, setNearestSnap] = useState<Coordinates | null>(null);
   const [existingVertex, setExistingVertex] = useState<Record<string, Coordinates> | null>(null);
 
+  const offset = getStageDim(0.15);
   const invertStrokeColour: boolean = (p2!.x < p1!.x || p3!.y < p1!.y) && !(p2!.x < p1!.x && p3!.y < p1!.y);
   const width = p2!.x - p1!.x;
   const length = p3!.y - p1!.y;
-  const line1Points = [p2!.x, p2!.y, p2!.x - width * 0.1, p2!.y + length * 0.25, p2!.x - width * 0.9, p2!.y + length * 0.75, p3!.x, p3!.y];
-  const line2Points = [p1!.x, p1!.y, p1!.x + width * 0.1, p1!.y + length * 0.25, p1!.x + width * 0.9, p1!.y + length * 0.75, p4!.x, p4!.y];
+  const line1aPoints = [p2!.x, p2!.y, -offset + p2!.x - width * 0.25, p2!.y + length * 0.1, -offset + p2!.x - width * 0.75, p2!.y + length * 0.9, p3!.x, p3!.y];
+  const line1bPoints = [p2!.x, p2!.y, offset + p2!.x - width * 0.25, p2!.y + length * 0.1, offset + p2!.x - width * 0.75, p2!.y + length * 0.9, p3!.x, p3!.y];
+  const line2aPoints = [p1!.x, p1!.y, -offset + p1!.x + width * 0.25, p1!.y + length * 0.1, -offset + p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
+  const line2bPoints = [p1!.x, p1!.y, offset + p1!.x + width * 0.25, p1!.y + length * 0.1, offset + p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4"): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
     const { x: _x, y: _y } = event.target!.absolutePosition();
@@ -47,8 +50,10 @@ export const AFEXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Line points={line1Points} stroke={invertStrokeColour ? stroke1 : stroke2} strokeWidth={2} lineCap="round" tension={0.5} />
-        <Line points={line2Points} stroke={invertStrokeColour ? stroke2 : stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
+        <Line points={line1aPoints} stroke={invertStrokeColour ? stroke1 : stroke2} strokeWidth={2} lineCap="round" tension={0.5} />
+        <Line points={line1bPoints} stroke={invertStrokeColour ? stroke1 : stroke2} strokeWidth={2} lineCap="round" tension={0.5} />
+        <Line points={line2aPoints} stroke={invertStrokeColour ? stroke2 : stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
+        <Line points={line2bPoints} stroke={invertStrokeColour ? stroke2 : stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
         {selected && (
           <Anchor
             vertex={p1!} //
