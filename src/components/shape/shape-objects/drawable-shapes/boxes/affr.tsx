@@ -9,7 +9,7 @@ import { Anchor } from "../anchor";
 import { isRectVertexName } from "../../../../../features/type-util";
 
 export const AFFR: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
-  const { x, y, fill, draw } = shape;
+  const { fill, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.RECT) throw new Error("Wrong drawable shape type");
   const { p1, p2, p3, p4 } = draw;
   const vertices = { p1: p1!, p2: p2!, p3: p3!, p4: p4! };

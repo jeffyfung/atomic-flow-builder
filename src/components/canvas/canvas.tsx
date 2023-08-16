@@ -8,8 +8,7 @@ import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
 import { Gridline, computeNearestSnap, getGridCoordinate } from "./gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
-import { computeDimension2V, computeDimensionArc } from "../shape/shape-objects/drawable-shapes";
-import { KonvaEventObject } from "konva/lib/Node";
+import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
 
 export const SNAP_GRID_THRESHOLD = 0.4;
 
