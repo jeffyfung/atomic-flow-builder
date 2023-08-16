@@ -167,6 +167,7 @@ export enum ShapeType {
   STRAIGHT_LINE_AFJ$2C = "afj$2c",
   STRAIGHT_LINE_AF_J$2C = "afJ$2c",
   STRAIGHT_LINE_AFC$2C = "afc$2c",
+  STRAIGHT_LINE_AF_C$2C = "afC$2c",
 }
 
 export enum LatexColour {
@@ -2012,6 +2013,17 @@ export const getShapeProperties = (type: ShapeType, x: number, y: number): Shape
         variables: ["width", "length", "stroke1"],
       };
     case ShapeType.STRAIGHT_LINE_AFC$2C:
+      return {
+        type,
+        x,
+        y,
+        gridX,
+        gridY,
+        stroke1: LatexColour.BLACK,
+        draw: { type: DrawableShapeType.ARC, preview: false },
+        variables: ["width", "length", "stroke1"],
+      };
+    case ShapeType.STRAIGHT_LINE_AF_C$2C:
       return {
         type,
         x,
