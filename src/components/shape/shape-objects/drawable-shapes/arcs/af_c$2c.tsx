@@ -73,8 +73,8 @@ export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
             vertex={bottom!} //
             vertexName="bottom"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex as "top" | "bottom" | "middle"))}
-            handleDragEnd={(e, vertex) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex as "top" | "bottom" | "middle"))}
+            handleDragMove={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
+            handleDragEnd={(e, vertex) => isArcVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
           />
         )}
       </Group>
