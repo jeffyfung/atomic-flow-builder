@@ -8,12 +8,12 @@ import { computeNearestSnap, getGridCoordinate, getStageDim } from "../../../../
 import { computeDimensionArc } from "..";
 import { isArcVertexName } from "../../../../../features/type-util";
 
-export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.ARC) throw new Error("Wrong drawable shape type");
   const { top, bottom, middle } = draw;
   const vertices = { top: top!, middle: middle!, bottom: bottom! };
-  const [nearestSnap, setNearestSnap] = useState<Coordinates | null>(null);
+  const [nearestSnap, setNearestSnap] = useState<Coordinates | undefined>(undefined);
   const [existingVertex, setExistingVertex] = useState<Record<string, Coordinates> | null>(null);
 
   const offset = getStageDim(0.15);
@@ -32,7 +32,7 @@ export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>, vName: "top" | "bottom" | "middle") => {
     if (nearestSnap) {
       const payload = computeDimensionArc({ [vName]: nearestSnap }, existingVertex!);
-      setNearestSnap(null);
+      setNearestSnap(undefined);
       setExistingVertex(null);
       return payload;
     } else {
@@ -47,6 +47,8 @@ export const AF_C$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
         onClick={(event) => onClick(event, shapeId)} //
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
+        hitStrokeWidth={4}
       >
         <Line points={line1Points} stroke={stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
         <Line points={line2Points} stroke={stroke1} strokeWidth={2} lineCap="round" tension={0.5} />

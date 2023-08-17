@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { getStageDim } from "../../canvas/gridline";
 
-export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -32,9 +32,11 @@ export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shape
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke="black" strokeWidth={2} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke="black" strokeWidth={2} lineCap="round" />
@@ -44,7 +46,7 @@ export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shape
   );
 };
 
-export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -71,9 +73,11 @@ export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shape
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke="black" strokeWidth={2} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke="black" strokeWidth={2} lineCap="round" />
@@ -83,7 +87,7 @@ export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shape
   );
 };
 
-export const StraightLine_AFVDJ: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const StraightLine_AFVDJ: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -106,9 +110,11 @@ export const StraightLine_AFVDJ: React.FC<ShapeProps> = ({ selected, shape, shap
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={points} stroke="black" strokeWidth={2} lineCap="round" dash={[6, 6]} />
       </Group>

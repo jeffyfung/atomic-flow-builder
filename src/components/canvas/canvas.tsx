@@ -10,8 +10,6 @@ import { Gridline, computeNearestSnap, getGridCoordinate } from "./gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
 import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
 
-export const SNAP_GRID_THRESHOLD = 0.4;
-
 // TODO: make the canvas fit the layout/window perfectly (by fixing the stage area? inresponsive to viewport size?)
 export const Canvas: React.FC<{}> = () => {
   const { shapes, previewShape, dragging, drawing } = useAppSelector(selectCanvas);
@@ -19,7 +17,7 @@ export const Canvas: React.FC<{}> = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
   const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
-  const [nearestSnap, setNearestSnap] = useState<{ x: number; y: number; gridX: number; gridY: number } | null>(null);
+  const [nearestSnap, setNearestSnap] = useState<{ onShape?: Coordinates; onGrid?: Coordinates }>({});
   const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<Coordinates | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
@@ -28,29 +26,34 @@ export const Canvas: React.FC<{}> = () => {
     setStageObj(stageRef.current);
   }, []);
 
-  const handleClick = (_event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (dragging || drawing) {
-      const shape = store.getState().canvas.previewShape;
+      const shape = store.getState().canvas.previewShape!;
+      const stage = stageRef.current!;
+      stage.setPointersPositions(event);
+      const { x, y } = stage.getPointerPosition()!;
+      const { gridX, gridY } = getGridCoordinate(x, y);
+      const _shape = { ...shape, x, y, gridX, gridY };
       if (shape !== null) {
         if (dragging) {
-          handleClickDragging(shape);
+          handleClickDragging(_shape);
         } else {
-          handleClickDrawing(shape);
+          handleClickDrawing(_shape);
         }
       }
       if (nearestSnap) {
-        setNearestSnap(null);
+        setNearestSnap({});
       }
     }
   };
 
   const handleClickDragging = (shape: ShapeProperties) => {
-    dispatch(addToCanvas(nearestSnap ? { ...shape, ...nearestSnap } : shape));
+    dispatch(addToCanvas(nearestSnap.onShape || nearestSnap.onGrid ? { ...shape, ...(nearestSnap.onShape || nearestSnap.onGrid) } : shape));
     dispatch(toggleDragging(false));
   };
 
   const handleClickDrawing = (shape: ShapeProperties) => {
-    const _shape = nearestSnap ? { ...shape, ...nearestSnap } : shape;
+    const _shape = nearestSnap.onShape || nearestSnap.onGrid ? { ...shape, ...(nearestSnap.onShape || nearestSnap.onGrid) } : shape;
     const { x, y, gridX, gridY } = _shape;
     if (!drawingAnchorPoint) return setDrawingAnchorPoint({ x, y, gridX, gridY });
 
@@ -94,7 +97,7 @@ export const Canvas: React.FC<{}> = () => {
       default:
         throw new Error("Invalid drawable shape type");
     }
-    dispatch(addToCanvas({ ...shape, ...updatedProperties }));
+    dispatch(addToCanvas({ ..._shape, ...updatedProperties }));
     dispatch(toggleDrawing(false));
     setDrawingAnchorPoint(null);
   };
@@ -114,7 +117,10 @@ export const Canvas: React.FC<{}> = () => {
         handleMouseOverDrawing({ x, y, gridX, gridY });
       }
       setInspectorDisplay(false);
-      setNearestSnap(computeNearestSnap(gridX, gridY));
+      setNearestSnap((snap) => ({ ...snap, onGrid: computeNearestSnap(gridX, gridY) }));
+
+      // const container = stageRef.current!.container();
+      // container.style.cursor = nearestSnap.onGrid && drawingAnchorPoint ? "none" : "crosshair";
     }
   };
 
@@ -127,7 +133,7 @@ export const Canvas: React.FC<{}> = () => {
 
     const shape = store.getState().canvas.previewShape!;
     const { x, y, gridX, gridY } = coor;
-    // TODO: can potentially be combined into 1 function if the arguments are the same?
+
     let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
     switch (shape.draw!.type) {
       case DrawableShapeType.TWO_VERTEX:
@@ -165,6 +171,7 @@ export const Canvas: React.FC<{}> = () => {
         };
         break;
     }
+    console.log(updatedProperties);
     dispatch(updatePreview(updatedProperties));
   };
 
@@ -181,14 +188,37 @@ export const Canvas: React.FC<{}> = () => {
     setInspectorDisplay(false);
   };
 
-  const handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    const container = event.target.getStage()!.container();
-    container.style.cursor = "grab";
+  const handleShapeMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
+    // const container = event.target.getStage()!.container();
+    // if (dragging || drawing) {
+    //   container.style.cursor = "none";
+    // } else {
+    //   container.style.cursor = "grab";
+    // }
   };
 
-  const handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
+  const handleShapeMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const container = event.target.getStage()!.container();
     container.style.cursor = "crosshair";
+    if (nearestSnap.onShape) {
+      setNearestSnap({ onGrid: nearestSnap.onGrid });
+    }
+  };
+
+  // TODO: need to account for the dragging for connection lines (custom drag over evts)
+  // TODO: add handleMouseOver to all shapes (but it does not work for draggable shapes)
+  // consider switching back to using enter and leave for changing cursor style to grab
+  const handleShapeMouseOver = (_event: Konva.KonvaEventObject<MouseEvent>) => {
+    console.log("fire handleShapeMouseOver");
+    const container = stageRef.current!.container();
+    if (dragging || drawing) {
+      container.style.cursor = "none";
+      const { x, y } = stageRef.current!.getPointerPosition()!;
+      const { gridX, gridY } = getGridCoordinate(x, y);
+      setNearestSnap((snap) => ({ ...snap, onShape: { x, y, gridX, gridY } }));
+    } else {
+      container.style.cursor = "grab";
+    }
   };
 
   const clearSelection = () => {
@@ -225,28 +255,6 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  // const handleAnchorDragMove = (e: KonvaEventObject<DragEvent>, shapeId: string, vName: string, drawType: DrawableShapeType, existingVertex: Record<string, Coordinates>) => {
-  //   const { x, y } = e.target!.absolutePosition();
-  //   const { gridX, gridY } = getGridCoordinate(x, y);
-  //   setNearestSnap(computeNearestSnap(gridX, gridY));
-  //   let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
-  //   if (drawType === DrawableShapeType.TWO_VERTEX) {
-  //     // const updatedProperties = computeDimension2V(shape, { [vName]: { x: _x, y: _y, gridX, gridY } }, existingVertex);
-  //     updatedProperties = {};
-  //   } else {
-  //     // Arc
-  //     updatedProperties = computeDimensionArc({ [vName]: { x, y, gridX, gridY } }, existingVertex);
-  //   }
-
-  //   setInspectorDisplay(false);
-  //   dispatch(
-  //     updateShape({
-  //       id: shapeId,
-  //       properties: updatedProperties,
-  //     })
-  //   );
-  // };
-
   const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => {
     if (Object.keys(payload).length > 0) {
       dispatch(
@@ -258,30 +266,11 @@ export const Canvas: React.FC<{}> = () => {
     }
   };
 
-  // const handleAnchorDragEnd = (e: KonvaEventObject<DragEvent>, shapeId: string, vName: string, drawType: DrawableShapeType, existingVertex: Record<string, Coordinates>) => {
-  //   if (nearestSnap) {
-  //     const payload = computeDimensionArc(shape, { [vName]: nearestSnap }, existingVertex!);
-  //     setNearestSnap(null);
-  //     setExistingVertex(null);
-  //     return payload;
-  //   } else {
-  //     setExistingVertex(null);
-  //     return {};
-  //   }
-
-  //   if (Object.keys(payload).length > 0) {
-  //     dispatch(
-  //       updateShape({
-  //         id: shapeId,
-  //         properties: payload,
-  //       })
-  //     );
-  //   }
-  // }
+  const snap = nearestSnap.onShape || nearestSnap.onGrid;
 
   return (
     <>
-      <main className="canvas" onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
+      <main className="canvas" onDragOver={() => console.log("hi")} onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Gridline stage={stageObj} />
           <Layer>
@@ -293,8 +282,9 @@ export const Canvas: React.FC<{}> = () => {
                   shapeId={shapeId}
                   shape={{ ...shape, id: shapeId }}
                   onClick={handleClickShape}
-                  handleMouseEnter={handleMouseEnter}
-                  handleMouseLeave={handleMouseLeave}
+                  handleMouseEnter={handleShapeMouseEnter}
+                  handleMouseLeave={handleShapeMouseLeave}
+                  handleMouseOver={handleShapeMouseOver}
                   handleDragEnd={handleSelectedShapeDragEnd}
                   handleDragStart={handleSelectedShapeDragStart}
                   handleAnchorDragMove={handleAnchorDragMove}
@@ -313,6 +303,7 @@ export const Canvas: React.FC<{}> = () => {
                 onClick={() => {}}
                 handleMouseEnter={() => {}}
                 handleMouseLeave={() => {}}
+                handleMouseOver={() => {}}
                 handleDragEnd={() => {}}
                 handleDragStart={() => {}}
                 handleAnchorDragMove={() => {}}
@@ -320,9 +311,9 @@ export const Canvas: React.FC<{}> = () => {
               />
             </Layer>
           )}
-          {nearestSnap && (
+          {snap && (
             <Layer>
-              <Circle x={nearestSnap.x} y={nearestSnap.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />
+              <Circle x={snap.x} y={snap.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />
             </Layer>
           )}
         </Stage>

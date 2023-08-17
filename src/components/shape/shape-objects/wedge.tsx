@@ -8,7 +8,7 @@ import { getStageDim } from "../../canvas/gridline";
 
 // for both hollow and solid wedge
 
-export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -37,16 +37,18 @@ export const WedgeAFWUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       />
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
   );
 };
 
-export const WedgeAFWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, label1, label2 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -72,9 +74,11 @@ export const WedgeAFWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={points} stroke={stroke1} lineCap="round" />
         <RegularPolygon ref={shapeRef2} x={0} y={0} fill={fill} sides={3} radius={radius} stroke={LatexColour.BLACK} strokeWidth={4} />
@@ -86,7 +90,7 @@ export const WedgeAFWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const WedgeAFWWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFWWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, label1, label2 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -115,9 +119,11 @@ export const WedgeAFWWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke1} lineCap="round" />
@@ -130,7 +136,7 @@ export const WedgeAFWWUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const WedgeAFAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, label1, label2 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -157,9 +163,11 @@ export const WedgeAFAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={points} stroke={stroke1} lineCap="round" />
         <RegularPolygon ref={shapeRef2} x={0} y={0} fill={fill} sides={3} radius={radius} stroke={LatexColour.BLACK} strokeWidth={4} />
@@ -171,7 +179,7 @@ export const WedgeAFAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const WedgeAFAAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFAAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, label1, label2 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -201,9 +209,11 @@ export const WedgeAFAAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke1} lineCap="round" />
@@ -216,7 +226,7 @@ export const WedgeAFAAUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -255,9 +265,11 @@ export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -295,7 +307,7 @@ export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const WedgeAFCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -331,9 +343,11 @@ export const WedgeAFCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -368,7 +382,7 @@ export const WedgeAFCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -407,9 +421,11 @@ export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -467,7 +483,7 @@ export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const WedgeAFCCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -503,9 +519,11 @@ export const WedgeAFCCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -559,7 +577,7 @@ export const WedgeAFCCUNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -591,9 +609,11 @@ export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef2} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef3} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -611,7 +631,7 @@ export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const WedgeAFCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -640,9 +660,11 @@ export const WedgeAFCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -657,7 +679,7 @@ export const WedgeAFCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -696,9 +718,11 @@ export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -719,7 +743,7 @@ export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const WedgeAFCCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -753,9 +777,11 @@ export const WedgeAFCCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -772,7 +798,7 @@ export const WedgeAFCCUNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   );
 };
 
-export const WedgeAFCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -805,9 +831,11 @@ export const WedgeAFCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef2} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef3} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -825,7 +853,7 @@ export const WedgeAFCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const WedgeAFCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.RegularPolygon>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -855,9 +883,11 @@ export const WedgeAFCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef2} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef3} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -872,7 +902,7 @@ export const WedgeAFCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   );
 };
 
-export const WedgeAFCCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -912,9 +942,11 @@ export const WedgeAFCCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -935,7 +967,7 @@ export const WedgeAFCCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   );
 };
 
-export const WedgeAFCCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const WedgeAFCCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -970,9 +1002,11 @@ export const WedgeAFCCUNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId,
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />

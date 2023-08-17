@@ -6,7 +6,7 @@ import Konva from "konva";
 import { GraphLabel } from "./graph-label";
 import { getStageDim } from "../../canvas/gridline";
 
-export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -41,6 +41,7 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         stroke={LatexColour.BLACK}
         strokeWidth={4}
         sceneFunc={(context, shape) => {
@@ -53,13 +54,14 @@ export const ArcAFIDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       />
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
   );
 };
 
-export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -97,9 +99,11 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={leftLinePoints} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={rightLinePoints} stroke={stroke2} lineCap="round" />
@@ -125,7 +129,7 @@ export const ArcAFIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, widthFactor, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -168,9 +172,11 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={leftLinePoints} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={rightLinePoints} stroke={stroke2} lineCap="round" />

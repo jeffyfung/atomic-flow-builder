@@ -7,11 +7,11 @@ import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
 import { computeDimension2V } from "..";
 
-export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.TWO_VERTEX) throw new Error("Wrong drawable shape type");
   const { start, end } = draw;
-  const [nearestSnap, setNearestSnap] = useState<Coordinates | null>(null);
+  const [nearestSnap, setNearestSnap] = useState<Coordinates | undefined>(undefined);
   const [existingVertex, setExistingVertex] = useState<Coordinates | null>(null);
 
   const width = end!.x - start!.x;
@@ -28,7 +28,7 @@ export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>) => {
     if (nearestSnap) {
       const payload = computeDimension2V(shape, nearestSnap, existingVertex!);
-      setNearestSnap(null);
+      setNearestSnap(undefined);
       setExistingVertex(null);
       return payload;
     } else {
@@ -43,6 +43,8 @@ export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
         onClick={(event) => onClick(event, shapeId)} //
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
+        hitStrokeWidth={4}
       >
         <Line points={points} stroke={stroke1} strokeWidth={2} lineCap="round" tension={0.5} />
         {selected && (

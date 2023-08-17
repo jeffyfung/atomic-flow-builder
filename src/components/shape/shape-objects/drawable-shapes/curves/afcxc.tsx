@@ -8,12 +8,12 @@ import { Circle, Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { isRectVertexName } from "../../../../../features/type-util";
 
-export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleAnchorDragMove, handleAnchorDragEnd }) => {
+export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, stroke2, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.RECT) throw new Error("Wrong drawable shape type");
   const { p1, p2, p3, p4 } = draw;
   const vertices = { p1: p1!, p2: p2!, p3: p3!, p4: p4! };
-  const [nearestSnap, setNearestSnap] = useState<Coordinates | null>(null);
+  const [nearestSnap, setNearestSnap] = useState<Coordinates | undefined>(undefined);
   const [existingVertex, setExistingVertex] = useState<Record<string, Coordinates> | null>(null);
 
   const invertStrokeColour: boolean = (p2!.x < p1!.x || p3!.y < p1!.y) && !(p2!.x < p1!.x && p3!.y < p1!.y);
@@ -31,7 +31,7 @@ export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
 
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4") => {
     if (nearestSnap) {
-      setNearestSnap(null);
+      setNearestSnap(undefined);
       setExistingVertex(null);
       return computeDimensionRect({ [vName]: nearestSnap }, existingVertex!);
     } else {
@@ -46,6 +46,8 @@ export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
         onClick={(event) => onClick(event, shapeId)} //
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
+        hitStrokeWidth={4}
       >
         <Line points={line1Points} stroke={invertStrokeColour ? stroke1 : stroke2} strokeWidth={2} lineCap="round" tension={0.5} />
         <Line points={line2Points} stroke={invertStrokeColour ? stroke2 : stroke1} strokeWidth={2} lineCap="round" tension={0.5} />

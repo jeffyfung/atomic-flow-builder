@@ -6,7 +6,7 @@ import { Circle, Group, Line, Transformer, Shape as KonvaShape } from "react-kon
 import { LatexColour } from "../../../features/shape";
 import { GraphLabel } from "./graph-label";
 
-export const DotAFD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -30,13 +30,21 @@ export const DotAFD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
         radius={radius}
         stroke={LatexColour.BLACK}
         strokeWidth={4}
+        onClick={(event) => onClick(event, shapeId)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
+        draggable
+        onDragStart={handleDragStart}
+        onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={0}
       />
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
   );
 };
 
-export const DotAFDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, label1, label2, stroke1 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -61,9 +69,11 @@ export const DotAFDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={points} stroke={stroke1} lineCap="round" />
         <Circle
@@ -83,7 +93,7 @@ export const DotAFDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const DotAF_DDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_DDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, label1, label2, stroke1 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -111,9 +121,11 @@ export const DotAF_DDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke1} lineCap="round" />
@@ -134,7 +146,7 @@ export const DotAF_DDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const DotAFDUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFDUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, label1, label2, stroke1 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
@@ -159,9 +171,11 @@ export const DotAFDUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={points} stroke={stroke1} lineCap="round" />
         <Circle
@@ -181,7 +195,7 @@ export const DotAFDUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   );
 };
 
-export const DotAF_DUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_DUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, label1, label2, stroke1 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -209,9 +223,11 @@ export const DotAF_DUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke1} lineCap="round" />
@@ -232,7 +248,7 @@ export const DotAF_DUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const DotAFCDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -265,9 +281,11 @@ export const DotAFCDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -304,7 +322,7 @@ export const DotAFCDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const DotAFCDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -335,9 +353,11 @@ export const DotAFCDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -371,7 +391,7 @@ export const DotAFCDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAF_CDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -406,9 +426,11 @@ export const DotAF_CDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -466,7 +488,7 @@ export const DotAF_CDDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAF_CDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -498,9 +520,11 @@ export const DotAF_CDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -554,7 +578,7 @@ export const DotAF_CDDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAFCUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -587,9 +611,11 @@ export const DotAFCUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -626,7 +652,7 @@ export const DotAFCUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   );
 };
 
-export const DotAFCUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -657,9 +683,11 @@ export const DotAFCUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -693,7 +721,7 @@ export const DotAFCUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAF_CUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -728,9 +756,11 @@ export const DotAF_CUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -788,7 +818,7 @@ export const DotAF_CUDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAF_CUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -820,9 +850,11 @@ export const DotAF_CUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -876,7 +908,7 @@ export const DotAF_CUDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAFCDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -909,9 +941,11 @@ export const DotAFCDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -948,7 +982,7 @@ export const DotAFCDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAFCDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -979,9 +1013,11 @@ export const DotAFCDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1015,7 +1051,7 @@ export const DotAFCDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAF_CDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1050,9 +1086,11 @@ export const DotAF_CDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1111,7 +1149,7 @@ export const DotAF_CDDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAF_CDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1143,9 +1181,11 @@ export const DotAF_CDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1200,7 +1240,7 @@ export const DotAF_CDDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAFCUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1233,9 +1273,11 @@ export const DotAFCUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1272,7 +1314,7 @@ export const DotAFCUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   );
 };
 
-export const DotAFCUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1303,9 +1345,11 @@ export const DotAFCUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1339,7 +1383,7 @@ export const DotAFCUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAF_CUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1374,9 +1418,11 @@ export const DotAF_CUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1434,7 +1480,7 @@ export const DotAF_CUDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAF_CUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
@@ -1466,9 +1512,11 @@ export const DotAF_CUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <KonvaShape
           ref={shapeRef1}
@@ -1522,7 +1570,7 @@ export const DotAF_CUDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAFCDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1554,9 +1602,11 @@ export const DotAFCDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -1574,7 +1624,7 @@ export const DotAFCDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAFCDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1603,9 +1653,11 @@ export const DotAFCDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -1620,7 +1672,7 @@ export const DotAFCDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAF_CDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1659,9 +1711,11 @@ export const DotAF_CDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -1682,7 +1736,7 @@ export const DotAF_CDD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAF_CDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1716,9 +1770,11 @@ export const DotAF_CDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -1735,7 +1791,7 @@ export const DotAF_CDDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   );
 };
 
-export const DotAFCUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1767,9 +1823,11 @@ export const DotAFCUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -1787,7 +1845,7 @@ export const DotAFCUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   );
 };
 
-export const DotAFCUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAFCUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1816,9 +1874,11 @@ export const DotAFCUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1Points} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line2Points} stroke={stroke2} lineCap="round" tension={0.5} />
@@ -1833,7 +1893,7 @@ export const DotAFCUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAF_CUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1872,9 +1932,11 @@ export const DotAF_CUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
@@ -1895,7 +1957,7 @@ export const DotAF_CUD_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   );
 };
 
-export const DotAF_CUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleDragStart, handleDragEnd }) => {
+export const DotAF_CUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y, stroke1, stroke2, label1, label2, label3, label4, widthFactor } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
@@ -1929,9 +1991,11 @@ export const DotAF_CUDN_XC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
         onClick={(event) => onClick(event, shapeId)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseOver={handleMouseOver}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={(e) => handleDragEnd(e, shapeId)}
+        hitStrokeWidth={4}
       >
         <Line ref={shapeRef1} points={line1aPoints} stroke={stroke1} lineCap="round" tension={0.5} />
         <Line ref={shapeRef2} points={line1bPoints} stroke={stroke1} lineCap="round" tension={0.5} />
