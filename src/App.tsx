@@ -5,8 +5,16 @@ import { ThemeProvider } from "@mui/material";
 import { colorTheme } from "./config";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { useEffect } from "react";
 
 const App = () => {
+  useEffect(() => {
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    });
+  }, []);
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={colorTheme}>
