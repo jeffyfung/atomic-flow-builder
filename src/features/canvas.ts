@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { Coordinates, ShapeProperties } from "./shape";
+import { ShapeProperties } from "./shape";
 import { nanoid } from "nanoid";
 
 export interface CanvasState {
