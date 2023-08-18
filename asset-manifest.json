@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/atomic-flow-builder/static/css/main.073c9b0a.css",
+    "main.js": "/atomic-flow-builder/static/js/main.68878fef.js",
+    "static/js/787.5e233ffa.chunk.js": "/atomic-flow-builder/static/js/787.5e233ffa.chunk.js",
+    "static/media/af_c$2c.png": "/atomic-flow-builder/static/media/af_c$2c.2193eabac901ba571714.png",
+    "index.html": "/atomic-flow-builder/index.html",
+    "main.073c9b0a.css.map": "/atomic-flow-builder/static/css/main.073c9b0a.css.map",
+    "main.68878fef.js.map": "/atomic-flow-builder/static/js/main.68878fef.js.map",
+    "787.5e233ffa.chunk.js.map": "/atomic-flow-builder/static/js/787.5e233ffa.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.68878fef.js"
+  ]
+}
