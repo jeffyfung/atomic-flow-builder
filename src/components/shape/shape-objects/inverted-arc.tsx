@@ -5,11 +5,14 @@ import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
 import { getStageDim } from "../../canvas/gridline";
+import { useAppDispatch } from "../../../hooks";
+import { setSnappableVertices } from "../../../features/canvas";
 
 export const ArcAFIUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const arcWidth = getStageDim(5);
   const arcHeight = getStageDim(0.3);
@@ -28,6 +31,15 @@ export const ArcAFIUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x - arcWidth * 0.5, y: y - arcTopToCenter },
+        { x: x + arcWidth * 0.5, y: y - arcTopToCenter },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -64,6 +76,7 @@ export const ArcAFIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const arcWidth = getStageDim(5 * widthFactor!);
   const arcHeight = getStageDim(0.3);
@@ -87,6 +100,15 @@ export const ArcAFIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected, widthFactor]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x - strokeSpacing * 0.5, y: y - strokeLength },
+        { x: x + strokeSpacing * 0.5, y: y - strokeLength },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -134,6 +156,7 @@ export const ArcAFIIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const shapeRef4 = useRef<Konva.Line>(null);
   const shapeRef5 = useRef<Konva.Shape>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const arcWidth = getStageDim(5 * widthFactor!);
   const arcHeight = getStageDim(0.3);
@@ -160,6 +183,15 @@ export const ArcAFIIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected, widthFactor]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x - strokeSpacing * 0.5, y: y - strokeLength },
+        { x: x + strokeSpacing * 0.5, y: y - strokeLength },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>

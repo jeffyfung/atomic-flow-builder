@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
 import { getStageDim } from "../../canvas/gridline";
+import { useAppDispatch } from "../../../hooks";
+import { setSnappableVertices } from "../../../features/canvas";
 
 // for both hollow and solid inverted wedge
 
@@ -12,6 +14,7 @@ export const WedgeAFWDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const { x, y, fill } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -22,6 +25,10 @@ export const WedgeAFWDN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x, y }]));
+  }, [x, y]);
 
   return (
     <>
@@ -54,6 +61,7 @@ export const WedgeAFWDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -66,6 +74,10 @@ export const WedgeAFWDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x: x, y: y + radius + strokeLength }]));
+  }, [x, y]);
 
   return (
     <>
@@ -107,6 +119,7 @@ export const WedgeAFWWDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -121,6 +134,10 @@ export const WedgeAFWWDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x: x, y: y + radius + strokeLength }]));
+  }, [x, y]);
 
   return (
     <>
@@ -162,6 +179,7 @@ export const WedgeAFADC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -175,6 +193,10 @@ export const WedgeAFADC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x: x, y: y - centerToTriTop - strokeLength }]));
+  }, [x, y]);
 
   return (
     <>
@@ -216,6 +238,7 @@ export const WedgeAFAADC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -231,6 +254,10 @@ export const WedgeAFAADC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x: x, y: y - centerToTriTop - strokeLength }]));
+  }, [x, y]);
 
   return (
     <>
@@ -271,6 +298,7 @@ export const WedgeAFCDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -293,6 +321,16 @@ export const WedgeAFCDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + radius + strokeLength },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -347,6 +385,7 @@ export const WedgeAFCDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -367,6 +406,15 @@ export const WedgeAFCDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -427,6 +475,7 @@ export const WedgeAFCCDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const { x, y, fill, stroke1, stroke2, stroke3, label1, label2, label3, label4, label5, label6 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -451,6 +500,16 @@ export const WedgeAFCCDC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + radius + strokeLength },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -535,6 +594,7 @@ export const WedgeAFCCDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   const { x, y, fill, stroke1, stroke2, label1, label2, label3, label4 } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -556,6 +616,15 @@ export const WedgeAFCCDNC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -639,6 +708,7 @@ export const WedgeAFCDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const shapeRef3 = useRef<Konva.Line>(null);
   const shapeRef4 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -655,6 +725,16 @@ export const WedgeAFCDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + radius + strokeLength },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -702,6 +782,7 @@ export const WedgeAFCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -716,6 +797,15 @@ export const WedgeAFCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -764,6 +854,7 @@ export const WedgeAFCCDSXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   const shapeRef6 = useRef<Konva.Line>(null);
   const shapeRef7 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -784,6 +875,16 @@ export const WedgeAFCCDSXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + radius + strokeLength },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -836,6 +937,7 @@ export const WedgeAFCCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   const shapeRef4 = useRef<Konva.Line>(null);
   const shapeRef5 = useRef<Konva.RegularPolygon>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -853,6 +955,15 @@ export const WedgeAFCCDNXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -900,6 +1011,7 @@ export const WedgeAFCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   const shapeRef3 = useRef<Konva.Line>(null);
   const shapeRef4 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -917,6 +1029,16 @@ export const WedgeAFCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + strokeBottomPoint[1] },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -964,6 +1086,7 @@ export const WedgeAFCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   const shapeRef2 = useRef<Konva.Line>(null);
   const shapeRef3 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
@@ -979,6 +1102,15 @@ export const WedgeAFCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -1027,6 +1159,7 @@ export const WedgeAFCCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   const shapeRef6 = useRef<Konva.Line>(null);
   const shapeRef7 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -1048,6 +1181,16 @@ export const WedgeAFCCDXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x, y: y + strokeBottomPoint[1] },
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
@@ -1100,6 +1243,7 @@ export const WedgeAFCCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId,
   const shapeRef4 = useRef<Konva.Line>(null);
   const shapeRef5 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
@@ -1118,6 +1262,15 @@ export const WedgeAFCCDNXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId,
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(
+      setSnappableVertices([
+        { x: x + topLeftPoint[0], y: y + topLeftPoint[1] },
+        { x: x + topRightPoint[0], y: y + topRightPoint[1] },
+      ])
+    );
+  }, [x, y]);
 
   return (
     <>
