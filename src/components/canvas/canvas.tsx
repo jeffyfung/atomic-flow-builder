@@ -46,9 +46,7 @@ export const Canvas: React.FC<{}> = () => {
           handleClickDrawing(_shape);
         }
       }
-      if (nearestSnaps) {
-        setNearestSnaps([]);
-      }
+      setNearestSnaps([]);
     }
   };
 
