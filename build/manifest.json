@@ -1,0 +1,14 @@
+{
+  "short_name": "Atomic Flow",
+  "name": "Atomic Flow Builder",
+  "icons": [
+    {
+      "src": "wave4.jpeg",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "./drawboard",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
