@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { ShapeProperties } from "./shape";
+import { Coordinates, ShapeProperties } from "./shape";
 import { nanoid } from "nanoid";
 
 export interface CanvasState {
@@ -8,8 +8,7 @@ export interface CanvasState {
   previewShape: ShapeProperties | null;
   dragging: boolean;
   drawing: boolean;
-  // selectedShape: string | null;
-  // displayInspector: boolean;
+  snappableVertices: { x: number; y: number }[];
 }
 
 // export interface DragPoint {
@@ -32,6 +31,7 @@ const initialState: CanvasState = {
   previewShape: null,
   dragging: false,
   drawing: false,
+  snappableVertices: [],
 };
 
 export const canvasSlice = createSlice({
@@ -69,10 +69,13 @@ export const canvasSlice = createSlice({
     toggleDrawing: (state, action: PayloadAction<boolean>) => {
       state.drawing = action.payload;
     },
+    setSnappableVertices: (state, action: PayloadAction<{ x: number; y: number }[]>) => {
+      state.snappableVertices = action.payload;
+    },
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging, toggleDrawing } = canvasSlice.actions;
+export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging, toggleDrawing, setSnappableVertices } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

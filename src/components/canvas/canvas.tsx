@@ -6,18 +6,23 @@ import { addToCanvas, selectCanvas, toggleDragging, toggleDrawing, updatePreview
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
-import { Gridline, computeNearestSnap, getGridCoordinate } from "./gridline";
+import { Gridline, computeNearestSnap, getGridCoordinate, getStageCoordinate } from "./gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
 import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
 
+export interface SnapPointForVertice {
+  onShape?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
+  onGrid?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
+}
+
 // TODO: make the canvas fit the layout/window perfectly (by fixing the stage area? inresponsive to viewport size?)
 export const Canvas: React.FC<{}> = () => {
-  const { shapes, previewShape, dragging, drawing } = useAppSelector(selectCanvas);
+  const { shapes, previewShape, dragging, drawing, snappableVertices } = useAppSelector(selectCanvas);
   const dispatch = useAppDispatch();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
   const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
-  const [nearestSnap, setNearestSnap] = useState<{ onShape?: Coordinates; onGrid?: Coordinates }>({});
+  const [nearestSnaps, setNearestSnaps] = useState<SnapPointForVertice[]>([]);
   const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<Coordinates | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
@@ -41,19 +46,29 @@ export const Canvas: React.FC<{}> = () => {
           handleClickDrawing(_shape);
         }
       }
-      if (nearestSnap) {
-        setNearestSnap({});
+      if (nearestSnaps) {
+        setNearestSnaps([]);
       }
     }
   };
 
   const handleClickDragging = (shape: ShapeProperties) => {
-    dispatch(addToCanvas(nearestSnap.onShape || nearestSnap.onGrid ? { ...shape, ...(nearestSnap.onShape || nearestSnap.onGrid) } : shape));
+    let _shape: ShapeProperties;
+    if (snaps.length) {
+      const { gridX, gridY } = shape;
+      const adjustedGridX = gridX + snaps[0].onGrid!.gridOffsetX;
+      const adjustedGridY = gridY + snaps[0].onGrid!.gridOffsetY;
+      const { stageX, stageY } = getStageCoordinate(adjustedGridX, adjustedGridY);
+      _shape = { ...shape, x: stageX, y: stageY, gridX: adjustedGridX, gridY: adjustedGridY };
+    } else {
+      _shape = shape;
+    }
+    dispatch(addToCanvas(_shape));
     dispatch(toggleDragging(false));
   };
 
   const handleClickDrawing = (shape: ShapeProperties) => {
-    const _shape = nearestSnap.onShape || nearestSnap.onGrid ? { ...shape, ...(nearestSnap.onShape || nearestSnap.onGrid) } : shape;
+    const _shape = snaps.length ? { ...shape, ...(snaps[0].onShape || snaps[0].onGrid) } : shape;
     const { x, y, gridX, gridY } = _shape;
     if (!drawingAnchorPoint) return setDrawingAnchorPoint({ x, y, gridX, gridY });
 
@@ -117,22 +132,25 @@ export const Canvas: React.FC<{}> = () => {
         handleMouseOverDrawing({ x, y, gridX, gridY });
       }
       setInspectorDisplay(false);
-      setNearestSnap((snap) => ({ ...snap, onGrid: computeNearestSnap(gridX, gridY) }));
-
-      // const container = stageRef.current!.container();
-      // container.style.cursor = nearestSnap.onGrid && drawingAnchorPoint ? "none" : "crosshair";
     }
   };
 
   const handleMouseOverDragging = (coor: Coordinates) => {
     dispatch(updatePreview(coor));
+    setNearestSnaps(
+      snappableVertices.map((v) => {
+        const { gridX, gridY } = getGridCoordinate(v.x, v.y);
+        return { onGrid: computeNearestSnap(gridX, gridY) };
+      })
+    );
   };
 
   const handleMouseOverDrawing = (coor: Coordinates) => {
-    if (drawingAnchorPoint === null) return dispatch(updatePreview(coor));
-
     const shape = store.getState().canvas.previewShape!;
     const { x, y, gridX, gridY } = coor;
+    setNearestSnaps((snaps) => [{ ...snaps[0], onGrid: computeNearestSnap(gridX, gridY) }]);
+
+    if (drawingAnchorPoint === null) return dispatch(updatePreview(coor));
 
     let updatedProperties: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">;
     switch (shape.draw!.type) {
@@ -171,7 +189,6 @@ export const Canvas: React.FC<{}> = () => {
         };
         break;
     }
-    console.log(updatedProperties);
     dispatch(updatePreview(updatedProperties));
   };
 
@@ -200,8 +217,8 @@ export const Canvas: React.FC<{}> = () => {
   const handleShapeMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const container = event.target.getStage()!.container();
     container.style.cursor = "crosshair";
-    if (nearestSnap.onShape) {
-      setNearestSnap({ onGrid: nearestSnap.onGrid });
+    if ((dragging || drawing) && nearestSnaps[0].onShape) {
+      setNearestSnaps([{ onGrid: nearestSnaps[0].onGrid }]);
     }
   };
 
@@ -209,13 +226,12 @@ export const Canvas: React.FC<{}> = () => {
   // TODO: add handleMouseOver to all shapes (but it does not work for draggable shapes)
   // consider switching back to using enter and leave for changing cursor style to grab
   const handleShapeMouseOver = (_event: Konva.KonvaEventObject<MouseEvent>) => {
-    console.log("fire handleShapeMouseOver");
     const container = stageRef.current!.container();
     if (dragging || drawing) {
       container.style.cursor = "none";
       const { x, y } = stageRef.current!.getPointerPosition()!;
       const { gridX, gridY } = getGridCoordinate(x, y);
-      setNearestSnap((snap) => ({ ...snap, onShape: { x, y, gridX, gridY } }));
+      setNearestSnaps((nearestSnaps) => [{ ...nearestSnaps[0], onShape: { x, y, gridX, gridY, gridOffsetX: 0, gridOffsetY: 0 } }]);
     } else {
       container.style.cursor = "grab";
     }
@@ -266,11 +282,18 @@ export const Canvas: React.FC<{}> = () => {
     }
   };
 
-  const snap = nearestSnap.onShape || nearestSnap.onGrid;
+  // drawable shapes only have 1 snapping vertex but can have onShape and onGrid snap
+  const snaps = nearestSnaps
+    .filter((nearestSnap) => nearestSnap.onShape || nearestSnap.onGrid)
+    .sort((a, b) => {
+      const snapA = (a.onShape || a.onGrid)!;
+      const snapB = (a.onShape || a.onGrid)!;
+      return snapA.gridOffsetX ** 2 + snapA.gridOffsetY ** 2 - (snapB.gridOffsetX ** 2 + snapB.gridOffsetY ** 2);
+    });
 
   return (
     <>
-      <main className="canvas" onDragOver={() => console.log("hi")} onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
+      <main className="canvas" onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
         <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
           <Gridline stage={stageObj} />
           <Layer>
@@ -311,11 +334,12 @@ export const Canvas: React.FC<{}> = () => {
               />
             </Layer>
           )}
-          {snap && (
-            <Layer>
-              <Circle x={snap.x} y={snap.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />
-            </Layer>
-          )}
+          <Layer>
+            {snaps.map((nearestSnap, i) => {
+              const snap = (nearestSnap.onShape || nearestSnap.onGrid)!;
+              return <Circle key={`snap-point-${i}`} x={snap.x} y={snap.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />;
+            })}
+          </Layer>
         </Stage>
       </main>
       {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} clearSelection={clearSelection} />}

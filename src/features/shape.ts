@@ -1,5 +1,6 @@
 import { getGridCoordinate } from "../components/canvas/gridline";
 
+// TODO: discriminate draggable and drawable shape properties interface
 export interface ShapeProperties {
   type: ShapeType;
   x: number;
@@ -20,6 +21,7 @@ export interface ShapeProperties {
   fill?: string;
   labelPlacement?: LabelPlacement;
   draw?: DrawProperties2V | DrawPropertiesArc | DrawPropertiesRect;
+  snappableVertices?: { offsetX: number; offsetY: number }[];
   variables: (keyof ShapeProperties | "length" | "width")[];
 }
 
