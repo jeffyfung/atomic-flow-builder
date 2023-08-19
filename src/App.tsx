@@ -19,7 +19,7 @@ const App = () => {
     <Provider store={store}>
       <ThemeProvider theme={colorTheme}>
         <div className="App">
-          <Router basename="/atomic-flow-builder">
+          <Router>
             <Routes>
               {/* <Route path="/" element={<Welcome/>}/> */}
               <Route path="/" element={<Drawboard />} />

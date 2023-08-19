@@ -30,9 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -54,8 +52,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@mui/base": "^5.0.0-beta.10",
-    "gh-pages": "^6.0.0"
-  },
-  "homepage": "https://jeffyfung.github.io/atomic-flow-builder"
+    "@mui/base": "^5.0.0-beta.10"
+  }
 }
