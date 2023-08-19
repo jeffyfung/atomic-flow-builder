@@ -119,6 +119,7 @@ import afcxcIcon from "../../res/palette-icons/afcxc.png";
 import af_cxcIcon from "../../res/palette-icons/af_cxc.png";
 import affrIcon from "../../res/palette-icons/affr.png";
 import affrbIcon from "../../res/palette-icons/affrb.png";
+import afccdsxcIcon from "../../res/palette-icons/afccdsxc.png";
 
 export interface PaletteItemSchema {
   iconElement: React.ReactNode;
@@ -488,6 +489,11 @@ const invertedSolidWedgeCatItemSchema: LeafPaletteItemSchema[] = [
   {
     shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCDSNXC,
     iconElement: <img src={afcdsnxcIcon} alt="afcdsnxc" width="25px" />,
+    nested: false,
+  },
+  {
+    shapeType: ShapeType.INVERTED_SOLID_WEDGE_AFCCDSXC,
+    iconElement: <img src={afccdsxcIcon} alt="afccdsxc" width="25px" />,
     nested: false,
   },
   {
