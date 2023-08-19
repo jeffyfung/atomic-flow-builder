@@ -23,7 +23,7 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
 
   return (
     <Box id="top-menu" sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
+      <AppBar position="fixed" color="primary">
         <Toolbar variant="dense">
           <IconButton size="large" edge="start" color="warning" onClick={openActionMenu} sx={{ mr: 0.5 }}>
             <TipsAndUpdatesIcon fontSize="large" />

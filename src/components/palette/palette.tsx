@@ -10,7 +10,7 @@ const StyledToolbarBox = styled(Box)({
   position: "absolute",
   width: "46px",
   left: "7px",
-  top: "28%",
+  top: "33%",
   backgroundColor: "white",
 });
 

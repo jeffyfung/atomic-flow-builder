@@ -27,7 +27,6 @@ export const Drawboard: React.FC<{}> = () => {
       <Box id="drawboard-main" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Canvas />
         <Palette />
-        {/* <Inspector /> */}
       </Box>
     </Box>
   );
