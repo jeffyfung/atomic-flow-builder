@@ -161,16 +161,17 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   const transformerRef = useRef<Konva.Transformer>(null);
   const dispatch = useAppDispatch();
 
+  const offset = getStageDim(0.15);
   const arcWidth = getStageDim(5 * widthFactor!);
   const arcHeight = getStageDim(0.3);
   const arcBottomToCenter = getStageDim(0.1);
   const strokeLength = getStageDim(4);
   const strokeSpacing = getStageDim(4 * widthFactor!);
-  const strokeNeighborSpacing = getStageDim(0.3 * widthFactor!);
-  const leftLinePoints = [-strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, 0, -strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, strokeLength];
-  const leftLine2Points = [-strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, 0, -strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, strokeLength];
-  const rightLinePoints = [strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, 0, strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5, strokeLength];
-  const rightLine2Points = [strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, 0, strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5, strokeLength];
+  // const strokeNeighborSpacing = getStageDim(0.3 * widthFactor!);
+  const leftLinePoints = [-offset - strokeSpacing * 0.5, 0, -offset - strokeSpacing * 0.5, strokeLength];
+  const leftLine2Points = [offset - strokeSpacing * 0.5, 0, offset - strokeSpacing * 0.5, strokeLength];
+  const rightLinePoints = [-offset + strokeSpacing * 0.5, 0, -offset + strokeSpacing * 0.5, strokeLength];
+  const rightLine2Points = [offset + strokeSpacing * 0.5, 0, offset + strokeSpacing * 0.5, strokeLength];
 
   const borderBox = {
     x: -arcWidth * 0.5,
@@ -226,10 +227,10 @@ export const ArcAFIIDXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
             context.closePath();
           }}
         />
-        {label1 && <GraphLabel x={-strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5 - 10 - 5 * label1.length} y={strokeLength * 0.4} text={label1} />}
-        {label2 && <GraphLabel x={-strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label2} />}
-        {label3 && <GraphLabel x={strokeSpacing * 0.5 - strokeNeighborSpacing * 0.5 - 10 - 5 * label3.length} y={strokeLength * 0.4} text={label3} />}
-        {label4 && <GraphLabel x={strokeSpacing * 0.5 + strokeNeighborSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label4} />}
+        {label1 && <GraphLabel x={-offset - strokeSpacing * 0.5 - 10 - 5 * label1.length} y={strokeLength * 0.4} text={label1} />}
+        {label2 && <GraphLabel x={offset - strokeSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label2} />}
+        {label3 && <GraphLabel x={-offset + strokeSpacing * 0.5 - 10 - 5 * label3.length} y={strokeLength * 0.4} text={label3} />}
+        {label4 && <GraphLabel x={offset + strokeSpacing * 0.5 + 5} y={strokeLength * 0.4} text={label4} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
