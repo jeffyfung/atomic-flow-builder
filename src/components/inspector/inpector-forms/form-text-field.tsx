@@ -27,8 +27,8 @@ export const FormTextField: React.FC<{
       placeholder="text"
       onChange={handleChange}
       sx={{ width: "87%" }}
-      inputProps={{ style: { fontSize: "0.85rem", padding: "8px 12px" } }}
-      InputLabelProps={{ style: { fontSize: "0.85rem" } }}
+      inputProps={{ style: { fontSize: "0.95rem", padding: "8px 12px" } }}
+      InputLabelProps={{ style: { fontSize: "0.95rem" } }}
     />
   );
 };

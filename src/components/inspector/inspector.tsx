@@ -13,6 +13,7 @@ import { convertShapeToLatex } from "../../features/latex-converter";
 import { ColourPicker } from "./inpector-forms/colour-picker";
 import { FormDropDown } from "./inpector-forms/form-drop-down";
 import { isShapePropertiesKey } from "../../features/type-util";
+import { INSPECTOR_TITLE, METADATA_TITLE } from "../../res/texts/inspector";
 
 const StyledBoxContainer = styled(Box)({
   position: "absolute",
@@ -58,7 +59,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              <Typography fontSize="0.85rem">Width Factor</Typography>
+              <Typography fontSize="0.95rem">Width Factor</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormTextFieldAndSlider shapeId={shapeId} shape={shape} fieldName={field} validator={validator.positiveNumberOnly} />
@@ -70,7 +71,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              <Typography fontSize="0.85rem">Stroke Colours</Typography>
+              <Typography fontSize="0.95rem">Stroke Colour(s)</Typography>
             </Grid>
             <Grid item xs={9}>
               <ColourPicker shapeId={shapeId} strokeNames={strokeNames} shape={shape} />
@@ -82,7 +83,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              <Typography fontSize="0.85rem">{`Label ${field.slice(5)}`}</Typography>
+              <Typography fontSize="0.95rem">{`Label ${field.slice(5)}`}</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormTextField shapeId={shapeId} shape={shape} fieldName={field} />
@@ -93,7 +94,7 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         components.push(
           <NestedGridContainer key={field} container direction="row" spacing={0}>
             <Grid item xs={3}>
-              <Typography fontSize="0.85rem">Label Placement</Typography>
+              <Typography fontSize="0.95rem">Label Placement</Typography>
             </Grid>
             <Grid item xs={9}>
               <FormDropDown shapeId={shapeId} shape={shape} fieldName={field} label="Position" options={Object.values(LabelPlacement)} />
@@ -121,19 +122,19 @@ export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleClos
         </Fab>
         <StyledGridContainer id="inspector" width="100%" height="100%" container direction="row" spacing={2} sx={{ boxShadow: "3" }}>
           <StyledGridItem item xs={12}>
-            <Typography fontSize="1rem" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
-              Object Inspector
+            <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
+              {INSPECTOR_TITLE}
             </Typography>
             {getForm(shape)}
           </StyledGridItem>
           <StyledGridItem item xs={12}>
-            <Typography fontSize="1rem" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
-              Metadata
+            <Typography variant="h6" fontWeight="bold" sx={{ marginBottom: "0.5vh" }}>
+              {METADATA_TITLE}
             </Typography>
             <NestedGridContainer key={"component-latex"} container direction="row" spacing={0}>
               <Grid item xs={3}>
-                <Typography fontSize="0.85rem">LaTex</Typography>
-                <Typography fontSize="0.7rem" color="grey" fontStyle="italic">
+                <Typography fontSize="0.95rem">LaTex</Typography>
+                <Typography fontSize="0.8rem" color="grey" fontStyle="italic">
                   (Read Only)
                 </Typography>
               </Grid>

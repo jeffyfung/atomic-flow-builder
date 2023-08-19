@@ -77,8 +77,8 @@ export const FormTextFieldAndSlider: React.FC<{
         error={!!error}
         helperText={error}
         sx={{ width: "30%", mr: 2 }} //
-        inputProps={{ style: { fontSize: "0.85rem", padding: "8px 12px" } }}
-        InputLabelProps={{ style: { fontSize: "0.85rem" } }}
+        inputProps={{ style: { fontSize: "0.95rem", padding: "8px 12px" } }}
+        InputLabelProps={{ style: { fontSize: "0.95rem" } }}
       />
       <Slider color="secondary" sx={{ width: "50%" }} valueLabelDisplay={valueLabelDisplay} step={step} min={min} max={max} marks={marks} value={value} onChange={handleSliderChange} />
     </>

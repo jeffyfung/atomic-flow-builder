@@ -33,8 +33,8 @@ export const FormDropDown: React.FC<{
       sx={{
         width: "87%",
       }}
-      InputLabelProps={{ style: { fontSize: "0.85rem" } }}
-      SelectProps={{ SelectDisplayProps: { style: { fontSize: "0.85rem", padding: "5px 12px" } } }}
+      InputLabelProps={{ style: { fontSize: "0.95rem" } }}
+      SelectProps={{ SelectDisplayProps: { style: { fontSize: "0.95rem", padding: "5px 12px" } } }}
     >
       {options.map((val) => (
         <MenuItem key={val} value={val}>
