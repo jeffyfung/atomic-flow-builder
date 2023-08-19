@@ -8,8 +8,8 @@ import { LeafPaletteItemSchema, PaletteItemSchema, paletteItemSchema } from "./c
 
 const StyledToolbarBox = styled(Box)({
   position: "absolute",
-  width: "40px",
-  left: "5px",
+  width: "46px",
+  left: "7px",
   top: "28%",
   backgroundColor: "white",
 });
@@ -163,6 +163,7 @@ export const Palette: React.FC<{}> = () => {
               gridAutoFlow: "column",
               gridColumnGap: "0px",
               padding: "0px",
+              overflow: "hidden",
             },
           }}
           PaperProps={{ sx: { boxShadow: 2 } }}

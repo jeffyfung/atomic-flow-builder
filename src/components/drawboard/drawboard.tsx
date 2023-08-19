@@ -10,8 +10,9 @@ export const Drawboard: React.FC<{}> = () => {
   const [actionMenuAnchor, setActionMenuAnchor] = useState<Element | null>(null);
 
   const openActionMenu = (event: MouseEvent) => {
-    setShowActionMenu(true);
-    setActionMenuAnchor(event.currentTarget);
+    // TODO: open About
+    // setShowActionMenu(true);
+    // setActionMenuAnchor(event.currentTarget);
   };
 
   const handleCloseActionMenu = () => {

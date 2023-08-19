@@ -28,10 +28,10 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
           <IconButton size="large" edge="start" color="warning" onClick={openActionMenu} sx={{ mr: 0.5 }}>
             <TipsAndUpdatesIcon fontSize="large" />
           </IconButton>
-          <StyledAppTitle variant="h6">{APP_TITLE}</StyledAppTitle>
-          <Stack direction="row" spacing={1} useFlexGap sx={{ position: "absolute", right: "10px" }}>
-            <DataButton hint={DOWNLOAD_BUTTON_HINT} iconComponent={<CloudDownloadIcon fontSize="large" />} color={"warning"} />
-            <DataButton hint={UPLOAD_BUTTON_HINT} iconComponent={<CloudUploadIcon fontSize="large" />} color={"warning"} />
+          <StyledAppTitle variant="h5">{APP_TITLE}</StyledAppTitle>
+          <Stack direction="row" spacing={2.5} useFlexGap sx={{ position: "absolute", right: "10px" }}>
+            <DataButton hint={DOWNLOAD_BUTTON_HINT} iconComponent={<CloudDownloadIcon sx={{ fontSize: "38px" }} />} color={"warning"} />
+            <DataButton hint={UPLOAD_BUTTON_HINT} iconComponent={<CloudUploadIcon sx={{ fontSize: "38px" }} fontSize="large" />} color={"warning"} />
             <LatexButton shapes={shapes} />
           </Stack>
         </Toolbar>
