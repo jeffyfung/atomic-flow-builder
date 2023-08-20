@@ -8,6 +8,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { APP_TITLE, DOWNLOAD_BUTTON_HINT, UPLOAD_BUTTON_HINT } from "../../res/texts/top-menu";
 import { DataButton } from "./data-button";
 import { LatexButton } from "./latex-button";
+import { download } from "../../features/file";
 
 const StyledAppTitle = styled(Typography)({
   textAlign: "center",
@@ -16,10 +17,22 @@ const StyledAppTitle = styled(Typography)({
 
 interface TopMenuProps {
   openActionMenu: (event: MouseEvent) => void;
+  handleOpenUploader: (event: MouseEvent) => void;
 }
 
-export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
+export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu, handleOpenUploader }) => {
   const { shapes } = useAppSelector(selectCanvas);
+
+  const downloadData = (event: MouseEvent) => {
+    event.preventDefault();
+    const currentDateTime = new Date().toISOString();
+    download(encodeURIComponent(JSON.stringify(shapes)), `atomic_flow_graph_${currentDateTime}`);
+  };
+
+  const uploadData = (event: MouseEvent) => {
+    event.preventDefault();
+    handleOpenUploader(event);
+  };
 
   return (
     <Box id="top-menu" sx={{ flexGrow: 1 }}>
@@ -30,8 +43,8 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu }) => {
           </IconButton>
           <StyledAppTitle variant="h5">{APP_TITLE}</StyledAppTitle>
           <Stack direction="row" spacing={2.5} useFlexGap sx={{ position: "absolute", right: "10px" }}>
-            <DataButton hint={DOWNLOAD_BUTTON_HINT} iconComponent={<CloudDownloadIcon sx={{ fontSize: "38px" }} />} color={"warning"} />
-            <DataButton hint={UPLOAD_BUTTON_HINT} iconComponent={<CloudUploadIcon sx={{ fontSize: "38px" }} fontSize="large" />} color={"warning"} />
+            <DataButton hint={DOWNLOAD_BUTTON_HINT} iconComponent={<CloudDownloadIcon sx={{ fontSize: "38px" }} />} color={"warning"} handleClick={downloadData} />
+            <DataButton hint={UPLOAD_BUTTON_HINT} iconComponent={<CloudUploadIcon sx={{ fontSize: "38px" }} fontSize="large" />} color={"warning"} handleClick={uploadData} />
             <LatexButton shapes={shapes} />
           </Stack>
         </Toolbar>

@@ -11,21 +11,6 @@ export interface CanvasState {
   snappableVertices: { x: number; y: number }[];
 }
 
-// export interface DragPoint {
-//   type: ShapeType;
-//   clientX: number;
-//   clientY: number;
-// offsetX: number;
-// offsetY: number;
-// screenX: number;
-// screenY: number;
-// }
-
-// export interface DropPoint extends DragPoint {
-//   coordX?: number;
-//   coordY?: number;
-// }
-
 const initialState: CanvasState = {
   shapes: {},
   previewShape: null,
@@ -41,6 +26,13 @@ export const canvasSlice = createSlice({
     addToCanvas: (state, action: PayloadAction<ShapeProperties>) => {
       state.shapes[nanoid()] = action.payload;
       state.previewShape = null;
+    },
+    loadCanvas: (state, action: PayloadAction<Record<string, ShapeProperties>>) => {
+      state.shapes = action.payload;
+      state.previewShape = null;
+      state.dragging = false;
+      state.drawing = false;
+      state.snappableVertices = [];
     },
     addToPreview: (state, action: PayloadAction<ShapeProperties>) => {
       state.previewShape = action.payload;
@@ -75,7 +67,7 @@ export const canvasSlice = createSlice({
   },
 });
 
-export const { addToCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging, toggleDrawing, setSnappableVertices } = canvasSlice.actions;
+export const { addToCanvas, loadCanvas, addToPreview, updatePreview, clear, updateShape, deleteShape, toggleDragging, toggleDrawing, setSnappableVertices } = canvasSlice.actions;
 
 export const selectCanvas = (state: RootState) => state.canvas;
 

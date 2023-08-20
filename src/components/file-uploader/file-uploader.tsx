@@ -1,0 +1,99 @@
+import { CloudUpload } from "@mui/icons-material";
+import { Backdrop, Box, CircularProgress, Fade, Modal, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { UPLOAD_HINT_TEXT } from "../../res/texts/file-uploader";
+import { upload } from "../../features/file";
+
+interface FileUploaderProps {
+  open: boolean;
+  toggleOpen: (value: React.SetStateAction<boolean>) => void;
+}
+
+// TODO: add validation; error throwing
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "500px",
+  height: "200px",
+  backgroundColor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 24,
+  padding: "4px",
+};
+
+export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleModalClose = () => toggleOpen(false);
+
+  const handleDragOver = (event: React.DragEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLElement>) => {
+    event.preventDefault();
+    console.log("fire drop");
+    event.stopPropagation();
+    if (!event.dataTransfer.files[0]) throw new Error("No file uploaded");
+    uploadFile(event.dataTransfer.files[0]);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) throw new Error("No file uploaded");
+    uploadFile(event.target.files[0]);
+  };
+
+  const uploadFile = (file: File): void => {
+    setLoading(true);
+    upload(file, () => {
+      setTimeout(() => {
+        setLoading(false);
+        toggleOpen(false);
+      }, 400);
+    });
+  };
+
+  return (
+    <Modal
+      open={open} //
+      onClose={handleModalClose}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 500,
+        },
+      }}
+    >
+      <Fade in={open}>
+        <Box sx={style}>
+          <label onDragOver={handleDragOver} onDrop={handleDrop} style={{ display: "block", height: "100%" }} htmlFor="file-upload">
+            <Box
+              height="100%"
+              sx={{
+                backgroundColor: "white",
+                "&:hover": { cursor: "grab" },
+              }}
+            >
+              <Stack direction="column" justifyContent="center" alignItems="center" height="100%" width="100%">
+                <CloudUpload style={{ fontSize: "50px", color: "#2a53f0" }} />
+                <Typography>{UPLOAD_HINT_TEXT}</Typography>
+                {loading && <CircularProgress />}
+              </Stack>
+            </Box>
+          </label>
+          <input
+            id="file-upload"
+            onChange={handleInputChange} //
+            accept="application/JSON"
+            type="file"
+            style={{ display: "none" }}
+          />
+        </Box>
+      </Fade>
+    </Modal>
+  );
+};

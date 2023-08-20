@@ -28,7 +28,12 @@ export const computeDimension2V = (shape: ShapeProperties, displacedV: Coordinat
         gridX: variableWidth ? fixedV.gridX : displacedV.gridX,
         gridY: variableLength ? fixedV.gridY : displacedV.gridY,
       },
-      end: displacedV,
+      end: {
+        x: displacedV.x,
+        y: displacedV.y,
+        gridX: displacedV.gridX,
+        gridY: displacedV.gridY,
+      },
     },
   };
 };
