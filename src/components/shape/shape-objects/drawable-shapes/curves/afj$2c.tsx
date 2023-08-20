@@ -4,7 +4,7 @@ import { KonvaEventObject } from "konva/lib/Node";
 import { Circle, Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
-import { computeNearestSnap, getGridCoordinate } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate } from "../../../../canvas/gridline";
 import { computeDimension2V } from "..";
 
 export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {
@@ -19,10 +19,11 @@ export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const points = [start!.x, start!.y, start!.x + width * 0.1, start!.y + length * 0.25, start!.x + width * 0.9, start!.y + length * 0.75, end!.x, end!.y];
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
-    const { x: _x, y: _y } = event.target!.absolutePosition();
-    const { gridX, gridY } = getGridCoordinate(_x, _y);
+    const { x: absX, y: absY } = event.target!.getAbsolutePosition();
+    const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
+    const { gridX, gridY } = getGridCoordinate(stageX, stageY);
     setNearestSnap(computeNearestSnap(gridX, gridY));
-    return computeDimension2V(shape, { x: _x, y: _y, gridX, gridY }, existingVertex!);
+    return computeDimension2V(shape, { x: stageX, y: stageY, gridX, gridY }, existingVertex!);
   };
 
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>) => {

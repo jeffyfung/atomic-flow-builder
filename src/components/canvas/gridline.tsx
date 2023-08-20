@@ -1,6 +1,5 @@
 import Konva from "konva";
 import { Layer, Line, Text } from "react-konva";
-import { Coordinates } from "../../features/shape";
 import { SnapPointForVertice } from "./canvas";
 
 export const SNAP_GRID_THRESHOLD = 0.4;
@@ -9,12 +8,24 @@ export interface GridlineProps {
 }
 
 export const stepSize = 20;
-let stageWidth: number;
-let stageHeight: number;
+
+let stageRect: {
+  width: number;
+  height: number;
+  offsetX: number;
+  offsetY: number;
+};
 let numXSteps: number;
 let numYSteps: number;
 let xAxisVal: number;
 let yAxisVal: number; // y axis is top-down
+
+export const getRelativeStageCoordinate = (x: number, y: number): { stageX: number; stageY: number } => {
+  return {
+    stageX: x + stageRect.offsetX,
+    stageY: y + stageRect.offsetY,
+  };
+};
 
 export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY: number } => {
   return {
@@ -54,42 +65,46 @@ export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
 
   const strokeColour = "#d6d5d2";
   const axisColour = "#8c8c8c";
-  stageWidth = stage.width();
-  stageHeight = stage.height();
-  numXSteps = Math.round(stageWidth / stepSize);
-  numYSteps = Math.round(stageHeight / stepSize);
-  const xAxisIdx = Math.floor(numXSteps * 0.4);
-  const yAxisIdx = Math.floor(numYSteps * 0.5);
+  stageRect = {
+    width: stage.width(),
+    height: stage.height(),
+    offsetX: -Math.ceil(stage.position().x / stepSize) * stepSize || 0,
+    offsetY: -Math.ceil(stage.position().y / stepSize) * stepSize || 0,
+  };
+  const extraBufferLines = 15;
+  const drawRect = {
+    x1: stageRect.offsetX - extraBufferLines * stepSize,
+    y1: stageRect.offsetY - extraBufferLines * stepSize,
+    x2: stageRect.offsetX + stageRect.width + extraBufferLines * stepSize,
+    y2: stageRect.offsetY + stageRect.height + extraBufferLines * stepSize,
+  };
+  const labelGridSpacing = 5;
+  numXSteps = Math.round(stageRect.width / stepSize);
+  numYSteps = Math.round(stageRect.height / stepSize);
+  xAxisVal = Math.floor(numXSteps * 0.4) * stepSize;
+  yAxisVal = Math.floor(numYSteps * 0.5) * stepSize;
 
   let verticals = [];
-  let xIdx = -xAxisIdx;
-  for (let i = 0; i <= numXSteps; i++) {
-    if (i === xAxisIdx) {
-      xAxisVal = i * stepSize;
-      verticals.push(<Line key={`vert-origin`} x={xAxisVal} points={[0, 0, 0, stageHeight]} stroke={axisColour} strokeWidth={2.5} />);
-    } else {
-      verticals.push(<Line key={`vert-${i}`} x={i * stepSize} points={[0, 0, 0, stageHeight]} stroke={strokeColour} strokeWidth={1} />);
+  for (let i = -extraBufferLines; i <= numXSteps + extraBufferLines; i++) {
+    verticals.push(<Line key={`vert-${i}`} x={stageRect.offsetX + i * stepSize} points={[0, drawRect.y1, 0, drawRect.y2]} stroke={strokeColour} strokeWidth={1} />);
+    const gridX = (stageRect.offsetX + i * stepSize - xAxisVal) / stepSize;
+    const roundedGridX = Math.round(gridX);
+    if (gridX === roundedGridX && roundedGridX % labelGridSpacing === 0) {
+      verticals.push(<Text key={`vert-axis-${roundedGridX}`} x={stageRect.offsetX + i * stepSize - 4} y={yAxisVal + 2} text={`${roundedGridX}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
     }
-    if ((i - xAxisIdx) % 5 === 0) {
-      verticals.push(<Text key={`vert-axis-${xIdx}`} x={i * stepSize - 4} y={yAxisIdx * stepSize + 2} text={`${xIdx}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
-    }
-    xIdx++;
   }
+  verticals.push(<Line key={`vert-origin`} x={xAxisVal} points={[0, drawRect.y1, 0, drawRect.y2]} stroke={axisColour} strokeWidth={2.5} />);
 
   let horizontals = [];
-  let yIdx = yAxisIdx;
-  for (let i = 0; i <= numYSteps; i++) {
-    if (i === yAxisIdx) {
-      yAxisVal = i * stepSize;
-      horizontals.push(<Line key={`hori-origin`} y={yAxisVal} points={[0, 0, stageWidth, 0]} stroke={axisColour} strokeWidth={2} />);
-    } else {
-      horizontals.push(<Line key={`hori-${i}`} y={i * stepSize} points={[0, 0, stageWidth, 0]} stroke={strokeColour} strokeWidth={1} />);
+  for (let i = -extraBufferLines; i <= numYSteps + extraBufferLines; i++) {
+    horizontals.push(<Line key={`hori-${i}`} y={stageRect.offsetY + i * stepSize} points={[drawRect.x1, 0, drawRect.x2, 0]} stroke={strokeColour} strokeWidth={1} />);
+    const gridY = (stageRect.offsetY + i * stepSize - yAxisVal) / stepSize;
+    const roundedGridY = Math.round(gridY);
+    if (gridY === roundedGridY && roundedGridY % labelGridSpacing === 0) {
+      horizontals.push(<Text key={`hori-axis-${roundedGridY}`} x={xAxisVal - 14} y={stageRect.offsetY + i * stepSize} text={`${-roundedGridY}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
     }
-    if ((i - yAxisIdx) % 5 === 0) {
-      horizontals.push(<Text key={`hori-axis-${i}`} x={xAxisIdx * stepSize - 14} y={i * stepSize - 4} text={`${yIdx}`} fontFamily={"Calibri"} fontSize={10} fill={axisColour} />);
-    }
-    yIdx--;
   }
+  horizontals.push(<Line key={`hori-origin`} y={yAxisVal} points={[drawRect.x1, 0, drawRect.x2, 0]} stroke={axisColour} strokeWidth={2} />);
 
   return <Layer>{[...verticals, ...horizontals]}</Layer>;
 };

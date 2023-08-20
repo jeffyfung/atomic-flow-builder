@@ -3,19 +3,19 @@ import { Stage, Layer, Circle } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
 import { addToCanvas, selectCanvas, toggleDragging, toggleDrawing, updatePreview, updateShape } from "../../features/canvas";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector, useForceUpdate } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
 import { Gridline, computeNearestSnap, getGridCoordinate, getStageCoordinate } from "./gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
 import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
+import "./canvas.css";
 
 export interface SnapPointForVertice {
   onShape?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
   onGrid?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
 }
 
-// TODO: make the canvas fit the layout/window perfectly (by fixing the stage area? inresponsive to viewport size?)
 export const Canvas: React.FC<{}> = () => {
   const { shapes, previewShape, dragging, drawing, snappableVertices } = useAppSelector(selectCanvas);
   const dispatch = useAppDispatch();
@@ -26,6 +26,7 @@ export const Canvas: React.FC<{}> = () => {
   const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<Coordinates | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     setStageObj(stageRef.current);
@@ -36,7 +37,7 @@ export const Canvas: React.FC<{}> = () => {
       const shape = store.getState().canvas.previewShape!;
       const stage = stageRef.current!;
       stage.setPointersPositions(event);
-      const { x, y } = stage.getPointerPosition()!;
+      const { x, y } = stage.getRelativePointerPosition()!;
       const { gridX, gridY } = getGridCoordinate(x, y);
       const _shape = { ...shape, x, y, gridX, gridY };
       if (shape !== null) {
@@ -117,13 +118,11 @@ export const Canvas: React.FC<{}> = () => {
 
   const handleMouseOver = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-
     if (dragging || drawing) {
       const stage = stageRef.current!;
       stage.setPointersPositions(event);
-      const { x, y } = stage.getPointerPosition()!;
+      const { x, y } = stage.getRelativePointerPosition()!;
       const { gridX, gridY } = getGridCoordinate(x, y);
-
       if (dragging) {
         handleMouseOverDragging({ x, y, gridX, gridY });
       } else {
@@ -203,14 +202,7 @@ export const Canvas: React.FC<{}> = () => {
     setInspectorDisplay(false);
   };
 
-  const handleShapeMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    // const container = event.target.getStage()!.container();
-    // if (dragging || drawing) {
-    //   container.style.cursor = "none";
-    // } else {
-    //   container.style.cursor = "grab";
-    // }
-  };
+  const handleShapeMouseEnter = (_event: Konva.KonvaEventObject<MouseEvent>) => {};
 
   const handleShapeMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const container = event.target.getStage()!.container();
@@ -227,7 +219,7 @@ export const Canvas: React.FC<{}> = () => {
     const container = stageRef.current!.container();
     if (dragging || drawing) {
       container.style.cursor = "none";
-      const { x, y } = stageRef.current!.getPointerPosition()!;
+      const { x, y } = stageRef.current!.getRelativePointerPosition()!;
       const { gridX, gridY } = getGridCoordinate(x, y);
       setNearestSnaps((nearestSnaps) => [{ ...nearestSnaps[0], onShape: { x, y, gridX, gridY, gridOffsetX: 0, gridOffsetY: 0 } }]);
     } else {
@@ -244,7 +236,7 @@ export const Canvas: React.FC<{}> = () => {
   };
 
   const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
-    const { x, y } = event.target!.absolutePosition();
+    const { x, y } = stageRef.current!.getRelativePointerPosition();
     const { gridX, gridY } = getGridCoordinate(x, y);
     dispatch(
       updateShape({
@@ -285,14 +277,14 @@ export const Canvas: React.FC<{}> = () => {
     .filter((nearestSnap) => nearestSnap.onShape || nearestSnap.onGrid)
     .sort((a, b) => {
       const snapA = (a.onShape || a.onGrid)!;
-      const snapB = (a.onShape || a.onGrid)!;
+      const snapB = (b.onShape || b.onGrid)!;
       return snapA.gridOffsetX ** 2 + snapA.gridOffsetY ** 2 - (snapB.gridOffsetX ** 2 + snapB.gridOffsetY ** 2);
     });
 
   return (
     <>
-      <main className="canvas" onMouseMove={handleMouseOver} onClick={handleClick} style={{ backgroundColor: "#fffffd", cursor: "crosshair" }}>
-        <Stage ref={stageRef} width={window.innerWidth} height={window.innerHeight}>
+      <main className="canvas-main" onMouseMove={handleMouseOver} onClick={handleClick}>
+        <Stage className="canvas-stage" ref={stageRef} width={window.innerWidth} height={window.innerHeight} draggable onDragEnd={forceUpdate}>
           <Gridline stage={stageObj} />
           <Layer>
             {Object.entries(shapes).map(([shapeId, shape]) => {
