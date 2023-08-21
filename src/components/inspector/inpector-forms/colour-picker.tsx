@@ -61,6 +61,9 @@ export const ColourPicker: React.FC<ColourPickerProps> = ({ shapeId, shape, stro
           "& .MuiPaper-root": {
             backgroundColor: "#ffffff00",
           },
+          "& .MuiPaper-root:hover": {
+            cursor: `url(/eyedropper.png) 0 24, grab`,
+          },
           "& .MuiList-root": {
             display: "grid",
             gridTemplateColumns: `repeat(${menuNumCols}, 40px)`,
@@ -91,10 +94,8 @@ export const ColourPicker: React.FC<ColourPickerProps> = ({ shapeId, shape, stro
                 sx={{
                   backgroundColor: colour,
                   padding: 0,
-                  // TODO: not working - need to use webpack
                   ":hover": {
                     border: "2px solid blue",
-                    cursor: `url("/src/res/cursors/eyedropper.png"), grab`,
                   },
                 }}
               >

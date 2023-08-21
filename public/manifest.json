@@ -5,6 +5,10 @@
     {
       "src": "wave4.jpeg",
       "type": "image/jpeg"
+    },
+    {
+      "src": "eyedropper.png",
+      "type": "image/png"
     }
   ],
   "start_url": "./",
