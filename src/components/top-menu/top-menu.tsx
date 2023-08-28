@@ -16,11 +16,11 @@ const StyledAppTitle = styled(Typography)({
 });
 
 interface TopMenuProps {
-  openActionMenu: (event: MouseEvent) => void;
+  handleAbout: (event: MouseEvent) => void;
   handleOpenUploader: (event: MouseEvent) => void;
 }
 
-export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu, handleOpenUploader }) => {
+export const TopMenu: React.FC<TopMenuProps> = ({ handleAbout, handleOpenUploader }) => {
   const { shapes } = useAppSelector(selectCanvas);
 
   const downloadData = (event: MouseEvent) => {
@@ -38,7 +38,7 @@ export const TopMenu: React.FC<TopMenuProps> = ({ openActionMenu, handleOpenUplo
     <Box id="top-menu" sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="primary">
         <Toolbar variant="dense">
-          <IconButton size="large" edge="start" color="warning" onClick={openActionMenu} sx={{ mr: 0.5 }}>
+          <IconButton size="large" edge="start" color="warning" onClick={handleAbout} sx={{ mr: 0.5 }}>
             <TipsAndUpdatesIcon fontSize="large" />
           </IconButton>
           <StyledAppTitle variant="h5">{APP_TITLE}</StyledAppTitle>
