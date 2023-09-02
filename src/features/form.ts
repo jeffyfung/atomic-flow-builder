@@ -16,22 +16,3 @@ export const validator: Record<string, ValidatorType> = {
     func: (val: any) => (Number.isInteger(Number(val)) && Number(val) > 0 ? true : "Only positive integer"),
   },
 };
-
-// const validate = (
-//   // setter: React.Dispatch<React.SetStateAction<any>>, //
-//   validator: (val: any) => true | string,
-//   errorSetter: React.Dispatch<React.SetStateAction<string | null>>
-// ): ((e: FormEvent<any>) => void) => {
-//   return (event: FormEvent<HTMLInputElement>) => {
-//     const val = event.currentTarget?.value;
-//     if (val) {
-//       const result = validator(val);
-//       if (result === true) {
-//         // setter(event);
-//         errorSetter(null);
-//       } else {
-//         errorSetter(result);
-//       }
-//     }
-//   };
-// };
