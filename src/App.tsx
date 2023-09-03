@@ -6,6 +6,7 @@ import { colorTheme } from "./config";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { useEffect } from "react";
+import { inject } from "@vercel/analytics";
 
 const App = () => {
   useEffect(() => {
@@ -30,5 +31,7 @@ const App = () => {
     </Provider>
   );
 };
+
+inject();
 
 export default App;
