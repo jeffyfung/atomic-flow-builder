@@ -188,8 +188,8 @@ export const ArcAFIIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x - strokeSpacing * 0.5, y: y - strokeLength },
-        { x: x + strokeSpacing * 0.5, y: y - strokeLength },
+        { x: x - strokeSpacing * 0.5, y },
+        { x: x + strokeSpacing * 0.5, y },
       ])
     );
   }, [x, y]);
