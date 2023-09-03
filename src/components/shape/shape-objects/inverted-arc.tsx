@@ -17,6 +17,7 @@ export const ArcAFIUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   const arcWidth = getStageDim(5);
   const arcHeight = getStageDim(0.3);
   const arcTopToCenter = getStageDim(0.1);
+  const strokeSpacing = getStageDim(4);
   const borderBox = {
     x: -arcWidth * 0.5,
     y: -arcTopToCenter,
@@ -35,8 +36,8 @@ export const ArcAFIUN: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCli
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x - arcWidth * 0.5, y: y - arcTopToCenter },
-        { x: x + arcWidth * 0.5, y: y - arcTopToCenter },
+        { x: x - strokeSpacing * 0.5, y },
+        { x: x + strokeSpacing * 0.5, y },
       ])
     );
   }, [x, y]);
@@ -104,8 +105,8 @@ export const ArcAFIUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onCl
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x - strokeSpacing * 0.5, y: y - strokeLength },
-        { x: x + strokeSpacing * 0.5, y: y - strokeLength },
+        { x: x - strokeSpacing * 0.5, y },
+        { x: x + strokeSpacing * 0.5, y },
       ])
     );
   }, [x, y]);
