@@ -23,6 +23,7 @@ export const AFCXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick,
   const line2Points = [p1!.x, p1!.y, p1!.x + width * 0.25, p1!.y + length * 0.1, p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4"): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
+    event.cancelBubble = true;
     const { x: absX, y: absY } = event.target!.getAbsolutePosition();
     const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
     const { gridX, gridY } = getGridCoordinate(stageX, stageY);

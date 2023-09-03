@@ -19,10 +19,13 @@ export const AFJ$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const points = [start!.x, start!.y, start!.x + width * 0.1, start!.y + length * 0.25, start!.x + width * 0.9, start!.y + length * 0.75, end!.x, end!.y];
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
+    event.cancelBubble = true;
     const { x: absX, y: absY } = event.target!.getAbsolutePosition();
     const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
     const { gridX, gridY } = getGridCoordinate(stageX, stageY);
+    console.log("moved coor", { stageX, stageY, gridX, gridY });
     setNearestSnap(computeNearestSnap(gridX, gridY));
+    console.log("nearest snap", computeNearestSnap(gridX, gridY));
     return computeDimension2V(shape, { x: stageX, y: stageY, gridX, gridY }, existingVertex!);
   };
 

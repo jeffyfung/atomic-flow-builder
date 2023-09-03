@@ -20,6 +20,7 @@ export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const labelY = labelPlacement! === LabelPlacement.HIGH ? length * -0.2 : length * 0.1;
 
   const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
+    event.cancelBubble = true;
     const { x: absX, y: absY } = event.target!.getAbsolutePosition();
     const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
     const { gridX, gridY } = getGridCoordinate(stageX, stageY);
