@@ -10,17 +10,29 @@ interface FileUploaderProps {
 }
 
 // TODO: add validation; error throwing
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "500px",
-  height: "200px",
-  backgroundColor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  padding: "4px",
+const styles = {
+  container: {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "background.paper",
+    borderRadius: "10px",
+    boxShadow: 24,
+    padding: "12px",
+  },
+  innerContainer: {
+    minWidth: "45vw",
+    minHeight: "40vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "10px",
+    border: "#9ba3e0 2px dashed",
+    gap: "12px",
+    padding: "12px",
+  },
 };
 
 export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) => {
@@ -69,29 +81,31 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) 
       }}
     >
       <Fade in={open}>
-        <Box sx={style}>
-          <label onDragOver={handleDragOver} onDrop={handleDrop} style={{ display: "block", height: "100%" }} htmlFor="file-upload">
-            <Box
-              height="100%"
-              sx={{
-                backgroundColor: "white",
-                "&:hover": { cursor: "grab" },
-              }}
-            >
-              <Stack direction="column" justifyContent="center" alignItems="center" height="100%" width="100%">
-                <CloudUpload style={{ fontSize: "50px", color: "#2a53f0" }} />
-                <Typography>{UPLOAD_HINT_TEXT}</Typography>
-                {loading && <CircularProgress />}
-              </Stack>
-            </Box>
-          </label>
-          <input
-            id="file-upload"
-            onChange={handleInputChange} //
-            accept="application/JSON"
-            type="file"
-            style={{ display: "none" }}
-          />
+        <Box sx={styles.container}>
+          <Box sx={styles.innerContainer}>
+            <label onDragOver={handleDragOver} onDrop={handleDrop} style={{ display: "block", height: "100%" }} htmlFor="file-upload">
+              <Box
+                height="100%"
+                sx={{
+                  backgroundColor: "white",
+                  "&:hover": { cursor: "grab" },
+                }}
+              >
+                <Stack direction="column" justifyContent="center" alignItems="center" height="100%" width="100%">
+                  <CloudUpload style={{ fontSize: "50px", color: "#2a53f0" }} />
+                  <Typography>{UPLOAD_HINT_TEXT}</Typography>
+                  {loading && <CircularProgress />}
+                </Stack>
+              </Box>
+            </label>
+            <input
+              id="file-upload"
+              onChange={handleInputChange} //
+              accept="application/JSON"
+              type="file"
+              style={{ display: "none" }}
+            />
+          </Box>
         </Box>
       </Fade>
     </Modal>
