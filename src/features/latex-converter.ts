@@ -1,4 +1,4 @@
-import { getGridDim } from "../components/canvas/gridline";
+import { getGridDim } from "../components/canvas/gridline/gridline";
 import { DrawableShapeType, LabelPlacement, ShapeProperties } from "./shape";
 import { isShapePropertiesKey } from "./type-util";
 

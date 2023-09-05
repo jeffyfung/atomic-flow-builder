@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Circle } from "react-konva";
 import Konva from "konva";
 import { Shape } from "../shape/shape";
-import { addToCanvas, selectCanvas, toggleDragging, toggleDrawing, updatePreview, updateShape } from "../../features/canvas";
+import { addToCanvas, selectCanvas, selectOrderedShapeEntries, toggleDragging, toggleDrawing, updatePreview, updateShape } from "../../features/canvas";
 import { useAppDispatch, useAppSelector, useForceUpdate } from "../../hooks";
 import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
-import { Gridline, computeNearestSnap, getGridCoordinate, getStageCoordinate } from "./gridline";
+import { Gridline, computeNearestSnap, getGridCoordinate, getStageCoordinate } from "./gridline/gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
 import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
 import "./canvas.css";
+import { ContextMenu } from "./context-menu/context-menu";
 
 export interface SnapPointForVertice {
   onShape?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
@@ -18,12 +19,14 @@ export interface SnapPointForVertice {
 
 export const Canvas: React.FC<{}> = () => {
   const { shapes, previewShape, dragging, drawing, snappableVertices } = useAppSelector(selectCanvas);
+  const orderedShapeList = useAppSelector(selectOrderedShapeEntries);
   const dispatch = useAppDispatch();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inspectorDisplay, setInspectorDisplay] = useState<boolean>(true);
   const [stageObj, setStageObj] = useState<Konva.Stage | null>(null);
   const [nearestSnaps, setNearestSnaps] = useState<SnapPointForVertice[]>([]);
   const [drawingAnchorPoint, setDrawingAnchorPoint] = useState<Coordinates | null>(null);
+  const [contextMenuPosition, setContextMenuPosition] = useState<{ top: number; left: number } | null>(null);
 
   const stageRef = useRef<Konva.Stage>(null);
   const forceUpdate = useForceUpdate();
@@ -189,13 +192,22 @@ export const Canvas: React.FC<{}> = () => {
     dispatch(updatePreview(updatedProperties));
   };
 
-  const handleClickShape = (_event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
+  const handleClickShape = (event: Konva.KonvaEventObject<MouseEvent>, id: string) => {
     if (selectedId === id) {
-      setSelectedId(null);
+      if (event.evt.button === 2) {
+        setContextMenuPosition({ left: event.evt.clientX, top: event.evt.clientY });
+      } else {
+        setSelectedId(null);
+      }
     } else {
       setSelectedId(id);
+      if (event.evt.button === 2) {
+        setInspectorDisplay(false);
+        setContextMenuPosition({ left: event.evt.clientX, top: event.evt.clientY });
+      } else {
+        setInspectorDisplay(true);
+      }
     }
-    setInspectorDisplay(true);
   };
 
   const handleCloseInspector = () => {
@@ -281,13 +293,20 @@ export const Canvas: React.FC<{}> = () => {
       return snapA.gridOffsetX ** 2 + snapA.gridOffsetY ** 2 - (snapB.gridOffsetX ** 2 + snapB.gridOffsetY ** 2);
     });
 
+  const handleContextMenu = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    if (contextMenuPosition) {
+      setContextMenuPosition(null);
+    }
+  };
+
   return (
     <>
-      <main className="canvas-main" onMouseMove={handleMouseOver} onClick={handleClick}>
+      <main className="canvas-main" onMouseMove={handleMouseOver} onClick={handleClick} onContextMenu={handleContextMenu}>
         <Stage className="canvas-stage" ref={stageRef} width={window.innerWidth} height={window.innerHeight} draggable onDragEnd={forceUpdate}>
           <Gridline stage={stageObj} />
           <Layer>
-            {Object.entries(shapes).map(([shapeId, shape]) => {
+            {orderedShapeList.map(([shapeId, shape]) => {
               return (
                 <Shape
                   selected={selectedId === shapeId} //
@@ -333,6 +352,7 @@ export const Canvas: React.FC<{}> = () => {
         </Stage>
       </main>
       {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} clearSelection={clearSelection} />}
+      {contextMenuPosition && <ContextMenu position={contextMenuPosition} setContextMenuPosition={setContextMenuPosition} selectedId={selectedId} clearSelection={clearSelection} />}
     </>
   );
 };

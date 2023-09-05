@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { ShapeProps } from "../../../shape";
 import { KonvaEventObject } from "konva/lib/Node";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate } from "../../../../canvas/gridline/gridline";
 import { computeDimensionRect } from "..";
 import { Circle, Group, Rect } from "react-konva";
 import { Anchor } from "../anchor";

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ShapeProps } from "../shape";
 import Konva from "konva";
-import { getStageDim } from "../../canvas/gridline";
+import { getStageDim } from "../../canvas/gridline/gridline";
 import { Circle, Group, Line, Transformer, Shape as KonvaShape } from "react-konva";
 import { LatexColour } from "../../../features/shape";
 import { GraphLabel } from "./graph-label";

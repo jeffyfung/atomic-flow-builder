@@ -3,7 +3,7 @@ import {} from "../../../features/shape";
 import { ShapeProps } from "../shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
-import { getStageDim } from "../../canvas/gridline";
+import { getStageDim } from "../../canvas/gridline/gridline";
 
 export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;

@@ -1,4 +1,4 @@
-import { getGridCoordinate } from "../components/canvas/gridline";
+import { getGridCoordinate } from "../components/canvas/gridline/gridline";
 
 // TODO: discriminate draggable and drawable shape properties interface
 export interface ShapeProperties {

@@ -1,5 +1,5 @@
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../../../features/shape";
-import { getGridCoordinate } from "../../../canvas/gridline";
+import { getGridCoordinate } from "../../../canvas/gridline/gridline";
 
 export * from "./straight-line";
 export * from "./curves";

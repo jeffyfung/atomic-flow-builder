@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ShapeProps } from "../../../shape";
 import { Coordinates, DrawableShapeType, LabelPlacement } from "../../../../../features/shape";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline/gridline";
 import { KonvaEventObject } from "konva/lib/Node";
 import { Circle, Group, Line } from "react-konva";
 import { GraphLabel } from "../../graph-label";

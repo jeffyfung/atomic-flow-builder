@@ -4,7 +4,7 @@ import { KonvaEventObject } from "konva/lib/Node";
 import { Circle, Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline/gridline";
 import { computeDimensionArc } from "..";
 import { isArcVertexName } from "../../../../../features/type-util";
 

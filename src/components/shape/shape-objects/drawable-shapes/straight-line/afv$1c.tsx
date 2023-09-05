@@ -5,7 +5,7 @@ import { KonvaEventObject } from "konva/lib/Node";
 import { Circle, Group, Line } from "react-konva";
 import { GraphLabel } from "../../graph-label";
 import { Anchor } from "../anchor";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate } from "../../../../canvas/gridline";
+import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate } from "../../../../canvas/gridline/gridline";
 import { computeDimension2V } from "..";
 
 export const AFV$1C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {

@@ -1,6 +1,6 @@
 import Konva from "konva";
 import { Layer, Line, Text } from "react-konva";
-import { SnapPointForVertice } from "./canvas";
+import { SnapPointForVertice } from "../canvas";
 
 export const SNAP_GRID_THRESHOLD = 0.4;
 export interface GridlineProps {

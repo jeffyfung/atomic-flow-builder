@@ -4,7 +4,7 @@ import { ShapeProps } from "../shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { GraphLabel } from "./graph-label";
-import { getStageDim } from "../../canvas/gridline";
+import { getStageDim } from "../../canvas/gridline/gridline";
 import { useAppDispatch } from "../../../hooks";
 import { setSnappableVertices } from "../../../features/canvas";
 
