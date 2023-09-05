@@ -8,7 +8,6 @@ import { GraphLabel } from "./graph-label";
 import { useAppDispatch } from "../../../hooks";
 import { setSnappableVertices } from "../../../features/canvas";
 
-// TODO: add snapping vertices
 export const DotAFD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef = useRef<Konva.RegularPolygon>(null);

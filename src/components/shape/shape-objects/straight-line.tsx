@@ -4,16 +4,19 @@ import { ShapeProps } from "../shape";
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import { getStageDim } from "../../canvas/gridline/gridline";
+import { setSnappableVertices } from "../../../features/canvas";
+import { useAppDispatch } from "../../../hooks";
 
 export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleDragStart, handleDragEnd }) => {
   const { x, y } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
-  const leftPoint = [getStageDim(-0.7), 0];
-  const rightPoint = [getStageDim(0.7), 0];
-  const topPoint = [0, getStageDim(-0.7)];
+  const leftPoint = [getStageDim(-1), 0];
+  const rightPoint = [getStageDim(1), 0];
+  const topPoint = [0, getStageDim(-1)];
   const line1Points = [leftPoint[0], leftPoint[1], rightPoint[0], rightPoint[1]];
   const line2Points = [0, 0, topPoint[0], topPoint[1]];
 
@@ -23,6 +26,10 @@ export const StraightLine_AFBD: React.FC<ShapeProps> = ({ selected, shape, shape
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x, y }]));
+  }, [x, y]);
 
   return (
     <>
@@ -51,10 +58,11 @@ export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shape
   const shapeRef1 = useRef<Konva.Line>(null);
   const shapeRef2 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
-  const leftPoint = [getStageDim(-0.7), 0];
-  const rightPoint = [getStageDim(0.7), 0];
-  const bottomPoint = [0, getStageDim(0.7)];
+  const leftPoint = [getStageDim(-1), 0];
+  const rightPoint = [getStageDim(1), 0];
+  const bottomPoint = [0, getStageDim(1)];
   const line1Points = [leftPoint[0], leftPoint[1], rightPoint[0], rightPoint[1]];
   const line2Points = [0, 0, bottomPoint[0], bottomPoint[1]];
 
@@ -64,6 +72,10 @@ export const StraightLine_AFBU: React.FC<ShapeProps> = ({ selected, shape, shape
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x, y }]));
+  }, [x, y]);
 
   return (
     <>
@@ -91,8 +103,9 @@ export const StraightLine_AFVDJ: React.FC<ShapeProps> = ({ selected, shape, shap
   const { x, y } = shape;
   const shapeRef1 = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
+  const dispatch = useAppDispatch();
 
-  const strokeLength = getStageDim(0.7);
+  const strokeLength = getStageDim(1);
   const points = [0, -strokeLength, 0, strokeLength];
 
   useEffect(() => {
@@ -101,6 +114,10 @@ export const StraightLine_AFVDJ: React.FC<ShapeProps> = ({ selected, shape, shap
       transformerRef.current!.getLayer()!.batchDraw();
     }
   }, [selected]);
+
+  useEffect(() => {
+    dispatch(setSnappableVertices([{ x, y }]));
+  }, [x, y]);
 
   return (
     <>
