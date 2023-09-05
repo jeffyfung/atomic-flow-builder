@@ -264,16 +264,16 @@ export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const strokeLength = getStageDim(3.4);
   const triangleCentertoBottom = sideLength * 0.5 * 1.732 - radius; // tan 60
-  const bottomLeftPoint = [getStageDim(-2), getStageDim(4.1)];
-  const bottomRightPoint = [getStageDim(2), getStageDim(4.1)];
-  const points = [0, -radius, 0, -radius - strokeLength];
+  const bottomLeftPoint = [getStageDim(-2), getStageDim(4)];
+  const bottomRightPoint = [getStageDim(2), getStageDim(4)];
+  const topPoint = [getStageDim(0), getStageDim(-4)];
+  const points = [0, -radius, topPoint[0], topPoint[1]];
   const borderBox = {
     x: bottomLeftPoint[0],
-    y: -radius - strokeLength,
+    y: topPoint[1],
     width: bottomRightPoint[0] * 2,
-    height: radius + strokeLength + bottomLeftPoint[1],
+    height: bottomLeftPoint[1] - topPoint[1],
   };
 
   useEffect(() => {
@@ -288,7 +288,7 @@ export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x, y: y - radius - strokeLength },
+        { x: x, y: y + topPoint[1] },
         { x: x + bottomLeftPoint[0], y: y + bottomLeftPoint[1] },
         { x: x + bottomRightPoint[0], y: y + bottomRightPoint[1] },
       ])
@@ -337,8 +337,8 @@ export const WedgeAFCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onC
         {label2 && <GraphLabel x={bottomLeftPoint[0] + 10 * label2.length} y={bottomLeftPoint[1] * 0.6} text={label2} />}
         {label3 && <GraphLabel x={bottomRightPoint[0] - 10 - 5 * label3.length} y={bottomRightPoint[1] * 0.6} text={label3} />}
         {label4 && <GraphLabel x={bottomRightPoint[0] + 10 * label4.length} y={bottomRightPoint[1] * 0.6} text={label4} />}
-        {label5 && <GraphLabel x={-10 - 5 * label5.length} y={-radius - strokeLength * 0.5} text={label5} />}
-        {label6 && <GraphLabel x={5} y={-radius - strokeLength * 0.5} text={label6} />}
+        {label5 && <GraphLabel x={-10 - 5 * label5.length} y={topPoint[1] * 0.6} text={label5} />}
+        {label6 && <GraphLabel x={5} y={topPoint[1] * 0.6} text={label6} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -440,17 +440,17 @@ export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const strokeLength = getStageDim(3.4);
   const triangleCentertoBottom = sideLength * 0.5 * 1.732 - radius; // tan 60
-  const bottomLeftPoint = [getStageDim(-2), getStageDim(4.1)];
-  const bottomRightPoint = [getStageDim(2), getStageDim(4.1)];
-  const line1points = [offset, -radius, offset, -radius - strokeLength];
-  const line2points = [-offset, -radius, -offset, -radius - strokeLength];
+  const bottomLeftPoint = [getStageDim(-2), getStageDim(4)];
+  const bottomRightPoint = [getStageDim(2), getStageDim(4)];
+  const topPoint = [getStageDim(0), getStageDim(-4)];
+  const line1points = [offset, -radius, offset + topPoint[0], topPoint[1]];
+  const line2points = [-offset, -radius, -offset + topPoint[0], topPoint[1]];
   const borderBox = {
     x: -offset + bottomLeftPoint[0],
-    y: -radius - strokeLength,
+    y: topPoint[1],
     width: (bottomRightPoint[0] + offset) * 2,
-    height: radius + strokeLength + bottomLeftPoint[1],
+    height: bottomLeftPoint[1] - topPoint[1],
   };
 
   useEffect(() => {
@@ -465,7 +465,7 @@ export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x, y: y - radius - strokeLength },
+        { x: x, y: y + topPoint[1] },
         { x: x + bottomLeftPoint[0], y: y + bottomLeftPoint[1] },
         { x: x + bottomRightPoint[0], y: y + bottomRightPoint[1] },
       ])
@@ -534,8 +534,8 @@ export const WedgeAFCCUC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         {label2 && <GraphLabel x={offset + bottomLeftPoint[0] + 10 * label2.length} y={bottomLeftPoint[1] * 0.6} text={label2} />}
         {label3 && <GraphLabel x={-offset + bottomRightPoint[0] - 10 - 5 * label3.length} y={bottomRightPoint[1] * 0.6} text={label3} />}
         {label4 && <GraphLabel x={offset + bottomRightPoint[0] + 10 * label4.length} y={bottomRightPoint[1] * 0.6} text={label4} />}
-        {label5 && <GraphLabel x={-offset + -10 - 5 * label5.length} y={-radius - strokeLength * 0.5} text={label5} />}
-        {label6 && <GraphLabel x={offset + 5} y={-radius - strokeLength * 0.5} text={label6} />}
+        {label5 && <GraphLabel x={-offset + -10 - 5 * label5.length} y={topPoint[1] * 0.6} text={label5} />}
+        {label6 && <GraphLabel x={offset + 5} y={topPoint[1] * 0.6} text={label6} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -657,12 +657,12 @@ export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const strokeLength = getStageDim(3.4);
-  const bottomLeftPoint = [getStageDim(-2 * widthFactor!), getStageDim(4.1)];
-  const bottomRightPoint = [getStageDim(2 * widthFactor!), getStageDim(4.1)];
+  const bottomLeftPoint = [getStageDim(-2 * widthFactor!), getStageDim(4)];
+  const bottomRightPoint = [getStageDim(2 * widthFactor!), getStageDim(4)];
+  const topPoint = [getStageDim(0), getStageDim(-4)];
   const line1Points = [0, 0, bottomLeftPoint[0] * 0.1, bottomLeftPoint[1] * 0.25, bottomLeftPoint[0] * 0.85, bottomLeftPoint[1] * 0.6, bottomLeftPoint[0], bottomLeftPoint[1]];
   const line2Points = [0, 0, bottomRightPoint[0] * 0.1, bottomRightPoint[1] * 0.25, bottomRightPoint[0] * 0.85, bottomRightPoint[1] * 0.6, bottomRightPoint[0], bottomRightPoint[1]];
-  const line3Points = [0, -radius, 0, -radius - strokeLength];
+  const line3Points = [0, -radius, topPoint[0], topPoint[1]];
 
   useEffect(() => {
     if (selected) {
@@ -674,7 +674,7 @@ export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x, y: y - radius - strokeLength },
+        { x: x, y: y + topPoint[1] },
         { x: x + bottomLeftPoint[0], y: y + bottomLeftPoint[1] },
         { x: x + bottomRightPoint[0], y: y + bottomRightPoint[1] },
       ])
@@ -703,8 +703,8 @@ export const WedgeAFCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, on
         {label2 && <GraphLabel x={bottomLeftPoint[0] + 15} y={bottomLeftPoint[1] * 0.8} text={label2} />}
         {label3 && <GraphLabel x={bottomRightPoint[0] - 18 - 5 * label3.length} y={bottomRightPoint[1] * 0.8} text={label3} />}
         {label4 && <GraphLabel x={bottomRightPoint[0] - 2} y={bottomRightPoint[1] * 0.5} text={label4} />}
-        {label5 && <GraphLabel x={-10 - 5 * label5.length} y={(strokeLength + radius) * -0.6} text={label5} />}
-        {label6 && <GraphLabel x={7} y={(strokeLength + radius) * -0.6} text={label6} />}
+        {label5 && <GraphLabel x={-10 - 5 * label5.length} y={topPoint[1] * 0.6} text={label5} />}
+        {label6 && <GraphLabel x={7} y={topPoint[1] * 0.6} text={label6} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -784,15 +784,15 @@ export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const strokeLength = getStageDim(3.4);
-  const bottomLeftPoint = [getStageDim(-2 * widthFactor!), getStageDim(4.1)];
-  const bottomRightPoint = [getStageDim(2 * widthFactor!), getStageDim(4.1)];
+  const bottomLeftPoint = [getStageDim(-2 * widthFactor!), getStageDim(4)];
+  const bottomRightPoint = [getStageDim(2 * widthFactor!), getStageDim(4)];
+  const topPoint = [getStageDim(0), getStageDim(-4)];
   const line1aPoints = [-offset, 0, -offset + bottomLeftPoint[0] * 0.2, bottomLeftPoint[1] * 0.25, -offset + bottomLeftPoint[0] * 0.85, bottomLeftPoint[1] * 0.6, -offset + bottomLeftPoint[0], bottomLeftPoint[1]];
   const line1bPoints = [offset, 0, offset + bottomLeftPoint[0] * 0.2, bottomLeftPoint[1] * 0.25, offset + bottomLeftPoint[0] * 0.85, bottomLeftPoint[1] * 0.6, offset + bottomLeftPoint[0], bottomLeftPoint[1]];
   const line2aPoints = [-offset, 0, -offset + bottomRightPoint[0] * 0.2, bottomRightPoint[1] * 0.25, -offset + bottomRightPoint[0] * 0.85, bottomRightPoint[1] * 0.6, -offset + bottomRightPoint[0], bottomRightPoint[1]];
   const line2bPoints = [offset, 0, offset + bottomRightPoint[0] * 0.2, bottomRightPoint[1] * 0.25, offset + bottomRightPoint[0] * 0.85, bottomRightPoint[1] * 0.6, offset + bottomRightPoint[0], bottomRightPoint[1]];
-  const line3aPoints = [-offset, -radius, -offset, -radius - strokeLength];
-  const line3bPoints = [offset, -radius, offset, -radius - strokeLength];
+  const line3aPoints = [-offset, -radius, -offset + topPoint[0], topPoint[1]];
+  const line3bPoints = [offset, -radius, offset + topPoint[0], topPoint[1]];
 
   useEffect(() => {
     if (selected) {
@@ -804,7 +804,7 @@ export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
   useEffect(() => {
     dispatch(
       setSnappableVertices([
-        { x: x, y: y - radius - strokeLength },
+        { x: x, y: y + topPoint[1] },
         { x: x + bottomLeftPoint[0], y: y + bottomLeftPoint[1] },
         { x: x + bottomRightPoint[0], y: y + bottomRightPoint[1] },
       ])
@@ -836,8 +836,8 @@ export const WedgeAFCCUXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
         {label2 && <GraphLabel x={offset + bottomLeftPoint[0] + 15} y={bottomLeftPoint[1] * 0.8} text={label2} />}
         {label3 && <GraphLabel x={-offset + bottomRightPoint[0] - 18 - 5 * label3.length} y={bottomRightPoint[1] * 0.8} text={label3} />}
         {label4 && <GraphLabel x={offset + bottomRightPoint[0] - 2} y={bottomRightPoint[1] * 0.5} text={label4} />}
-        {label5 && <GraphLabel x={-offset - 10 - 5 * label5.length} y={(strokeLength + radius) * -0.6} text={label5} />}
-        {label6 && <GraphLabel x={offset + 7} y={(strokeLength + radius) * -0.6} text={label6} />}
+        {label5 && <GraphLabel x={-offset - 10 - 5 * label5.length} y={topPoint[1] * 0.6} text={label5} />}
+        {label6 && <GraphLabel x={offset + 7} y={topPoint[1] * 0.6} text={label6} />}
       </Group>
       {selected && <Transformer ref={transformerRef} resizeEnabled={false} rotateEnabled={false} borderDash={[2, 2]} />}
     </>
@@ -920,8 +920,8 @@ export const WedgeAFCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, o
 
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const bottomLeftPoint = [getStageDim(-2) * widthFactor!, getStageDim(6.2)];
-  const bottomRightPoint = [getStageDim(2) * widthFactor!, getStageDim(6.2)];
+  const bottomLeftPoint = [getStageDim(-2) * widthFactor!, getStageDim(6)];
+  const bottomRightPoint = [getStageDim(2) * widthFactor!, getStageDim(6)];
   const strokeTopPoint = [0, getStageDim(-6)];
   const triangleCenterPoint = [0, getStageDim(-1.8)];
   const line1Points = [0, triangleCenterPoint[1], bottomLeftPoint[0] * 0.2, 0, bottomLeftPoint[0] * 0.8, bottomLeftPoint[1] * 0.4, bottomLeftPoint[0], bottomLeftPoint[1]];
@@ -1049,8 +1049,8 @@ export const WedgeAFCCUXXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, 
   const offset = getStageDim(0.15);
   const sideLength = getStageDim(1.6);
   const radius = (sideLength * 0.5) / 0.866; // cos 30
-  const bottomLeftPoint = [getStageDim(-2) * widthFactor!, getStageDim(6.2)];
-  const bottomRightPoint = [getStageDim(2) * widthFactor!, getStageDim(6.2)];
+  const bottomLeftPoint = [getStageDim(-2) * widthFactor!, getStageDim(6)];
+  const bottomRightPoint = [getStageDim(2) * widthFactor!, getStageDim(6)];
   const strokeTopPoint = [0, getStageDim(-6)];
   const triangleCenterPoint = [0, getStageDim(-1.8)];
   const line1aPoints = [-offset, triangleCenterPoint[1], -offset + bottomLeftPoint[0] * 0.2, 0, -offset + bottomLeftPoint[0] * 0.8, bottomLeftPoint[1] * 0.4, -offset + bottomLeftPoint[0], bottomLeftPoint[1]];
