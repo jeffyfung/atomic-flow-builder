@@ -351,7 +351,7 @@ export const Canvas: React.FC<{}> = () => {
           </Layer>
         </Stage>
       </main>
-      {selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} clearSelection={clearSelection} />}
+      {!previewShape && selectedId && inspectorDisplay && <Inspector key={selectedId} shapeId={selectedId} shape={shapes[selectedId]} handleCloseInspector={handleCloseInspector} clearSelection={clearSelection} />}
       {contextMenuPosition && <ContextMenu position={contextMenuPosition} setContextMenuPosition={setContextMenuPosition} selectedId={selectedId} clearSelection={clearSelection} />}
     </>
   );
