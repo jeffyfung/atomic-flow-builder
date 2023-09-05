@@ -10,11 +10,14 @@ import InfoIcon from "@mui/icons-material/InfoOutlined";
 export const LatexButton: React.FC<{ shapes: Record<string, ShapeProperties> }> = ({ shapes }) => {
   const [compactMode, setCompactMode] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [buttonText, setButtonText] = useState<string>(COPY_BUTTON_HINT);
   const open = Boolean(anchorEl);
 
   const handleClick = async () => {
     const latex = convertGraphToLatex(Object.values(shapes), compactMode);
     await navigator.clipboard.writeText(latex);
+    setButtonText("Copied to clipboard!");
+    setTimeout(() => setButtonText(COPY_BUTTON_HINT), 3000);
   };
 
   const handleSplitClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -32,7 +35,7 @@ export const LatexButton: React.FC<{ shapes: Record<string, ShapeProperties> }> 
   return (
     <>
       <ButtonGroup variant="contained" color="info" sx={{ my: "8px", mx: "10px" }}>
-        <Tooltip title={COPY_BUTTON_HINT} leaveDelay={100} arrow>
+        <Tooltip title={buttonText} leaveDelay={100} arrow>
           <Button size="small" startIcon={<FileCopyIcon />} onClick={handleClick} sx={{ px: "16px" }}>
             <Typography fontSize="15px" fontStyle="italic" textTransform="none">
               LaTeX
