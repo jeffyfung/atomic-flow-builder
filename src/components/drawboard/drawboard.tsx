@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { TopMenu } from "../top-menu/top-menu";
 import { Palette } from "../palette/palette";
 import { Canvas } from "../canvas/canvas";

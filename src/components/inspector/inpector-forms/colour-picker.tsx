@@ -3,7 +3,6 @@ import { LatexColour, ShapeProperties } from "../../../features/shape";
 import { Button, Grid, ListItem, Menu, Paper, styled } from "@mui/material";
 import { useAppDispatch } from "../../../hooks";
 import { updateShape } from "../../../features/canvas";
-import eyedropperIcon from "../../../res/cursors/eyedropper.png";
 
 export interface ColourPickerProps {
   shapeId: string;

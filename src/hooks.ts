@@ -7,6 +7,6 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const useForceUpdate = (): (() => void) => {
-  const [_value, setValue] = useState(0);
+  const [_, setValue] = useState(0);
   return () => setValue((value) => value + 1);
 };
