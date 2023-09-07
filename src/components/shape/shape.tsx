@@ -59,6 +59,9 @@ import Konva from "konva";
 import { WedgeAFAADC, WedgeAFADC, WedgeAFCCDC, WedgeAFCCDNC, WedgeAFCCDNXC, WedgeAFCCDNXXC, WedgeAFCCDSXC, WedgeAFCCDXXC, WedgeAFCDC, WedgeAFCDNC, WedgeAFCDNXC, WedgeAFCDNXXC, WedgeAFCDXC, WedgeAFCDXXC, WedgeAFWDC, WedgeAFWDN, WedgeAFWWDC } from "./shape-objects/inverted-wedge";
 import { AFC$2C, AF_C$2C, AFJ$2C, AFV$1C, AF_J$2C, AF_V$1C, AFEXC, AFCXC, AF_CXC, AFFR } from "./shape-objects/drawable-shapes";
 
+/**
+ * The props type for {@link Shape}.
+ */
 export interface ShapeProps {
   selected: boolean;
   shapeId: string;
@@ -73,6 +76,19 @@ export interface ShapeProps {
   handleAnchorDragEnd: (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => void;
 }
 
+/**
+ *  A higher-order component that wraps the individal shape component.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const Shape: React.FC<ShapeProps> = (props) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const Shape: React.FC<ShapeProps> = (props) => {
   switch (props.shape.type) {
     case ShapeType.ARC_AFIDN:

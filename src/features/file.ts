@@ -1,6 +1,11 @@
 import { store } from "../../src/store";
 import { loadCanvas } from "./canvas";
 
+/**
+ * Test
+ * @param jsonFile
+ * @param exportName
+ */
 export const download = (jsonFile: string, exportName: string) => {
   const dataStr = "data:text/json;charset=utf-8," + jsonFile;
   const downloadAnchorNode = document.createElement("a");

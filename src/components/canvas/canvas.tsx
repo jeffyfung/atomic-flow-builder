@@ -17,6 +17,13 @@ export interface SnapPointForVertice {
   onGrid?: Coordinates & { gridOffsetX: number; gridOffsetY: number };
 }
 
+/**
+ * This component renders the canvas and acts as the base for other componenents.
+ *
+ * The component does not take any props.
+ 
+ * @category Component
+ */
 export const Canvas: React.FC<{}> = () => {
   const { shapes, previewShape, dragging, drawing, snappableVertices } = useAppSelector(selectCanvas);
   const orderedShapeList = useAppSelector(selectOrderedShapeEntries);

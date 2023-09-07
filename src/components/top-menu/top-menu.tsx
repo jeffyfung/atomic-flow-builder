@@ -15,11 +15,27 @@ const StyledAppTitle = styled(Typography)({
   minHeight: "2vh",
 });
 
+/**
+ * The props type for {@link TopMenu}.
+ */
 interface TopMenuProps {
   handleAbout: (event: MouseEvent) => void;
   handleOpenUploader: (event: MouseEvent) => void;
 }
 
+/**
+ * Renders the top menu of the application. Contains the application icon, title and buttons.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const TopMenu: React.FC<TopMenuProps> = ({ handleAbout, handleOpenUploader }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const TopMenu: React.FC<TopMenuProps> = ({ handleAbout, handleOpenUploader }) => {
   const { shapes } = useAppSelector(selectCanvas);
 

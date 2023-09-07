@@ -6,6 +6,19 @@ import { Box } from "@mui/material";
 import { FileUploader } from "../file-uploader/file-uploader";
 import { About } from "../about/about";
 
+/**
+ *  Renders the page.
+ *
+ * This component does not take any props..
+ *
+ * ```
+ * export const Drawboard: React.FC<{}> = () => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const Drawboard: React.FC<{}> = () => {
   const [openAbout, setAbout] = useState<boolean>(false);
   const [openUploader, setOpenUploader] = useState<boolean>(false);

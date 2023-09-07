@@ -6,7 +6,11 @@ import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { deleteShape, setBack, setFront } from "../../../features/canvas";
 import { useAppDispatch } from "../../../hooks";
 
+/**
+ * The props type for {@link ContextMenu}.
+ */
 export interface ContextMenuProps {
+  /** Anchor position for context menu */
   position: { top: number; left: number };
   setContextMenuPosition: (
     value: React.SetStateAction<{
@@ -14,6 +18,7 @@ export interface ContextMenuProps {
       left: number;
     } | null>
   ) => void;
+  /** Unique ID of the shape clicked on */
   selectedId: string | null;
   clearSelection: () => void;
 }
@@ -53,6 +58,18 @@ const MenuDivider = styled.hr`
   margin: 4px 10px;
 `;
 
+/**
+ *  Renders a context menu when user right clicks on a shape.
+ *
+ * The props type is defined as a separate interface.
+ * ```
+ * export const ContextMenu: React.FC<ContextMenuProps> = ({ position, setContextMenuPosition, selectedId, clearSelection }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const ContextMenu: React.FC<ContextMenuProps> = ({ position, setContextMenuPosition, selectedId, clearSelection }) => {
   const dispatch = useAppDispatch();
 

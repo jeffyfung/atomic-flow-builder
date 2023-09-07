@@ -1,0 +1,14 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": ["typedoc-plugin-merge-modules"],
+  "mergeModulesRenameDefaults": true, // NEW option of TypeDoc added by this plugin
+  "mergeModulesMergeMode": "project", // NEW option of TypeDoc added by this plugin
+  "name": "Atomic Flow Builder",
+  "entryPointStrategy": "expand",
+  "excludeNotDocumented": true,
+  "entryPoints": ["./src"],
+  "externalPattern": ["**/node_modules/**"],
+  "excludeExternals": true,
+  "exclude": ["**/node_modules/**"],
+  "categorizeByGroup": true
+}

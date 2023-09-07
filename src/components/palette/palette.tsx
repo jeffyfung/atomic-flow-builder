@@ -15,14 +15,20 @@ const StyledToolbarBox = styled(Box)({
   backgroundColor: "white",
 });
 
-interface PaletteItemProps extends PaletteItemSchema {
+/**
+ * The props type for {@link PaletteItems}.
+ */
+export interface PaletteItemProps extends PaletteItemSchema {
   setNestedMenu: Dispatch<SetStateAction<LeafPaletteItemSchema[] | null>>;
   setNestedMenuAnchorEl: Dispatch<SetStateAction<Element | null>>;
   handleMouseEnter: (event: MouseEvent<HTMLElement>) => void;
   handleMouseLeave: (event: MouseEvent<HTMLElement>) => void;
 }
 
-interface LeafPaletteItemProps extends LeafPaletteItemSchema {
+/**
+ * The props type for {@link LeafPaletteItems}.
+ */
+export interface LeafPaletteItemProps extends LeafPaletteItemSchema {
   setNestedMenu: Dispatch<SetStateAction<LeafPaletteItemSchema[] | null>>;
   setNestedMenuAnchorEl: Dispatch<SetStateAction<Element | null>>;
   handleClick: (event: MouseEvent<HTMLElement>, shapeType: ShapeType) => void;
@@ -30,7 +36,20 @@ interface LeafPaletteItemProps extends LeafPaletteItemSchema {
   handleMouseLeave: (event: MouseEvent<HTMLElement>) => void;
 }
 
-const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, handleMouseEnter, handleMouseLeave, setNestedMenu, setNestedMenuAnchorEl }) => {
+/**
+ * Renders a menu item on the palette that represents a group of shapes in Virginia Lake.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, handleMouseEnter, handleMouseLeave, setNestedMenu, setNestedMenuAnchorEl }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
+export const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, handleMouseEnter, handleMouseLeave, setNestedMenu, setNestedMenuAnchorEl }) => {
   const onClick = (event: MouseEvent) => {
     setNestedMenu(children);
     setNestedMenuAnchorEl(event.currentTarget);
@@ -54,7 +73,20 @@ const PaletteItem: React.FC<PaletteItemProps> = ({ children, iconElement, handle
   );
 };
 
-const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClick, handleMouseEnter, handleMouseLeave, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
+/**
+ * Renders a menu item on the palette that represents a shape in Virginia Lake.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClick, handleMouseEnter, handleMouseLeave, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
+export const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClick, handleMouseEnter, handleMouseLeave, iconElement, setNestedMenu, setNestedMenuAnchorEl }) => {
   const clickHandler = (event: MouseEvent<HTMLElement>) => {
     handleClick(event, shapeType);
     setTimeout(() => {
@@ -93,6 +125,19 @@ const LeafPaletteItem: React.FC<LeafPaletteItemProps> = ({ shapeType, handleClic
   );
 };
 
+/**
+ * Renders a palette that is a menu of palette shapes.
+ *
+ * This component does not contain any props.
+ *
+ * ```
+ * export const Palette: React.FC<{}> = () => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const Palette: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
 

@@ -5,14 +5,35 @@ import { useAppDispatch } from "../../../hooks";
 import { updateShape } from "../../../features/canvas";
 import { ShapeProperties } from "../../../features/shape";
 
+/**
+ * The props type for slider.
+ */
 export interface SliderProps {
+  /** Options for displaying text above the slider */
   valueLabelDisplay: "auto" | "on" | "off";
+  /** Step size of the slider */
   step: number;
+  /** Min value shown in the slider */
   min: number;
+  /** Max value shown in the slider */
   max: number;
   marks: boolean;
 }
 
+/**
+ * Renders a text field for numerical input and a slider. The input field and the slider are in sync. Basic validation applied in the input field.
+ *
+ * ```
+ * export const About: React.FC<AboutProps> = ({
+ *  open,
+ *  toggleOpen
+ * }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const FormTextFieldAndSlider: React.FC<{
   shapeId: string;
   shape: ShapeProperties;

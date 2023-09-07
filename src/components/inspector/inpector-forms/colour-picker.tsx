@@ -4,6 +4,9 @@ import { Button, Grid, ListItem, Menu, Paper, styled } from "@mui/material";
 import { useAppDispatch } from "../../../hooks";
 import { updateShape } from "../../../features/canvas";
 
+/**
+ * The props type for {@link ColourPicker}.
+ */
 export interface ColourPickerProps {
   shapeId: string;
   shape: ShapeProperties;
@@ -17,6 +20,19 @@ const ColourButton = styled(Button)({
   padding: 0,
 });
 
+/**
+ *  Renders a colour picker. Must be linked to a shape.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const ColourPicker: React.FC<ColourPickerProps> = ({ shapeId, shape, strokeNames }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const ColourPicker: React.FC<ColourPickerProps> = ({ shapeId, shape, strokeNames }) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);

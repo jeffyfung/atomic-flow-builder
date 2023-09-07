@@ -4,6 +4,21 @@ import { useAppDispatch } from "../../../hooks";
 import { updateShape } from "../../../features/canvas";
 import { ShapeProperties } from "../../../features/shape";
 
+/**
+ * Renders a text field for user input and a slider. Must be linked to a shape on canvas.
+ *
+ * ```
+ * export const FormTextField: React.FC<{
+ *  shapeId: string;
+ *  shape: ShapeProperties;
+ *  fieldName: keyof ShapeProperties;
+ * }> = ({ shapeId, shape, fieldName }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const FormTextField: React.FC<{
   shapeId: string;
   shape: ShapeProperties;

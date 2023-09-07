@@ -2,7 +2,11 @@ import { Backdrop, Box, Button, Divider, Fade, Modal, Typography } from "@mui/ma
 import packageJson from "../../../package.json";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-interface AboutProps {
+/**
+ * The props type for {@link About}.
+ */
+export interface AboutProps {
+  /** Display the About interface */
   open: boolean;
   toggleOpen: (value: React.SetStateAction<boolean>) => void;
 }
@@ -54,6 +58,22 @@ const styles = {
   },
 };
 
+/**
+ *  Renders a modal that lists the background info of the application.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const About: React.FC<AboutProps> = ({
+ *  open,
+ *  toggleOpen
+ * }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const About: React.FC<AboutProps> = ({ open, toggleOpen }) => {
   const handleModalClose = () => toggleOpen(false);
 

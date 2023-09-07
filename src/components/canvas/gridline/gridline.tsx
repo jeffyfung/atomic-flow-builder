@@ -3,7 +3,11 @@ import { Layer, Line, Text } from "react-konva";
 import { SnapPointForVertice } from "../canvas";
 
 export const SNAP_GRID_THRESHOLD = 0.5;
+/**
+ * The props type for {@link Gridline}.
+ */
 export interface GridlineProps {
+  /** Reference to the Konva Stage */
   stage: Konva.Stage | null;
 }
 
@@ -20,6 +24,12 @@ let numYSteps: number;
 let xAxisVal: number;
 let yAxisVal: number; // y axis is top-down
 
+/**
+ * Convert from absolute coordinates to stage coordinates.
+ * @param x absolute x in viewport
+ * @param y absolute y in viewport
+ * @returns coordinates relative to Konva Stage
+ */
 export const getRelativeStageCoordinate = (x: number, y: number): { stageX: number; stageY: number } => {
   return {
     stageX: x + stageRect.offsetX,
@@ -27,6 +37,12 @@ export const getRelativeStageCoordinate = (x: number, y: number): { stageX: numb
   };
 };
 
+/**
+ * Convert from stage coordinates to grid coordinates.
+ * @param x x relative to Konva Stage
+ * @param y y relative to Konva Stage
+ * @returns grid coordinates
+ */
 export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY: number } => {
   return {
     gridX: (x - xAxisVal) / stepSize,
@@ -34,6 +50,12 @@ export const getGridCoordinate = (x: number, y: number): { gridX: number; gridY:
   };
 };
 
+/**
+ * Convert from grid coordinates to stage coordinates
+ * @param x grid x
+ * @param y grid y
+ * @returns coordinates relative to Konva Stage
+ */
 export const getStageCoordinate = (x: number, y: number): { stageX: number; stageY: number } => {
   return {
     stageX: x * stepSize + xAxisVal,
@@ -41,14 +63,30 @@ export const getStageCoordinate = (x: number, y: number): { stageX: number; stag
   };
 };
 
+/**
+ * Convert from grid dimension to stage dimension.
+ * @param val size in the scale of grid coordinate system
+ * @returns size in the scale of the stage coordinate system
+ */
 export const getStageDim = (val: number): number => {
   return val * stepSize;
 };
 
+/**
+ * Convert from stage dimension to grid dimension.
+ * @param val size in the scale of the stage coordinate system
+ * @returns size in the scale of grid coordinate system
+ */
 export const getGridDim = (val: number): number => {
   return val / stepSize;
 };
 
+/**
+ * Compute the grid to snap to given grid coordinates
+ * @param gridX
+ * @param gridY
+ * @returns Snapping position
+ */
 export const computeNearestSnap = (gridX: number, gridY: number): SnapPointForVertice["onGrid"] => {
   const nearestSnapGridX = Math.round(gridX);
   const nearestSnapGridY = Math.round(gridY);
@@ -60,6 +98,19 @@ export const computeNearestSnap = (gridX: number, gridY: number): SnapPointForVe
   }
 };
 
+/**
+ *  Renders gridlines. Grid size can be adjusted by `stepSize`. Child of {@link Canvas}.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const Gridline: React.FC<GridlineProps> = ({ stage }) => {
   if (!stage) return <Layer></Layer>;
 

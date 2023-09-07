@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { UPLOAD_HINT_TEXT } from "../../res/texts/file-uploader";
 import { upload } from "../../features/file";
 
-interface FileUploaderProps {
+/**
+ * The props type for {@link FileUploader}.
+ */
+export interface FileUploaderProps {
   open: boolean;
   toggleOpen: (value: React.SetStateAction<boolean>) => void;
 }
@@ -35,6 +38,19 @@ const styles = {
   },
 };
 
+/**
+ *  Renders the file uploader interface. User can upload a file by dragging it to the interface.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -47,7 +63,6 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ open, toggleOpen }) 
 
   const handleDrop = (event: React.DragEvent<HTMLElement>) => {
     event.preventDefault();
-    console.log("fire drop");
     event.stopPropagation();
     if (!event.dataTransfer.files[0]) throw new Error("No file uploaded");
     uploadFile(event.dataTransfer.files[0]);

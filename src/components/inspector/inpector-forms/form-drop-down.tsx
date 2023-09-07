@@ -4,6 +4,23 @@ import { useAppDispatch } from "../../../hooks";
 import { ChangeEvent } from "react";
 import { updateShape } from "../../../features/canvas";
 
+/**
+ *  Renders a drop-down field. Can be used in a form.
+ *
+ * ```
+ * export const FormDropDown: React.FC<{
+ *  shapeId: string;
+ *  shape: ShapeProperties;
+ *  fieldName: keyof ShapeProperties;
+ *  label: string;
+ *  options: any[];
+ * }> = ({ shapeId, shape, fieldName, label, options }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const FormDropDown: React.FC<{
   shapeId: string;
   shape: ShapeProperties;

@@ -32,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docs": "typedoc --options typedoc.json src"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +55,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@mui/base": "^5.0.0-beta.10"
+    "@mui/base": "^5.0.0-beta.10",
+    "typedoc": "^0.25.1",
+    "typedoc-plugin-merge-modules": "^5.1.0",
+    "typedoc-plugin-pages": "^1.1.0"
   }
 }

@@ -42,13 +42,31 @@ const NestedGridContainer = styled(Grid)({
   paddingTop: "15px",
 });
 
+/**
+ * The props type for {@link Inspector}.
+ */
 export interface InspectorProps {
+  /** ID of the selected shape. */
   shapeId: string;
+  /** Properties of the selected shape. */
   shape: ShapeProperties;
   handleCloseInspector: (event: MouseEvent<HTMLElement>) => void;
   clearSelection: () => void;
 }
 
+/**
+ * Renders a form that displays the properties and metadata of a selected shape on canvas. Users can update the properties of the selected shape through the form.
+ *
+ * The props type is defined as a separate interface.
+ *
+ * ```
+ * export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleCloseInspector, clearSelection }) => {
+ *  // ...
+ * }
+ * ```
+ *
+ * @category Component
+ */
 export const Inspector: React.FC<InspectorProps> = ({ shapeId, shape, handleCloseInspector, clearSelection }) => {
   const dispatch = useAppDispatch();
 
