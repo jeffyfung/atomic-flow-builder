@@ -19,8 +19,10 @@ export interface ContextMenuProps {
 }
 
 const MenuContainer = styled.ul<{ $position: { top: number; left: number } }>`
-  top: ${(props) => props.$position.top}px;
-  left: ${(props) => props.$position.left}px;
+  top: ${({ $position }) => (window.innerHeight - $position.top > 250 ? $position.top : undefined)}px;
+  bottom: ${({ $position }) => (window.innerHeight - $position.top > 250 ? undefined : window.innerHeight - $position.top)}px;
+  left: ${({ $position }) => (window.innerWidth - $position.left > 230 ? $position.left : undefined)}px;
+  right: ${({ $position }) => (window.innerWidth - $position.left > 230 ? undefined : window.innerWidth - $position.left)}px;
   position: absolute;
   min-width: 210px;
   background-color: #fefefe;
