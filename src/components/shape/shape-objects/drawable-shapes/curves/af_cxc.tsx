@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
 import { ShapeProps } from "../../../shape";
 import { KonvaEventObject } from "konva/lib/Node";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline/gridline";
-import { computeDimensionRect } from "..";
-import { Circle, Group, Line } from "react-konva";
+import { getStageDim } from "../../../../canvas/gridline/gridline";
+import { Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
 import { isRectVertexName } from "../../../../../features/type-util";
 
@@ -13,7 +12,6 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   if (!draw || draw.type !== DrawableShapeType.RECT) throw new Error("Wrong drawable shape type");
   const { p1, p2, p3, p4 } = draw;
   const vertices = { p1: p1!, p2: p2!, p3: p3!, p4: p4! };
-  const [nearestSnap, setNearestSnap] = useState<Coordinates | undefined>(undefined);
   const [existingVertex, setExistingVertex] = useState<Record<string, Coordinates> | null>(null);
 
   const offset = getStageDim(0.15);
@@ -25,24 +23,15 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
   const line2aPoints = [p1!.x, p1!.y, -offset + p1!.x + width * 0.25, p1!.y + length * 0.1, -offset + p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
   const line2bPoints = [p1!.x, p1!.y, offset + p1!.x + width * 0.25, p1!.y + length * 0.1, offset + p1!.x + width * 0.75, p1!.y + length * 0.9, p4!.x, p4!.y];
 
-  const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4"): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
-    event.cancelBubble = true;
-    const { x: absX, y: absY } = event.target!.getAbsolutePosition();
-    const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
-    const { gridX, gridY } = getGridCoordinate(stageX, stageY);
-    setNearestSnap(computeNearestSnap(gridX, gridY));
-    return computeDimensionRect({ [vName]: { x: stageX, y: stageY, gridX, gridY } }, existingVertex!);
+  const handleAnchorUpdatedDim = (_event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4") => {
+    const data = { drawableShapeType: DrawableShapeType.RECT, existingVertex: existingVertex!, selectedVName: vName };
+    handleAnchorDragMove(shapeId, data);
   };
 
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>, vName: "p1" | "p2" | "p3" | "p4") => {
-    if (nearestSnap) {
-      setNearestSnap(undefined);
-      setExistingVertex(null);
-      return computeDimensionRect({ [vName]: nearestSnap }, existingVertex!);
-    } else {
-      setExistingVertex(null);
-      return {};
-    }
+    setExistingVertex(null);
+    const data = { drawableShapeType: DrawableShapeType.RECT, existingVertex: existingVertex!, selectedVName: vName };
+    handleAnchorDragEnd(shapeId, data);
   };
 
   return (
@@ -63,8 +52,8 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={p1!} //
             vertexName="p1"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
-            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
+            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdatedDim(e, vertex)}
+            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdateEnd(e, vertex)}
           />
         )}
         {selected && (
@@ -72,8 +61,8 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={p2!} //
             vertexName="p2"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
-            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
+            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdatedDim(e, vertex)}
+            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdateEnd(e, vertex)}
           />
         )}
         {selected && (
@@ -81,8 +70,8 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={p3!} //
             vertexName="p3"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
-            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
+            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdatedDim(e, vertex)}
+            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdateEnd(e, vertex)}
           />
         )}
         {selected && (
@@ -90,12 +79,11 @@ export const AF_CXC: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick
             vertex={p4!} //
             vertexName="p4"
             handleDragStart={() => setExistingVertex(vertices)}
-            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e, vertex))}
-            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e, vertex))}
+            handleDragMove={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdatedDim(e, vertex)}
+            handleDragEnd={(e, vertex) => isRectVertexName(vertex) && handleAnchorUpdateEnd(e, vertex)}
           />
         )}
       </Group>
-      {nearestSnap && <Circle x={nearestSnap!.x} y={nearestSnap!.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />}
     </>
   );
 };

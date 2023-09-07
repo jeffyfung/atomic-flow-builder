@@ -1,13 +1,11 @@
 import { KonvaEventObject } from "konva/lib/Node";
-import React from "react";
 import { Circle } from "react-konva";
 import { Coordinates } from "../../../../features/shape";
-
 export interface AnchorProps {
   vertex: Coordinates;
   vertexName: string;
-  handleDragStart: () => void;
-  handleDragMove: (event: KonvaEventObject<DragEvent>, vName: string) => void; // optional?
+  handleDragStart: (event?: KonvaEventObject<DragEvent>) => void;
+  handleDragMove: (event: KonvaEventObject<DragEvent>, vName: string) => void;
   handleDragEnd: (event: KonvaEventObject<DragEvent>, vName: string) => void;
 }
 
@@ -23,8 +21,14 @@ export const Anchor: React.FC<AnchorProps> = ({ vertex, vertexName, handleDragSt
       fill="#e6e6e6"
       draggable
       onDragStart={handleDragStart}
-      onDragMove={(e) => handleDragMove(e, vertexName)}
-      onDragEnd={(e) => handleDragEnd(e, vertexName)}
+      onDragMove={(e) => {
+        e.cancelBubble = true;
+        handleDragMove(e, vertexName);
+      }}
+      onDragEnd={(e) => {
+        e.cancelBubble = true;
+        handleDragEnd(e, vertexName);
+      }}
     />
   );
 };

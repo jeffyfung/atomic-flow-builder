@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { ShapeProps } from "../../../shape";
 import { KonvaEventObject } from "konva/lib/Node";
-import { Circle, Group, Line } from "react-konva";
+import { Group, Line } from "react-konva";
 import { Anchor } from "../anchor";
-import { computeNearestSnap, getGridCoordinate, getRelativeStageCoordinate, getStageDim } from "../../../../canvas/gridline/gridline";
+import { getStageDim } from "../../../../canvas/gridline/gridline";
 import { Coordinates, DrawableShapeType } from "../../../../../features/shape";
-import { computeDimension2V } from "..";
 
 export const AF_J$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClick, handleMouseEnter, handleMouseLeave, handleMouseOver, handleAnchorDragMove, handleAnchorDragEnd }) => {
   const { stroke1, draw } = shape;
   if (!draw || draw.type !== DrawableShapeType.TWO_VERTEX) throw new Error("Wrong drawable shape type");
   const { start, end } = draw;
-  const [nearestSnap, setNearestSnap] = useState<Coordinates | undefined>(undefined);
   const [existingVertex, setExistingVertex] = useState<Coordinates | null>(null);
 
   const offset = getStageDim(0.15);
@@ -20,25 +18,15 @@ export const AF_J$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
   const line1Points = [-offset + start!.x, start!.y, -offset + start!.x + width * 0.1, start!.y + length * 0.25, -offset + start!.x + width * 0.9, start!.y + length * 0.75, -offset + end!.x, end!.y];
   const line2Points = [offset + start!.x, start!.y, offset + start!.x + width * 0.1, start!.y + length * 0.25, offset + start!.x + width * 0.9, start!.y + length * 0.75, offset + end!.x, end!.y];
 
-  const handleAnchorUpdatedDim = (event: KonvaEventObject<DragEvent>): Parameters<ShapeProps["handleAnchorDragMove"]>[1] => {
-    event.cancelBubble = true;
-    const { x: absX, y: absY } = event.target!.getAbsolutePosition();
-    const { stageX, stageY } = getRelativeStageCoordinate(absX, absY);
-    const { gridX, gridY } = getGridCoordinate(stageX, stageY);
-    setNearestSnap(computeNearestSnap(gridX, gridY));
-    return computeDimension2V(shape, { x: stageX, y: stageY, gridX, gridY }, existingVertex!);
+  const handleAnchorUpdatedDim = (_event: KonvaEventObject<DragEvent>) => {
+    const data = { drawableShapeType: DrawableShapeType.TWO_VERTEX, existingVertex: existingVertex! };
+    handleAnchorDragMove(shapeId, data);
   };
 
   const handleAnchorUpdateEnd = (_event: KonvaEventObject<DragEvent>) => {
-    if (nearestSnap) {
-      const payload = computeDimension2V(shape, nearestSnap, existingVertex!);
-      setNearestSnap(undefined);
-      setExistingVertex(null);
-      return payload;
-    } else {
-      setExistingVertex(null);
-      return {};
-    }
+    setExistingVertex(null);
+    const data = { drawableShapeType: DrawableShapeType.TWO_VERTEX, existingVertex: existingVertex! };
+    handleAnchorDragEnd(shapeId, data);
   };
 
   return (
@@ -57,8 +45,8 @@ export const AF_J$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
             vertex={start!} //
             vertexName="start"
             handleDragStart={() => setExistingVertex(end!)}
-            handleDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))}
-            handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))}
+            handleDragMove={handleAnchorUpdatedDim}
+            handleDragEnd={handleAnchorUpdateEnd}
           />
         )}
         {selected && (
@@ -66,12 +54,11 @@ export const AF_J$2C: React.FC<ShapeProps> = ({ selected, shape, shapeId, onClic
             vertex={end!} //
             vertexName="end"
             handleDragStart={() => setExistingVertex(start!)}
-            handleDragMove={(e) => handleAnchorDragMove(shapeId, handleAnchorUpdatedDim(e))}
-            handleDragEnd={(e) => handleAnchorDragEnd(shapeId, handleAnchorUpdateEnd(e))}
+            handleDragMove={handleAnchorUpdatedDim}
+            handleDragEnd={handleAnchorUpdateEnd}
           />
         )}
       </Group>
-      {nearestSnap && <Circle x={nearestSnap!.x} y={nearestSnap!.y} radius={5} stroke="grey" strokeWidth={1} fill="#fcf5ca" />}
     </>
   );
 };

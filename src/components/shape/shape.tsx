@@ -1,5 +1,5 @@
 import React from "react";
-import { ShapeProperties, ShapeType } from "../../features/shape";
+import { Coordinates, DrawableShapeType, ShapeProperties, ShapeType } from "../../features/shape";
 import {
   ArcAFIDN,
   ArcAFIDXC,
@@ -68,9 +68,10 @@ export interface ShapeProps {
   handleMouseLeave: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleMouseOver: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleDragStart: (event: Konva.KonvaEventObject<DragEvent>) => void;
+  handleDragMove: (event: Konva.KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: Konva.KonvaEventObject<DragEvent>, id: string) => void;
-  handleAnchorDragMove: (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">) => void;
-  handleAnchorDragEnd: (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => void;
+  handleAnchorDragMove: (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => void;
+  handleAnchorDragEnd: (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => void;
 }
 
 export const Shape: React.FC<ShapeProps> = (props) => {

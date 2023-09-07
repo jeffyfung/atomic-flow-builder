@@ -8,7 +8,7 @@ import { store } from "../../store";
 import { Inspector } from "../inspector/inspector";
 import { Gridline, computeNearestSnap, getGridCoordinate, getStageCoordinate } from "./gridline/gridline";
 import { Coordinates, DrawableShapeType, ShapeProperties } from "../../features/shape";
-import { computeDimension2V } from "../shape/shape-objects/drawable-shapes";
+import { computeDimension2V, computeDimensionArc, computeDimensionRect } from "../shape/shape-objects/drawable-shapes";
 import "./canvas.css";
 import { ContextMenu } from "./context-menu/context-menu";
 
@@ -244,10 +244,12 @@ export const Canvas: React.FC<{}> = () => {
   };
 
   const handleSelectedShapeDragStart = (event: Konva.KonvaEventObject<DragEvent>) => {
+    event.cancelBubble = true;
     setInspectorDisplay(false);
   };
 
   const handleSelectedShapeDragEnd = (event: Konva.KonvaEventObject<DragEvent>, id: string) => {
+    event.cancelBubble = true;
     const { x, y } = stageRef.current!.getRelativePointerPosition();
     const { gridX, gridY } = getGridCoordinate(x, y);
     dispatch(
@@ -263,28 +265,62 @@ export const Canvas: React.FC<{}> = () => {
     );
   };
 
-  const handleAnchorDragMove = (shapeId: string, payload: Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">) => {
+  const handleAnchorDragMove = (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => {
     setInspectorDisplay(false);
+    const { drawableShapeType, existingVertex, selectedVName } = data;
+    const { x, y } = stageRef.current!.getRelativePointerPosition()!;
+    const { gridX, gridY } = getGridCoordinate(x, y);
+    setNearestSnaps(() => {
+      const nearestSnap = computeNearestSnap(gridX, gridY);
+      return nearestSnap ? [{ onGrid: nearestSnap }] : [];
+    });
+
+    let properties: Partial<ShapeProperties>;
+    switch (drawableShapeType) {
+      case DrawableShapeType.TWO_VERTEX:
+        properties = computeDimension2V(shapes[shapeId], { x, y, gridX, gridY }, existingVertex as Coordinates);
+        break;
+      case DrawableShapeType.ARC:
+        properties = computeDimensionArc([selectedVName!, { x, y, gridX, gridY }], existingVertex as Record<string, Coordinates>);
+        break;
+      case DrawableShapeType.RECT:
+        properties = computeDimensionRect([selectedVName!, { x, y, gridX, gridY }], existingVertex as Record<string, Coordinates>);
+        break;
+    }
     dispatch(
       updateShape({
         id: shapeId,
-        properties: payload,
+        properties,
       })
     );
   };
 
-  const handleAnchorDragEnd = (shapeId: string, payload: Partial<Pick<ShapeProperties, "x" | "y" | "gridX" | "gridY" | "draw">>) => {
-    if (Object.keys(payload).length > 0) {
+  const handleAnchorDragEnd = (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => {
+    const { drawableShapeType, existingVertex, selectedVName } = data;
+    if (nearestSnaps.length) {
+      let properties: Partial<ShapeProperties>;
+      switch (drawableShapeType) {
+        case DrawableShapeType.TWO_VERTEX:
+          properties = computeDimension2V(shapes[shapeId], nearestSnaps[0].onGrid!, existingVertex as Coordinates);
+          break;
+        case DrawableShapeType.ARC:
+          properties = computeDimensionArc([selectedVName!, nearestSnaps[0].onGrid!], existingVertex as Record<string, Coordinates>);
+          break;
+        case DrawableShapeType.RECT:
+          properties = computeDimensionRect([selectedVName!, nearestSnaps[0].onGrid!], existingVertex as Record<string, Coordinates>);
+          break;
+      }
       dispatch(
         updateShape({
           id: shapeId,
-          properties: payload,
+          properties,
         })
       );
     }
+    setNearestSnaps([]);
   };
 
-  // drawable shapes only have 1 snapping vertex but can have onShape and onGrid snap
+  // drawable shapes only have 1 snapping vertex but can have onShape (beta) and onGrid snap
   const snaps = nearestSnaps
     .filter((nearestSnap) => nearestSnap.onShape || nearestSnap.onGrid)
     .sort((a, b) => {
