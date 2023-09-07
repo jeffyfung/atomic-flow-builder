@@ -68,7 +68,6 @@ export interface ShapeProps {
   handleMouseLeave: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleMouseOver: (evt: Konva.KonvaEventObject<MouseEvent>) => void;
   handleDragStart: (event: Konva.KonvaEventObject<DragEvent>) => void;
-  handleDragMove: (event: Konva.KonvaEventObject<DragEvent>) => void;
   handleDragEnd: (event: Konva.KonvaEventObject<DragEvent>, id: string) => void;
   handleAnchorDragMove: (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => void;
   handleAnchorDragEnd: (shapeId: string, data: { drawableShapeType: DrawableShapeType; existingVertex: Coordinates | Record<string, Coordinates>; selectedVName?: string }) => void;
