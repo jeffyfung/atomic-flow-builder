@@ -2,6 +2,7 @@
 
 ### Development
 
+`npm ci`
 `npm start`
 
 Runs the app in the development mode.\
@@ -13,6 +14,7 @@ The application is hosted on [atomic-flow-builder.vercel.app](https://atomic-flo
 
 To build the application locally, run
 
+`npm ci`
 `npm run build`
 
 Builds the app for production to the `build` folder.\
